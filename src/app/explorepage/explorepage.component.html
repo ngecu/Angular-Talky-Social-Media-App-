@@ -1,0 +1,567 @@
+
+
+ <div class="p-4">
+<!-- <app-navbar></app-navbar> -->
+<div class="container-fluid">
+   <div class="row">
+
+ <!-- <div class="container d-flex justify-content-center"> -->
+ <app-sidebar  class="col-2 d-md-block bg-light sidebar"></app-sidebar>
+
+   <main class="col-10">
+    
+    <div *ngIf="showSpinners">
+        <div class="container d-flex justify-content-center">
+       <div class="spinner-grow text-muted"></div>
+       <div class="spinner-grow text-primary"></div>
+       <div class="spinner-grow text-success"></div>
+       <div class="spinner-grow text-info"></div>
+       <div class="spinner-grow text-warning"></div>
+       <div class="spinner-grow text-danger"></div>
+       <div class="spinner-grow text-secondary"></div>
+       <div class="spinner-grow text-dark"></div>
+       <div class="spinner-grow text-light"></div>
+       </div>
+     </div>
+
+     <div  *ngIf="!showSpinners">
+        <div class="row">
+
+            <div class="col-md-3">
+              <!-- Image 1 -->
+              <div class="gallery-item">
+                <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                <div class="overlay">
+                  <div class="overlay-content">
+                    <i class="far fa-heart"></i> Like
+                    <br>
+                    <i class="far fa-comment"></i> 5 Comments
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col-md-3">
+              <!-- Image 2 -->
+              <div class="gallery-item">
+                <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                <div class="overlay">
+                  <div class="overlay-content">
+                    <i class="far fa-heart"></i> Like
+                    <br>
+                    <i class="far fa-comment"></i> 8 Comments
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col-md-3">
+              <!-- Image 3 -->
+              <div class="gallery-item">
+                <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                <div class="overlay">
+                  <div class="overlay-content">
+                    <i class="far fa-heart"></i> Like
+                    <br>
+                    <i class="far fa-comment"></i> 5 Comments
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col-md-3">
+              <!-- Image 4 -->
+              <div class="gallery-item">
+                <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                <div class="overlay">
+                  <div class="overlay-content">
+                    <i class="far fa-heart"></i> Like
+                    <br>
+                    <i class="far fa-comment"></i> 8 Comments
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            
+            <div class="col-md-3">
+                <!-- Image 1 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 2 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 3 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 4 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+
+              
+            <div class="col-md-3">
+                <!-- Image 1 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 2 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 3 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 4 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+              <div class="col-md-3">
+                <!-- Image 1 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 2 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 3 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 4 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              
+            <div class="col-md-3">
+                <!-- Image 1 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 2 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 3 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 4 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+
+              
+            <div class="col-md-3">
+                <!-- Image 1 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 2 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 3 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 4 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+
+              
+            <div class="col-md-3">
+                <!-- Image 1 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 2 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 3 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 4 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+
+              
+            <div class="col-md-3">
+                <!-- Image 1 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 2 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 3 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 4 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+
+              
+            <div class="col-md-3">
+                <!-- Image 1 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 2 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 3 -->
+                <div class="gallery-item">
+                  <img src="https://images5.alphacoders.com/133/1332366.jpeg" alt="Image 1">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 5 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <!-- Image 4 -->
+                <div class="gallery-item">
+                  <img src="https://c4.wallpaperflare.com/wallpaper/277/354/502/feelsbadman-pepe-meme-memes-wallpaper-preview.jpg" alt="Image 2">
+                  <div class="overlay">
+                    <div class="overlay-content">
+                      <i class="far fa-heart"></i> Like
+                      <br>
+                      <i class="far fa-comment"></i> 8 Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+          </div>
+
+     </div>
+
+
+   </main>
+ </div>
+</div>
+</div>

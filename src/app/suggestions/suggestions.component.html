@@ -1,0 +1,110 @@
+<div class="d-flex flex-row align-items-center">
+    <div
+        class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sidenav-profile-photo">
+        <img src="assets/images/profiles/profile-6.jpg" alt="..."
+            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+    </div>
+    <div class="d-flex flex-row justify-content-between">
+        <div class="profile-info ml-3">
+            <span class="profile-info-username">codingvenue</span>
+            <span class="profile-info-name">Coding Venue</span>
+        </div>
+    
+        
+            <small data-bs-toggle="modal" data-bs-target="#myModal">
+                Switch Account
+              </small>
+        
+    </div>
+    
+
+    
+</div>
+
+<div class="mt-4">
+    <div class="d-flex flex-row justify-content-between">
+        <small class="text-muted font-weight-normal">Suggestions For You</small>
+        <small>See All</small>
+    </div>
+    <div>
+        <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+            <div class="d-flex flex-row align-items-center">
+                <div
+                    class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                    <img src="assets/images/profiles/profile-3.jpg" alt="..."
+                        style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                </div>
+                <strong class="ml-3 sugest-username">instagram</strong>
+            </div>
+            <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+        </div>
+        <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+            <div class="d-flex flex-row align-items-center">
+                <div
+                    class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                    <img src="assets/images/profiles/profile-4.png" alt="..."
+                        style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                </div>
+                <strong class="ml-3 sugest-username">dccomics</strong>
+            </div>
+            <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+        </div>
+        <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+            <div class="d-flex flex-row align-items-center">
+                <div
+                    class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                    <img src="assets/images/profiles/profile-5.jpg" alt="..."
+                        style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                </div>
+                <strong class="ml-3 sugest-username">thecw</strong>
+            </div>
+            <button class="btn btn-primary btn-sm p-0 btn-ig">Follow</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Switch Accounts</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            <ul class="list-group">
+                <!-- Account 1 -->
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <img src="assets/images/profiles/profile-1.jpg" alt="User 1" class="rounded-circle user-image mr-3" width="40" height="40">
+                        <span class="username">User 1</span>
+                    </div>
+                    <span class="badge badge-dark"><i class="fas fa-check"></i></span>
+                </li>
+        
+                <!-- Account 2 -->
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <img src="assets/images/profiles/profile-1.jpg" alt="User 2" class="rounded-circle user-image mr-3" width="40" height="40">
+                        <span class="username">User 2</span>
+                    </div>
+                    <span class="badge badge-dark"><i class="fas fa-check"></i></span>
+                </li>
+        
+                <!-- Add more accounts as needed -->
+        
+            </ul>
+        </div>
+        
+  
+        <div class="modal-footer text-center">
+            <a data-bs-dismiss="modal" [routerLink]="'/login'" class="text-primary">Login into an existing account</a>
+        </div>
+        
+  
+      </div>
+    </div>
+  </div>
