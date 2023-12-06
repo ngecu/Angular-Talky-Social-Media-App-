@@ -14,6 +14,7 @@ import { LoginpageComponent } from './loginpage/loginpage.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { FormsModule } from '@angular/forms';
 import { ExplorepageComponent } from './explorepage/explorepage.component';
+import { MessagespageComponent } from './messagespage/messagespage.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ExplorepageComponent } from './explorepage/explorepage.component';
     StoryComponent,
     SidebarComponent,
     LoginpageComponent,
-    ExplorepageComponent
+    ExplorepageComponent,
+    MessagespageComponent
   ],
   imports: [
     BrowserModule,
