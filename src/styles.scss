@@ -1,3 +1,16 @@
+body {
+    scrollbar-width: thin; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+  
+  body::-webkit-scrollbar {
+    width: 0.5em; /* Adjust as needed */
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Adjust as needed */
+  }
+  
 .link-menu {
     color: black;
 }

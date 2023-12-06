@@ -23,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^15.1.2",
     "@types/bootstrap": "^5.2.10",
     "bootstrap": "^5.3.2",
+    "boxicons": "^2.1.4",
     "ng-emoji-picker": "^6.0.1",
     "ngx-dropzone": "^3.1.0",
     "ngx-webcam": "^0.4.1",

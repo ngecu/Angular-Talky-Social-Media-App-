@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ExplorepageComponent } from './explorepage/explorepage.component';
+import { ForgetpwdComponent } from './forgetpwd/forgetpwd.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { LivepageComponent } from './livepage/livepage.component';
 import { LoginpageComponent } from './loginpage/loginpage.component';
@@ -16,6 +17,8 @@ const routes: Routes = [
   {path:'live',component:LivepageComponent},
   {path:'devngecu',component:ProfilepageComponent},
   {path:'signup',component:SignuppageComponent},
+  {path:'forgotpwd',component:ForgetpwdComponent},
+
 
 
 
