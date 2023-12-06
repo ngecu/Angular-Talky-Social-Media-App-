@@ -15,6 +15,12 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { FormsModule } from '@angular/forms';
 import { ExplorepageComponent } from './explorepage/explorepage.component';
 import { MessagespageComponent } from './messagespage/messagespage.component';
+import {WebcamModule} from 'ngx-webcam';
+import { LivepageComponent } from './livepage/livepage.component';
+import { ProfilepageComponent } from './profilepage/profilepage.component';
+import { SignuppageComponent } from './signuppage/signuppage.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { ForgetpwdComponent } from './forgetpwd/forgetpwd.component';
 
 @NgModule({
   declarations: [
@@ -28,13 +34,19 @@ import { MessagespageComponent } from './messagespage/messagespage.component';
     SidebarComponent,
     LoginpageComponent,
     ExplorepageComponent,
-    MessagespageComponent
+    MessagespageComponent,
+    LivepageComponent,
+    ProfilepageComponent,
+    SignuppageComponent,
+    ForgetpwdComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     PickerModule,
-    FormsModule
+    FormsModule,
+    WebcamModule,
+    NgxDropzoneModule
   ],
   providers: [],
   bootstrap: [AppComponent]

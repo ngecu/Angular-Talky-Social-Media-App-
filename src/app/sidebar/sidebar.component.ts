@@ -16,13 +16,6 @@ export class SidebarComponent {
     return this.router.isActive(route, true);
   }
 
-  ngOnInit(){
-    console.log(Array.from(document.querySelectorAll('button[data-bs-toggle="popover"]')));
-
-    Array.from(document.querySelectorAll('button[data-bs-toggle="popover"]')).forEach(popoverNode => new Popover(popoverNode))
-
-    
-  }
 
   
 }

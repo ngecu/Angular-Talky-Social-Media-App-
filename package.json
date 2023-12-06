@@ -24,6 +24,8 @@
     "@types/bootstrap": "^5.2.10",
     "bootstrap": "^5.3.2",
     "ng-emoji-picker": "^6.0.1",
+    "ngx-dropzone": "^3.1.0",
+    "ngx-webcam": "^0.4.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
