@@ -1,0 +1,38 @@
+###
+PUT http://localhost:5000/user/13aa8b4d-2e2c-44fc-8419-1a3aec6271a3
+Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTNhYThiNGQtMmUyYy00NGZjLTg0MTktMWEzYWVjNjI3MWEzIiwiZnVsbF9uYW1lIjoiUm9iaW5zb24gTmdlY3UiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInBob25lX251bWJlciI6IjA3MDc1ODMwOTIiLCJyb2xlIjoxLCJ3ZWxjb21lZCI6MCwiYWN0aXZlIjoxLCJpYXQiOjE3MDAyNTAyNzR9.zM61Vo6bcmOJz50XCCYYF-Soo6kAX9KvrdeQrl2zr9c
+
+{
+"active":0
+}
+
+
+###
+POST http://localhost:5000/user/login
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "3W!W.:srzc4r^!P"
+}
+
+###
+GET http://localhost:5000/category/allCategories
+Content-Type: application/json
+
+
+
+
+###
+GET http://localhost:5000/category/getCategoriesWithTours
+Content-Type: application/json
+
+###
+GET http://localhost:5000/events/filter/sol
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "3W!W.:srzc4r^!P"
+}
