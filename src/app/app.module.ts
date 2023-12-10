@@ -21,6 +21,9 @@ import { ProfilepageComponent } from './profilepage/profilepage.component';
 import { SignuppageComponent } from './signuppage/signuppage.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ForgetpwdComponent } from './forgetpwd/forgetpwd.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,9 @@ import { ForgetpwdComponent } from './forgetpwd/forgetpwd.component';
     FormsModule,
     WebcamModule,
     NgxDropzoneModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [],
   bootstrap: [AppComponent]

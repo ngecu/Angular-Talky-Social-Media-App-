@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
+
 @Component({
   selector: 'app-loginpage',
   templateUrl: './loginpage.component.html',
@@ -12,11 +15,11 @@ export class LoginpageComponent {
   notFoundMessage:String=''
   isLoggined:boolean=false
 
-  constructor(private fb:FormBuilder,private route:Router){}
+  constructor(private router:Router,private fb:FormBuilder,private route:Router,private toastr: ToastrService){}
 
   //form group for validation
   loginForm=this.fb.group({
-    Email:['',[Validators.required,Validators.email]],
+    Email:['',[Validators.required]],
     Password:['',[Validators.required,Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z/d$@$!%*?&].{8,}')]],
   })
 
@@ -32,29 +35,19 @@ export class LoginpageComponent {
         localStorage.setItem('isLoggined',`${true}`)
         
         this.isLoggined=true
+        this.toastr.success('Form submitted successfully! Redirecting to login', 'Success');
+
         setTimeout(() => {
-          this.route.navigateByUrl(``)
+          this.router.navigate(['/'])
+
         },2000);
       }
       else{
-        this.notFoundMessage="Can't login incorrect Email or Password"
-        setTimeout(() => {
-          this.loginForm.reset()
-          this.notFoundMessage=''
-          
-        }, 2000);
+        this.toastr.error('Incorrect Details', 'Error');
       }
 
     }else{
-      this.notFoundMessage='Invalid Details'
-      setTimeout(() => {
-        this.loginForm.reset()
-        this.notFoundMessage=''
-        
-      }, 2000);
-       
-
-      
+      this.toastr.error('Form is invalid. Please check the fields.', 'Error');       
       
     }
   }

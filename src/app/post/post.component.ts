@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import 'boxicons'
 import { Post } from '../interfaces/post';
+import { Router } from '@angular/router';
+import { User } from '../interfaces/user';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+
 
 @Component({
   selector: 'app-post',
@@ -46,6 +51,19 @@ export class PostComponent {
         'https://www.hdcarwallpapers.com/walls/super_sports_cars-HD.jpg',
         'https://www.hdcarwallpapers.com/walls/super_sports_cars-HD.jpg'
       ],
+      likes: 365354,
+      description: 'Lil drone shot I got a while back but never posted.',
+      comments: ['Comment 1', 'Comment 2'],
+      isLiked: false,
+      isBookmarked: false
+    },
+
+    {
+      username: 'samkolder',
+      profileImage: 'assets/images/profiles/profile-1.jpg',
+      timeAgo: '3 days',
+      images: [
+        'https://www.hdcarwallpapers.com/walls/super_sports_cars-HD.jpg',      ],
       likes: 365354,
       description: 'Lil drone shot I got a while back but never posted.',
       comments: ['Comment 1', 'Comment 2'],
@@ -113,5 +131,33 @@ export class PostComponent {
 
     // ... Add more discussion entries as needed
   ];
+
+  constructor(private router: Router) {
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+    ).subscribe(() => {
+      this.searchUsers();
+    });
+  }
+
+
+  searchQuery: string = '';
+  searchResults: User[] = [];
+  users: User[] = [
+    { username: 'instagram', isFollowing: false, profileImage: 'assets/images/profiles/profile-3.jpg' },
+    { username: 'dccomics', isFollowing: false, profileImage: 'assets/images/profiles/profile-4.png' },
+    { username: 'thecw', isFollowing: false, profileImage: 'assets/images/profiles/profile-5.jpg' }
+  ];
+
+  private searchSubject = new Subject<string>();
+
+
+
+  searchUsers(): void {
+    this.searchResults = this.users.filter(user =>
+      user.username.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
 
 }

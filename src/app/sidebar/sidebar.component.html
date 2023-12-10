@@ -49,14 +49,14 @@
 <li class="nav-item">
     <a data-toggle="collapse" class="nav-link d-flex align-items-center text-dark" data-bs-toggle="collapse" data-bs-target="#demo" aria-expanded="false">
         <i class="fa-solid fa-plus"></i>
-        <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Create</span>
+        <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Add</span>
     </a>
     <div id="demo" class="collapse">
         <ul class="list-group">
             <li class="list-group-item">
                 <a routerLink="/live"  class="nav-link d-flex align-items-center text-dark">
                     <i class="fa-regular fa-message"></i>
-                    <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Live</span>
+                    <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Status</span>
 
                 </a>
             </li>
@@ -86,23 +86,12 @@
 
        
         <li class="nav-item">
-            <a  routerLinkActive="active" class="nav-link d-flex align-items-center text-dark">
-                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
-                <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">More</span>
+            <a  routerLinkActive="active" class="nav-link d-flex align-items-center text-light bg-danger">
+                <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Logout</span>
             </a>
         </li>
 
-        <li>
-            <div class="theme-switcher">
-                <label class="swtich">
-                  <input
-                    type="checkbox"
-                    [checked]="isLightTheme"
-                    (change)="onThemeSwitchChange()"
-                  />
-                </label>
-              </div>
-        </li>
+    
 
         
 
