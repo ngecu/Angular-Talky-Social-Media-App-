@@ -12,7 +12,7 @@ import { StoryComponent } from './story/story.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { LoginpageComponent } from './loginpage/loginpage.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExplorepageComponent } from './explorepage/explorepage.component';
 import { MessagespageComponent } from './messagespage/messagespage.component';
 import {WebcamModule} from 'ngx-webcam';
@@ -46,7 +46,8 @@ import { ForgetpwdComponent } from './forgetpwd/forgetpwd.component';
     PickerModule,
     FormsModule,
     WebcamModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
