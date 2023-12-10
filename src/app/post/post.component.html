@@ -1,0 +1,307 @@
+<div class="mx-4">
+    
+    <div *ngFor="let post of posts" class="d-flex flex-column mt-4 mb-4">
+    
+        <div class="card">
+            <div class="card-header p-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div
+                        class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
+                        <img src="assets/images/profiles/profile-1.jpg" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                    <span class="font-weight-bold px-2">samkolder</span>
+<span class="text-muted"> &middot; </span>
+<span class="text-muted">3 days</span>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="embed-responsive embed-responsive-1by1">
+                    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+    
+                        <!-- Indicators/dots -->
+                        <div class="carousel-indicators">
+                          <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                          <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                          <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                        </div>
+                      
+                        <!-- The slideshow/carousel -->
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img src="https://www.hdcarwallpapers.com/walls/super_sports_cars-HD.jpg" alt="Los Angeles" class="d-block w-100">
+                          </div>
+                          <div class="carousel-item">
+                            <img src="https://www.hdcarwallpapers.com/walls/super_sports_cars-HD.jpg" alt="Chicago" class="d-block w-100">
+                          </div>
+                          <div class="carousel-item">
+                            <img src="https://www.hdcarwallpapers.com/walls/super_sports_cars-HD.jpg" alt="New York" class="d-block w-100">
+                          </div>
+                        </div>
+                      
+                        <!-- Left and right controls/icons -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                          <span class="carousel-control-next-icon"></span>
+                        </button>
+                      </div>
+                </div>
+    
+                <div class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">
+                    <ul class="list-inline d-flex flex-row align-items-center m-0">
+                        <li class="list-inline-item">
+                            <button class="btn p-0" (click)="toggleLike(post)">
+                              <i class="fa-regular fa-heart"></i>
+                            </button>
+                        </li>
+                        <li class="list-inline-item ml-2">
+                            <button class="btn p-0" data-bs-toggle="modal" data-bs-target="#comments">
+                              <i class="fa-regular fa-comment"></i>
+                            </button>
+                        </li>
+                        <li class="list-inline-item ml-2">
+                            <button class="btn p-0" data-bs-toggle="modal" data-bs-target="#share">
+                              <i class="fa-regular fa-paper-plane"></i>
+                            
+                            </button>
+                        </li>
+                    </ul>
+                    <div>
+                        <button class="btn p-0 m-2" (click)="toggleBookmark(post)">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z"/></svg>
+                        </button>
+                    </div>
+                </div>
+    
+                <div class="pl-3 pr-3 pb-2">
+                   <small> <strong class="d-block">{{ post.likes }} likes</strong></small>
+                  
+                    <small class="d-block mb-1">{{ post.description }}</small>
+              
+                        <span class="text-muted" data-bs-toggle="modal" data-bs-target="#comments">View all 2,247 comments</span>
+                   
+    
+                   
+    
+                  
+                </div>
+    
+                <div class="position-relative comment-box">
+                    <form>
+                        <input class="w-100 border-0 p-3 input-post" placeholder="Add a comment..." 
+                        type="text"
+                        name="textarea"
+                        [(ngModel)]="textArea">
+                        <button class="btn btn-primary position-absolute btn-ig">Post</button>
+                    </form>
+                </div>
+    
+    
+            </div>
+        </div>
+    
+    </div>
+
+  
+  
+</div>
+
+
+<div class="modal fade" id="comments">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+  
+        <div class="modal-body d-flex">
+            <!-- Image on the left -->
+            <div class="w-50">
+              <img src="https://www.hdcarwallpapers.com/walls/super_sports_cars-HD.jpg" alt="User Image" class="img-fluid w-100 h-100">
+            </div>
+          
+            <!-- Comments on the right -->
+            <div class="w-50 position-relative">
+                <!-- Header with round profile picture and username -->
+                <div class="d-flex align-items-center  p-3  w-100">
+                  <img src="assets/images/profiles/profile-1.jpg" alt="Profile Image" class="rounded-circle mr-2" width="65"
+                  height="65">
+                  <span class="font-weight-bold px-2">samkolder</span>
+                  <button class="btn btn-sm p-0 btn-ig">Follow</button>
+                </div>
+              
+                <!-- Content container for comments and other elements -->
+                <div class="ml-auto">
+                  <!-- List of comments (scrollable) -->
+                  <div class="comments-container overflow-auto" style="max-height: 400px;">
+                    <div>
+                      <section class="gradient-custom">
+                       
+                          <div class="row d-flex justify-content-center">
+                            <div class="col-12">
+                              <div class="card">
+                                <div class="card-body p-4">
+                                  
+                      
+                                  <div class="row" *ngFor="let entry of discussionData">
+                                    <!-- Entry -->
+                                    <div class="col">
+                                      <div class="d-flex flex-start">
+                                        <img class="rounded-circle shadow-1-strong me-3" [src]="entry.avatar" alt="avatar" width="65" height="65" />
+                                        <div class="flex-grow-1 flex-shrink-1">
+                                          <div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                              <p class="mb-1">
+                                                {{ entry.author }} <span class="small">- {{ entry.time }}</span>
+                                              </p>
+
+                                             <a *ngIf="entry.replies.length <= 2" style="cursor: pointer;text-decoration: none;"  class="text-primary"   (click)="populateTextArea(entry.author)">
+                                                <i class="fas fa-reply fa-xs"></i><span class="small"> reply</span>
+                                              </a>
+                                              </div>
+  
+                                              <p class="small mb-0">
+                                              {{ entry.content }}
+                                            </p>
+                                          </div>
+                          
+                                          <!-- Replies -->
+                                          <div class="d-flex flex-start mt-4" *ngFor="let reply of entry.replies">
+                                            <a class="me-3" href="#">
+                                              <img class="rounded-circle shadow-1-strong" [src]="reply.avatar" alt="avatar" width="65" height="65" />
+                                            </a>
+                                            <div class="flex-grow-1 flex-shrink-1">
+                                              <div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                  <p class="mb-1">
+                                                    {{ reply.author }} <span class="small">- {{ reply.time }}</span>
+                                                  </p>
+                                                </div>
+                                                <p class="small mb-0">
+                                                 @{{ entry.author }} {{ reply.content }}
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <!-- End Replies -->
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <hr/>
+                                    <!-- End Entry -->
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                       
+                      </section>
+
+                     
+                          
+                     
+                      </div>
+                  </div>
+              
+                             
+                  <!-- Number of likes -->
+                
+              
+                  <!-- Input with emoji button selector -->
+                  <div class="input-group mt-3">
+                    <input 
+                    
+                    type="text"
+                    class="form-control"
+                    name="textarea"
+                    [(ngModel)]="textArea"
+                    placeholder="Add a comment..."
+                    >
+                    <div class="input-group-append">
+                      <button data-toggle="collapse" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#emoji" aria-expanded="false"  type="button">😀</button>
+                    </div>
+                  </div>
+                  <div id="emoji" class="collapse">
+                    <div class="row">
+                      <div class="col-12">
+                        <emoji-mart
+                        class="emoji-mart w-100"
+                        
+                        (emojiSelect)="addEmoji($event)"
+                        title="Choose your emoji"
+                      ></emoji-mart>
+                      </div>
+                    </div>
+                   
+                </div>
+                </div>
+              </div>
+              
+          </div>
+          
+        
+  
+       
+        
+  
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="share">
+    <div class="modal-dialog">
+        <div class="modal-content">
+    
+          <!-- Modal Header -->
+          <div class="modal-header text-center">
+            <h4 class="modal-title">Share</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+    
+          <!-- Modal body -->
+          <div class="modal-body" style="padding: 0;">
+            <!-- "To:" label and input -->
+            <div class="form-group d-flex align-items-center">
+                <label for="recipientInput" class="mr-2">To:</label>
+                <input type="text" class="form-control border-0" id="recipientInput" placeholder="Type a name...">
+              </div>
+          
+            <!-- List of users with profile pics, names, and usernames -->
+            <ul class="list-group mt-4">
+              <!-- User 1 -->
+              <li class="list-group-item">
+                <div class="d-flex align-items-center">
+                  <!-- Profile image -->
+                  <img src="assets/images/profiles/profile-1.jpg" alt="User 1 Profile" class="rounded-circle mr-2" style="max-width: 40px;">
+          
+                  <!-- Name and username -->
+                  <div class="px-2">
+                    <h6 class="mb-0 font-weight-bold">User 1 Name</h6>
+                    <p class="mb-0">@user1</p>
+                  </div>
+                </div>
+              </li>
+          
+              <!-- User 2 -->
+              <li class="list-group-item">
+                <div class="d-flex align-items-center">
+                  <!-- Profile image -->
+                  <img src="assets/images/profiles/profile-1.jpg" alt="User 2 Profile" class="rounded-circle mr-2" style="max-width: 40px;">
+          
+                  <!-- Name and username -->
+                  <div class="px-2">
+                    <h6 class="mb-0 font-weight-bold">User 2 Name</h6>
+                    <p class="mb-0">@user2</p>
+                  </div>
+                </div>
+              </li>
+          
+              <!-- Add more users as needed -->
+            </ul>
+          </div>
+          
+    
+        
+    
+        </div>
+      </div>
+  </div>

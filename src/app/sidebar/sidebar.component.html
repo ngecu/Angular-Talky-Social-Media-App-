@@ -1,0 +1,199 @@
+<nav id="sidebar" class="d-md-block  sidebar" style="overflow: hidden;">
+    <div class="text-center">
+        <img src="assets/images/logo.png" alt="Logo" class="img-fluid mt-3 mb-3 w-100" >
+    </div>
+
+    <ul class="nav flex-column">
+  
+
+ <!-- Home -->
+<li class="nav-item">
+    <a routerLink="/" routerLinkActive="active" class="nav-link d-flex align-items-center text-dark">
+        <i class="fa-solid fa-house"></i>
+        <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Home</span>
+    </a>
+</li>
+
+
+<li class="nav-item">
+    <a routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Search</span>
+    </a>
+  </li>
+
+<!-- Messages -->
+<li class="nav-item">
+    <a routerLink="/direct/inbox" routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" [ngClass]="{'font-weight-bold': isActive('/direct/inbox')}">
+        <div style="position: relative;">
+            <i class="fa-regular fa-message"></i>
+            <!-- Add a red background with a number counter -->
+            <span class="badge badge-danger" style="position: absolute; top: 0px; right: -10px; font-size: 0.9rem; padding: 4px 6px; border-radius: 50%;">
+               1
+            </span>
+        </div>
+        <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Messages</span>
+    </a>
+</li>
+
+
+<!-- Notifications -->
+<li class="nav-item">
+    <a routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" [ngClass]="{'font-weight-bold': isActive('/notifications')}">
+        <i class="fa-regular fa-heart"></i>
+        <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Notifications</span>
+    </a>
+</li>
+
+
+<li class="nav-item">
+    <a data-toggle="collapse" class="nav-link d-flex align-items-center text-dark" data-bs-toggle="collapse" data-bs-target="#demo" aria-expanded="false">
+        <i class="fa-solid fa-plus"></i>
+        <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Create</span>
+    </a>
+    <div id="demo" class="collapse">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a routerLink="/live"  class="nav-link d-flex align-items-center text-dark">
+                    <i class="fa-regular fa-message"></i>
+                    <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Live</span>
+
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" class="nav-link d-flex align-items-center text-dark">
+                    Post
+                </a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+
+
+      
+        <li class="nav-item">
+           
+            <a routerLink="/devngecu" routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" >
+                <i class="fa-solid fa-address-card"></i>
+
+                <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Profile</span>
+            </a>
+
+        </li>
+      
+
+
+       
+        <li class="nav-item">
+            <a  routerLinkActive="active" class="nav-link d-flex align-items-center text-dark">
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+                <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">More</span>
+            </a>
+        </li>
+
+        <li>
+            <div class="theme-switcher">
+                <label class="swtich">
+                  <input
+                    type="checkbox"
+                    [checked]="isLightTheme"
+                    (change)="onThemeSwitchChange()"
+                  />
+                </label>
+              </div>
+        </li>
+
+        
+
+
+       
+    </ul>
+</nav>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Notification Bar</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <!-- Today's Suggestions -->
+        <div>
+            <h6 class="text-muted mb-3">Today</h6>
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                        <img src="assets/images/profiles/profile-3.jpg" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                    <strong class="ml-3 sugest-username">instagram</strong>
+                </div>
+                <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+            </div>
+            <!-- Add more today's suggestions as needed -->
+        </div>
+
+        <!-- Last Week's Suggestions -->
+        <div class="mt-4">
+            <h6 class="text-muted mb-3">Last Week</h6>
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                        <img src="assets/images/profiles/profile-4.png" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                    <strong class="ml-3 sugest-username">dccomics</strong>
+                </div>
+                <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+            </div>
+            <!-- Add more last week's suggestions as needed -->
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" id="postModalLabel">Switch Accounts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <!-- Add your content here -->
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer text-center">
+                <a data-bs-dismiss="modal" [routerLink]="'/login'" class="text-primary">Login into an existing account</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- off-canvas-menu.component.html -->
+<div class="offcanvas offcanvas-start offcanvas-full" id="offcanvasLeft" tabindex="-1" aria-labelledby="offcanvasLeftLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasLeftLabel">Search Users</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <input type="text" class="form-control mb-3" [(ngModel)]="searchQuery" placeholder="Search users..." (input)="searchUsers()">      <!-- Display search results here -->
+      <div *ngIf="searchResults.length > 0" class="list-group mt-3">
+       <!-- off-canvas-menu.component.html -->
+<div *ngFor="let user of searchResults" class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+    <div class="d-flex flex-row align-items-center">
+      <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+        <img src="{{ user.profileImage }}" alt="..." style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+      </div>
+      <strong class="ml-3 sugest-username">{{ user.username }}</strong>
+    </div>
+  </div>
+  
+      </div>
+    </div>
+</div>
+
+  

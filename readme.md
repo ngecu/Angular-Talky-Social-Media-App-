@@ -1,0 +1,3 @@
+### THINGS I NEED TO WORK ON
+
+1. 
