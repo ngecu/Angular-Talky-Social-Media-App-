@@ -12,10 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPost = void 0;
+exports.createComment = exports.createPost = void 0;
 const validators_1 = require("../validators/validators");
 const uuid_1 = require("uuid");
 const dbhelpers_1 = __importDefault(require("../dbhelpers/dbhelpers"));
+const lodash_1 = require("lodash");
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(req.body);
@@ -59,3 +60,53 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.createPost = createPost;
+const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log(req.body);
+        let { created_by_user_id, post_id, comment, comment_replied_to_id, created_at } = req.body;
+        let comment_id = (0, uuid_1.v4)();
+        let result = yield dbhelpers_1.default.execute('createComment', {
+            comment_id,
+            created_by_user_id,
+            post_id,
+            comment,
+            comment_replied_to_id,
+            created_at,
+        });
+        if (result.rowsAffected[0] === 0) {
+            return res.status(404).json({
+                message: 'Something went wrong, Comment not created',
+            });
+        }
+        else {
+            if (comment.includes('@')) {
+                const username_tagged = comment.split('@')[1].split(' ')[0]; // Extract username after @
+                const userExists = (yield dbhelpers_1.default.query(`SELECT * FROM user WHERE username = '${username_tagged}'`)).recordset;
+                if (!(0, lodash_1.isEmpty)(userExists)) {
+                    const user_id = userExists[0].user_id;
+                    const post_user_tag_id = (0, uuid_1.v4)();
+                    let result = yield dbhelpers_1.default.execute('addToPostTaggedTable', {
+                        post_user_tag_id,
+                        post_id,
+                        user_id,
+                        created_at,
+                    });
+                    if (result.rowsAffected[0] === 0) {
+                        return res.status(404).json({
+                            message: 'Something went wrong, user not added to tags',
+                        });
+                    }
+                }
+            }
+            return res.status(200).json({
+                message: 'Comment created successfully',
+            });
+        }
+    }
+    catch (error) {
+        return res.json({
+            error: error,
+        });
+    }
+});
+exports.createComment = createComment;

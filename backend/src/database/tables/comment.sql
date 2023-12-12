@@ -14,6 +14,4 @@ CREATE TABLE comment (
      FOREIGN KEY (post_id) REFERENCES post(post_id),
 FOREIGN KEY (comment_replied_to_id) REFERENCES comment(comment_id)
 
-    --  self join
-
 );
