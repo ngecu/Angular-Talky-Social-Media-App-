@@ -1,0 +1,49 @@
+<div>
+    <div class=" d-flex justify-content-start">
+        <div class="scroll-container">
+        <ul class="list-unstyled mb-0">
+            <li class="list-inline-item" *ngFor="let user of users" style="cursor: pointer;">
+                <button class="btn p-0 m-0" data-bs-toggle="modal" [attr.data-bs-target]="'#user_' + user.id">
+                  <div class="d-flex flex-column align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger story-profile-photo">
+                      <img [src]="user.profileImage" alt="Profile" style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                    <small>{{ user.name }}</small>
+                  </div>
+                </button>
+              </li>
+              
+
+        </ul>
+        </div>
+    </div>
+</div>
+
+<div *ngFor="let user of users">
+    <div class="modal fade" [id]="'user_' + user.id">
+      <div class="modal-dialog">
+        <div class="modal-content">
+  
+          <!-- Modal Header -->
+          <div class="modal-header text-center">
+            <div class="d-flex flex-column align-items-center">
+                <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger story-profile-photo">
+                  <img [src]="user.profileImage" alt="Profile" style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                </div>
+                <small>{{ user.name }}</small>
+              </div>
+              
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+  
+          <!-- Modal body -->
+          <div class="modal-body p-2">
+            <!-- "To:" label and input -->
+            <img [src]="user.img" class="w-100" alt="{{ user.name }}">
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  

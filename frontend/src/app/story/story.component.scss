@@ -1,0 +1,19 @@
+.scroll-container {
+    overflow-x: scroll;
+    white-space: nowrap;
+    padding: 10px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+  }
+
+  .list-inline-item {
+    display: inline-block;
+    margin-right: 10px; 
+  }
+
+
+  .scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+  

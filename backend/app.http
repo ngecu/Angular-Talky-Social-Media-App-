@@ -1,0 +1,38 @@
+### REGISTER USER
+POST http://localhost:5000/user/register
+Content-Type: application/json
+
+{
+    "profile_image_link":"",
+    "name":"Robinson Ngecu",
+    "email": "devngecu@gmail.com",
+    "password": "3W!W.:srzc4r^!P",
+    "username":"devngecu",
+    "phone_no":"0707583092",
+    "created_at":"Now"
+}
+
+
+## LOGIN USER
+POST http://localhost:5000/user/login
+Content-Type: application/json
+
+{
+    "email": "devngecu@gmail.com",
+    "password": "3W!W.:srzc4r^!P"
+}
+
+
+## CREATE POST
+
+POST http://localhost:5000/post/
+Content-Type: application/json
+
+{
+    "postImage":"", 
+    "created_by_user_id":"",
+    "caption":"This is my first caption",
+    "postType":"status",
+    "created_at":"now"
+}
+

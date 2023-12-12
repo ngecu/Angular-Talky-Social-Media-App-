@@ -1,0 +1,50 @@
+<div class="d-flex flex-row align-items-center">
+    <div
+        class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sidenav-profile-photo">
+        <img src="assets/images/profiles/profile-6.jpg" alt="..."
+            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+    </div>
+    <div class="d-flex flex-row justify-content-between" style="width: 20vw" >
+        <div class="profile-info ml-3 ">
+            <span class="profile-info-username">Robin Ngecu</span>
+            <span class="profile-info-name text-muted">@devngecu</span>
+        </div>
+    
+        
+        <!-- <small data-bs-toggle="modal" data-bs-target="#myModal" class="font-weight-bold text-primary" style="cursor: pointer;">
+            Switch 
+        </small> -->
+        
+        
+        
+    </div>
+    
+
+    
+</div>
+
+<div class="mt-4">
+    <div class="d-flex flex-row justify-content-between">
+        <small class="text-muted font-weight-normal">Suggestions For You</small>
+        <small>See All</small>
+    </div>
+    <div>
+        <div *ngFor="let user of users" class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+          <div class="d-flex flex-row align-items-center">
+            <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+             
+              <img src="{{ user.profileImage }}" alt="..." style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+            </div>
+            <strong class="ml-3 sugest-username">{{ user.username }}</strong>
+          </div>
+          <button class="btn p-0 btn-ig" (click)="toggleFollow(user)" style="outline: none;">
+            <span [ngClass]="{'text-dark': user.isFollowing}">
+              {{ user.isFollowing ? 'Unfollow' : 'Follow' }}
+            </span>
+          </button>
+          
+          
+        </div>
+      </div>
+      
+</div>

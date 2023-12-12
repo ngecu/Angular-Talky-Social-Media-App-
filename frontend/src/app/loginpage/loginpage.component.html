@@ -1,0 +1,87 @@
+<div id="main-wrapper" class="d-flex align-items-center justify-content-center" style="height: 100vh;">
+ 
+                    <div class="row no-gutters">
+                        <div class="col-lg-4 card">
+                            <div class="p-5">
+                                <div class="mb-5 text-center">
+                                    <h2 class="font-weight-bold text-center">Talky</h2>
+                                    <p class="test-muted text-center">
+                                        Where Connections Speak Louder. Follow the Conversations, Unfollow the Noise.
+                                    </p>
+                                    <h3 class="h4 text-muted">Login Page</h3>
+                                </div>
+                               
+                                <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+
+                                      <div class="row">
+                                       
+                                        <div class="col-12">
+                                          <div class="form-group">
+                                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="FullName/Username/Email" formControlName="Email" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                  
+                                  
+                                  
+                                      <div class="row">
+                                        <div class="col-md-12">
+                                          <div class="form-group">
+                                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="*************" formControlName="Password" />
+                                          </div>
+                                        </div>
+
+                                        
+
+                                      </div>
+
+                                      
+                                    <button type="submit" class="btn btn-primary btn-block w-100">Login</button>
+                                </form>
+                            </div>
+                            <p class="text-center">Don't Have An Account? <a routerLink="/signup">Sign Up</a></p>
+                            <p class="text-center"><a routerLink="/forgotpwd">Forgot Your Details</a></p>
+
+                                <p class="text-center">Get the App</p>
+                            <div class="row px-5">
+                                <div class="col-6">
+                                    <img class="w-100" src="https://static.cdninstagram.com/rsrc.php/v3/yz/r/c5Rp7Ym-Klz.png" alt="">
+                                </div>
+                                <div class="col-6">
+                                    <img class="w-100" src="https://static.cdninstagram.com/rsrc.php/v3/yu/r/EHY6QnZYdNX.png" alt="">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8 d-none d-lg-inline-block" style="position: relative;top: -140px;">
+                            <div class="pic-1" id="picture-1">
+                                <img src="https://images.wsj.net/im-634289?width=1280&size=1" alt="">
+                                </div>
+                                <div class="pic-2">
+                                   <img src="https://www.s-models.com/wp-content/uploads/2019/02/lea_smodels5.jpg" alt="">
+
+                                </div>
+                                <div class="pic-3">
+                                    <img src="https://nnmedia.nation.africa/uploads/2023/06/Ajib-Gathoni.jpg" alt="">
+
+                                </div>
+                              
+                                <div class="pic-5">
+                                 <img src="https://baseradio.co.ke/wp-content/uploads/2023/07/318090788_923450608621069_239892813060857745_n-e1689235198988.jpg" alt="">
+                                </div>
+                                <div class="pic-6">
+                                    <img src="https://i0.wp.com/www.k24tv.co.ke/wp-content/uploads/2021/05/WhatsApp-Image-2021-05-26-at-3.51.17-PM.jpeg" alt="">
+
+                                </div>
+                                <div class="pic-7">
+                                    <img src="https://lh3.googleusercontent.com/FqpJJSWxMbj6LU5kV0TehVCSElKO7kGA69tJN9WJ0rygWkIMHYKyYg3vCTadHgk1cMqPhDSD1CaKfyP5prv35Rd2240=s715" alt="">
+
+                                </div>
+            
+                        </div>
+                    </div>
+                
+    <!-- Row -->
+</div>

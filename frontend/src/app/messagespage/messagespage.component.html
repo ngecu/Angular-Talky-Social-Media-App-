@@ -1,0 +1,241 @@
+
+
+<!-- <app-navbar></app-navbar> -->
+
+<nav class="navbar navbar-expand-lg" id="top-mobile-nav">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">TALKY</a>
+<div class="d-flex">
+  <div class="mx-2">
+    <a routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+      <div style="position: relative;">
+      <i class="fa-regular fa-heart"></i>
+      </div>
+  </a>
+  </div>
+  <div class="mx-2">
+    <a routerLink="/direct/inbox" routerLinkActive="active" class="nav-link d-flex align-items-center text-dark">
+      <div style="position: relative;">
+          <i class="fa-regular fa-message"></i>
+          <!-- Add a red background with a number counter -->
+          <span class="badge badge-danger" style="position: absolute; top: 0px; right: -10px; font-size: 0.9rem; padding: 4px 6px; border-radius: 50%;">
+             1
+          </span>
+      </div>
+  </a> 
+  </div>
+ 
+
+  
+</div>
+ 
+  </div>
+  
+</nav>
+
+<div class="container">
+  <nav class="navbar navbar-expand-lg fixed-bottom" id="bottom-mobile-nav" style="background-color: white;">
+
+    <div class="d-flex w-100">
+      <a class="navbar-brand flex-fill d-flex align-items-center justify-content-center" routerLink="/profile/devngecu"> <i class="fa-solid fa-house"></i></a>
+
+      <a class="navbar-brand flex-fill d-flex align-items-center justify-content-center" routerLinkActive="active" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </a>
+
+      <a class="navbar-brand flex-fill d-flex align-items-center justify-content-center" data-toggle="collapse" data-bs-toggle="collapse" data-bs-target="#demo" aria-expanded="false">
+        <i class="fa-solid fa-plus"></i>
+      </a>
+
+      <a class="navbar-brand flex-fill d-flex align-items-center justify-content-center" routerLink="/profile/devngecu" routerLinkActive="active">
+        <i class="fa-solid fa-address-card"></i>
+      </a>
+    </div>
+
+  </nav>
+</div>
+
+<div class="container-fluid">
+   <div class="row">
+
+ <!-- <div class="container d-flex justify-content-center"> -->
+  <app-sidebar  class="col-2 d-md-block sidebar" style="border-right: solid 1px #DBDBDB;"></app-sidebar>
+
+  <div *ngIf="showSpinners">
+    <div class="container d-flex justify-content-center">
+      <span class="loader"></span>
+   </div>
+ </div>
+
+ <div *ngIf="!showSpinners" class="col-md-10 col-sm-12">
+     <main class="w-100">
+    
+    <div class=" d-flex justify-content-start">
+      <div class="scroll-container">
+      <ul class="list-unstyled mb-0">
+          <li *ngFor="let user of userList" class="list-inline-item" style="cursor: pointer;">
+              <button class="btn p-0 m-0 " style="cursor: pointer;"  (click)="selectUserHandler(user.phone)">
+                  <div class="d-flex flex-column align-items-center">
+                      <div
+                          class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger story-profile-photo">
+                          <img src="assets/images/profiles/profile-1.jpg" alt="..."
+                              style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                      </div>
+                      <small>{{user.name}}</small>
+                  </div>
+              </button>
+          </li>
+
+      </ul>
+      </div>
+  </div>
+
+        <div class="row">
+            <!-- <div class="col-3 " id="desktop-view">
+
+                <div class="list-group">
+                    <div  *ngFor="let user of userList" class="list-group-item" style="cursor: pointer;"  (click)="selectUserHandler(user.phone)">
+                      <div class="d-flex flex-row align-items-center">
+                        <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
+                          <img src="assets/images/profiles/profile-1.jpg" alt="..." style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                        </div>
+                        <span class="font-weight-bold px-2">{{user.name}}</span>
+                        <span class="text-muted"> &middot; </span>
+                        <span class="text-muted">3 days</span>
+                      </div>
+                    </div>
+
+                   
+              
+            </div>
+            </div> -->
+
+            <div class="col-12 ">
+                <div class="card">
+                    <div class="card-header">Chat</div>
+                    <div class="card-body height3">
+                      <div class="chat-container">
+                        <!-- <ng-container *ngIf="selectedUser">
+                          <div class="chat-header">
+                
+                            <img [src]="selectedUser?.image"
+                                 [alt]="selectedUser?.name"
+                                 class="avatar"
+                            />
+                            <p class="username">{{selectedUser?.name}}</p>
+                
+                          </div>
+                
+                          <div class="chat-body">
+                            <div *ngFor="let item of messageArray"
+                                 
+                            >
+                              <p class="message-container">{{item?.message}}</p>
+                            </div>
+                          </div>
+                
+                          <div class="chat-footer">
+                
+                            <div class="row">
+                              <div class="col-md-10">
+                                <div class="form-group mb-0">
+                                  <input type="text"
+                                         placeholder="Type a message"
+                                         class="form-control"
+                                         [(ngModel)]="messageText"
+                                         (keyup)="$event.keyCode === 13 && sendMessage()"
+                                  />
+                                </div>
+                              </div>
+                
+                              <div class="col-md-2 text-center align-self-center">
+                                <button class="btn btn-primary btn-sm px-3"
+                                        (click)="sendMessage()">Send
+                                </button>
+                              </div>
+                            </div>
+                
+                          </div>
+                        </ng-container> -->
+                      </div>
+                
+                   
+
+                      <ng-container *ngIf="selectedUser; else noSelectedUser">
+                        <ul class="chat-list">
+                            <li class="in">
+                                <div class="chat-img">
+                                  <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
+                                    <img src="assets/images/profiles/profile-1.jpg" alt="..." style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                                  </div>
+                                </div>
+                                <div class="chat-body">
+                                    <div class="chat-message">
+                                        <h5>{{selectedUser?.name}}</h5>
+                                        <p>Raw denim heard of them tofu master cleanse</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="out">
+                                <div class="chat-img">
+                                    <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar6.png">
+                                </div>
+                                <div class="chat-body">
+                                    <div class="chat-message">
+                                        <h5>Me</h5>
+                                        <p>Next level veard</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="in">
+                                <div class="chat-img">
+                                  <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
+                                    <img src="assets/images/profiles/profile-1.jpg" alt="..." style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                                  </div>                                </div>
+                                <div class="chat-body">
+                                    <div class="chat-message">
+                                        <h5 class="name">{{selectedUser?.name}}</h5>
+                                        <p>Will stumptown scenes coffee viral.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="out">
+                                <div class="chat-img">
+                                    <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar6.png">
+                                </div>
+                                <div class="chat-body">
+                                    <div class="chat-message">
+                                        <h5>Me</h5>
+                                        <p>Tofu master best deal</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <input type="text"
+                        placeholder="Type a message"
+                        class="form-control"
+                        [(ngModel)]="messageText"
+                        (keyup)="$event.keyCode === 13 && sendMessage()"
+                 />
+                 </ng-container>
+
+                 <ng-template #noSelectedUser>
+                  <!-- Show default image when no user is selected -->
+                  <img
+                    src="https://i.ytimg.com/vi/erLregZBobI/maxresdefault.jpg"
+                    alt="Default Image"
+                    class="default-image w-100"
+                  />
+                </ng-template>
+
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+ 
+   
+   </main>
+ </div>
+</div>
+</div>

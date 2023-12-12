@@ -1,0 +1,308 @@
+<nav id="sidebar" class="d-md-block  sidebar" style="overflow: hidden;">
+    <div class="text-center">
+        <img src="assets/images/logo.png" alt="Logo" class="img-fluid mt-3 mb-3 w-100" >
+    </div>
+
+    <ul class="nav flex-column">
+  
+
+ <!-- Home -->
+<li class="nav-item">
+    <a routerLink="/" routerLinkActive="active" class="nav-link d-flex align-items-center text-dark">
+        <i class="fa-solid fa-house"></i>
+        <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Home</span>
+    </a>
+</li>
+
+
+<li class="nav-item">
+    <a routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Search</span>
+    </a>
+  </li>
+
+<!-- Messages -->
+<li class="nav-item">
+    <a routerLink="/direct/inbox" routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" [ngClass]="{'font-weight-bold': isActive('/direct/inbox')}">
+        <div style="position: relative;">
+            <i class="fa-regular fa-message"></i>
+            <!-- Add a red background with a number counter -->
+            <span class="badge badge-danger" style="position: absolute; top: 0px; right: -10px; font-size: 0.9rem; padding: 4px 6px; border-radius: 50%;">
+               1
+            </span>
+        </div>
+        <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Messages</span>
+    </a>
+</li>
+
+
+<!-- Notifications -->
+<li class="nav-item">
+    <a routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" [ngClass]="{'font-weight-bold': isActive('/notifications')}">
+        <i class="fa-regular fa-heart"></i>
+        <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Notifications</span>
+    </a>
+</li>
+
+
+<li class="nav-item">
+    <a  class="nav-link d-flex align-items-center text-dark" data-bs-toggle="modal" data-bs-target="#add_post">
+        <i class="fa-solid fa-plus"></i>
+        <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Add</span>
+    </a>
+    <div id="demo" class="collapse">
+        <ul class="list-group">
+          
+            <li class="list-group-item">
+                <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight" class="nav-link d-flex align-items-center text-dark">
+                    Post
+                </a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+
+
+      
+        <li class="nav-item">
+           
+            <a routerLink="/profile/devngecu" routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" >
+                <i class="fa-solid fa-address-card"></i>
+
+                <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Profile</span>
+            </a>
+
+        </li>
+      
+
+
+       
+        <li class="nav-item">
+            <a (click)="Logout()"   routerLinkActive="active" class="nav-link d-flex align-items-center text-danger">
+                <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Logout</span>
+            </a>
+        </li>
+
+    
+
+        
+
+
+       
+    </ul>
+</nav>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Notifications</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <!-- Today's Suggestions -->
+        <div>
+            <h6 class="text-muted mb-3">Today</h6>
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                        <img src="assets/images/profiles/profile-3.jpg" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                   <span> <strong class="ml-3 sugest-username">instagram</strong> who you might know </span>
+                </div>
+                <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+            </div>
+            <!-- Add more today's suggestions as needed -->
+        </div>
+
+        <!-- Last Week's Suggestions -->
+        <div class="mt-4">
+            <h6 class="text-muted mb-3">Yesterday</h6>
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                        <img src="assets/images/profiles/profile-4.png" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                   <span> <strong class="ml-3 sugest-username">dccomics</strong> liked your post </span>
+                </div>
+                <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+            </div>
+            <!-- Add more last week's suggestions as needed -->
+        </div>
+
+        <div class="mt-4">
+            <h6 class="text-muted mb-3">Last Week </h6>
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                        <img src="assets/images/profiles/profile-4.png" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                   <span> <strong class="ml-3 sugest-username">dccomics</strong> liked your post </span>
+                </div>
+                <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                        <img src="assets/images/profiles/profile-4.png" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                   <span> <strong class="ml-3 sugest-username">dccomics</strong> liked your post </span>
+                </div>
+                <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                        <img src="assets/images/profiles/profile-4.png" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                   <span> <strong class="ml-3 sugest-username">dccomics</strong> liked your post </span>
+                </div>
+                <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                        <img src="assets/images/profiles/profile-4.png" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                   <span> <strong class="ml-3 sugest-username">dccomics</strong> liked your post </span>
+                </div>
+                <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                        <img src="assets/images/profiles/profile-4.png" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                   <span> <strong class="ml-3 sugest-username">dccomics</strong> liked your post </span>
+                </div>
+                <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                        <img src="assets/images/profiles/profile-4.png" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                   <span> <strong class="ml-3 sugest-username">dccomics</strong> liked your post </span>
+                </div>
+                <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                        <img src="assets/images/profiles/profile-4.png" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                   <span> <strong class="ml-3 sugest-username">dccomics</strong> liked your post </span>
+                </div>
+                <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                        <img src="assets/images/profiles/profile-4.png" alt="..."
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                   <span> <strong class="ml-3 sugest-username">dccomics</strong> started following you </span>
+                </div>
+                <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
+            </div>
+            <!-- Add more last week's suggestions as needed -->
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal " id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Add Post</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+           <form action="">
+            <div class="row">
+                     
+                <div class="col-12">
+                  <div class="form-group">
+                    <ngx-dropzone (change)="onSelect($event)">
+                      <ngx-dropzone-label>Drop Profile Image</ngx-dropzone-label>
+                      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                          <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                      </ngx-dropzone-preview>
+                  </ngx-dropzone>   
+                  <div class="row">
+                  </div>
+            </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                      
+                   
+                    </div>
+                  </div>
+
+              </div>
+           </form>
+        </div>
+        
+  
+        
+  
+      </div>
+    </div>
+  </div>
+
+
+<!-- off-canvas-menu.component.html -->
+<div class="offcanvas offcanvas-start offcanvas-full" id="offcanvasLeft" tabindex="-1" aria-labelledby="offcanvasLeftLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasLeftLabel">Search Users</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <input type="text" class="form-control mb-3" [(ngModel)]="searchQuery" placeholder="Search users..." (input)="searchUsers()">      <!-- Display search results here -->
+        <div *ngIf="searchResults.length > 0" class="list-group mt-3">
+            <!-- Display search results -->
+            <div *ngFor="let user of searchResults" class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+              <a routerLink="/profile/{{user.username}}" class="d-flex flex-row align-items-center">
+                <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+                  <img src="{{ user.profileImage }}" alt="..." style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                </div>
+                <strong class="ml-3 sugest-username">{{ user.username }}</strong>
+            </a>
+            </div>
+          </div>
+          
+          <!-- Show a message when there are no search results -->
+          <div *ngIf="searchResults.length === 0" class="mt-3">
+            <p>No results found.</p>
+          </div>
+          
+    </div>
+</div>
+
+  
