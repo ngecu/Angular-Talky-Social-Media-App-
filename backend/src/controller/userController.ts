@@ -157,3 +157,21 @@ export const toggleFollowUser =  async(req:Request, res: Response) =>{
         })
     }
 }
+
+export const getAllUsers = async(req:Request, res:Response)=>{
+    try {
+
+        const pool = await mssql.connect(sqlConfig)
+
+        let users = (await pool.request().execute('fetchAllUsers')).recordset
+
+        return res.status(200).json({
+            users: users
+        })
+        
+    } catch (error) {
+        return res.json({
+            error: error
+        })
+    }
+}

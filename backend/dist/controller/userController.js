@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.toggleFollowUser = exports.loginUser = exports.registerUser = void 0;
+exports.getAllUsers = exports.toggleFollowUser = exports.loginUser = exports.registerUser = void 0;
 const validators_1 = require("../validators/validators");
 const mssql_1 = __importDefault(require("mssql"));
 const uuid_1 = require("uuid");
@@ -150,3 +150,18 @@ const toggleFollowUser = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.toggleFollowUser = toggleFollowUser;
+const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);
+        let users = (yield pool.request().execute('fetchAllUsers')).recordset;
+        return res.status(200).json({
+            users: users
+        });
+    }
+    catch (error) {
+        return res.json({
+            error: error
+        });
+    }
+});
+exports.getAllUsers = getAllUsers;

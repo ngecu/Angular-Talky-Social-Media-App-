@@ -13,5 +13,5 @@ CREATE TABLE user (
     welcomed INT Default 0,
     active INT Default 1,
     created_at VARCHAR(20) NOT NULL,
-    resetPassword BIT
+    -- resetPassword BIT
 );
