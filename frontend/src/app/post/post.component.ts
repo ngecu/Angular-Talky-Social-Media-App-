@@ -6,6 +6,7 @@ import { User } from '../interfaces/user';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable, Subject, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { PostService } from '../services/post.service';
 
 
 @Component({
@@ -15,7 +16,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PostComponent {
   public openPopup: Function | undefined;
-
   textArea: string = '';
   textArea2: string = '';
 
@@ -23,8 +23,8 @@ export class PostComponent {
 
   // Other component methods and properties...
 
-  populateTextArea(author: string) {
-    this.textArea = `@${author} `;
+  replyToComment(entry:any) {
+    this.textArea = `@${entry.author} `;
     this.textAreaVisible = true;
   }
 
@@ -39,8 +39,21 @@ export class PostComponent {
   }
 
   postComment(post: Post){
-    post.comments.length = post.comments.length + 1
-    this.toastr.success('Comment Added', 'Success');
+    console.log(this.textArea2);
+    const comment_body = {
+      created_by_user_id:"Robin",
+      post_id:post.id,
+      comment : this.textArea2,
+      comment_replied_to_id:"",
+      created_at:new Date().toISOString()
+    }
+    this.postService.createComment(comment_body).subscribe(
+      (response) => {
+        post.comments.length = post.comments.length + 1
+        this.toastr.success("response", 'Success');
+      }
+    )
+
 
   }
 
@@ -58,7 +71,7 @@ export class PostComponent {
 
   posts: Post[] = [
     {
-     id:1,
+     id:"1",
       username: 'Jonathan Mwaniki',
 
       verified:true,
@@ -77,7 +90,7 @@ export class PostComponent {
     },
 
     {
-      id:2,
+      id:"2",
       username: 'Dev Ngecu',
       verified:false,
       profileImage: 'assets/images/profiles/profile-1.jpg',
@@ -92,7 +105,7 @@ export class PostComponent {
     },
 
     {
-      id:3,
+      id:"3",
       username: 'Marioo',
       verified:true,
       profileImage: 'assets/images/profiles/profile-1.jpg',
@@ -108,7 +121,7 @@ export class PostComponent {
     },
 
     {
-      id:4,
+      id:"4",
       username: 'Marioo',
       verified:true,
       profileImage: 'assets/images/profiles/profile-1.jpg',
@@ -144,26 +157,7 @@ export class PostComponent {
   }
 
   discussionData = [
-    {
-      avatar: 'https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp',
-      author: 'Maria Smantha',
-      time: '2 hours ago',
-      content: 'It is a long established fact that a reader will be distracted by the readable content of a page.',
-      replies: [
-        {
-          avatar: 'https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp',
-          author: 'Simona Disa',
-          time: '3 hours ago',
-          content: "letters, as opposed to using 'Content here, content here', making it look like readable English."
-        },
-        {
-          avatar: 'https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp',
-          author: 'John Smith',
-          time: '4 hours ago',
-          content: 'the majority have suffered alteration in some form, by injected humour, or randomised words.'
-        }
-      ]
-    },
+
 
     {
       avatar: 'https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp',
@@ -195,13 +189,14 @@ export class PostComponent {
     this.discussionData.splice(entry);
   }
 
-  constructor(private router: Router,private toastr: ToastrService) {
+  constructor(private router: Router,private toastr: ToastrService,private postService:PostService) {
     this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged(),
     ).subscribe(() => {
       this.searchUsers();
     });
+    
   }
 
 

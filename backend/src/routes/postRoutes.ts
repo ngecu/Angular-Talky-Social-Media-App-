@@ -1,10 +1,14 @@
 import { Router } from "express";
-import { createPost } from "../controller/postController";
+import { createComment, createPost, followingPosts } from "../controller/postController";
 
 
 const post_router = Router()
 
 post_router.post('/', createPost)
+post_router.post('/comment', createComment)
+post_router.get('/:following_user_id', followingPosts)
+
+
 
 
 

@@ -12,11 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createComment = exports.createPost = void 0;
+exports.createComment = exports.followingPosts = exports.createPost = void 0;
 const validators_1 = require("../validators/validators");
 const uuid_1 = require("uuid");
 const dbhelpers_1 = __importDefault(require("../dbhelpers/dbhelpers"));
 const lodash_1 = require("lodash");
+const mssql_1 = __importDefault(require("mssql"));
+const sqlConfig_1 = require("../config/sqlConfig");
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(req.body);
@@ -60,6 +62,30 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.createPost = createPost;
+const followingPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { following_user_id } = req.params;
+        const followers = (yield dbhelpers_1.default.execute('fetchFollowings', {
+            following_user_id
+        })).recordset;
+        const userIds = followers.map((follower) => ({ UserId: follower.user_id }));
+        const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);
+        const result = yield pool
+            .request()
+            .input('UserIds', mssql_1.default.TVP, userIds)
+            .execute('fetchPostsForUsers');
+        const followingPosts = result.recordset;
+        return res.status(200).json({
+            posts: followingPosts
+        });
+    }
+    catch (error) {
+        return res.json({
+            error: error
+        });
+    }
+});
+exports.followingPosts = followingPosts;
 const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(req.body);
@@ -81,6 +107,7 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         else {
             if (comment.includes('@')) {
                 const username_tagged = comment.split('@')[1].split(' ')[0]; // Extract username after @
+                console.log("username_tagged is ", username_tagged);
                 const userExists = (yield dbhelpers_1.default.query(`SELECT * FROM user WHERE username = '${username_tagged}'`)).recordset;
                 if (!(0, lodash_1.isEmpty)(userExists)) {
                     const user_id = userExists[0].user_id;
@@ -104,6 +131,7 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
     }
     catch (error) {
+        console.log(error);
         return res.json({
             error: error,
         });

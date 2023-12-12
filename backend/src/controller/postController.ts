@@ -4,6 +4,9 @@ import {v4} from 'uuid'
 import dbHelper from '../dbhelpers/dbhelpers'
 import { forEach } from "lodash";
 import { isEmpty } from 'lodash'
+import mssql from 'mssql'
+import { sqlConfig } from '../config/sqlConfig'
+import { Post } from "../interface/post";
 
 export const createPost = async(req:Request, res: Response) =>{
 
@@ -67,6 +70,37 @@ export const createPost = async(req:Request, res: Response) =>{
     }
 }
 
+export const followingPosts = async (req: Request, res: Response) => {
+    try {
+        const { following_user_id } = req.params;
+
+        const followers = (await dbHelper.execute('fetchFollowings', {
+            following_user_id
+        })).recordset;
+
+        const userIds = followers.map((follower) => ({ UserId: follower.user_id }));
+
+        const pool = await mssql.connect(sqlConfig);
+
+        const result = await pool
+            .request()
+            .input('UserIds', mssql.TVP, userIds)
+            .execute('fetchPostsForUsers');
+
+        const followingPosts: Post[] = result.recordset;
+
+        return res.status(200).json({
+            posts: followingPosts
+        });
+
+    } catch (error) {
+        return res.json({
+            error: error
+        });
+    }
+};
+
+
 export const createComment = async (req: Request, res: Response) => {
     try {
       console.log(req.body);
@@ -91,7 +125,9 @@ export const createComment = async (req: Request, res: Response) => {
       } else {
         if (comment.includes('@')) {
           const username_tagged = comment.split('@')[1].split(' ')[0]; // Extract username after @
-  
+          
+          console.log("username_tagged is ",username_tagged);
+          
           const userExists = (await dbHelper.query(`SELECT * FROM user WHERE username = '${username_tagged}'`)).recordset;
   
           if (!isEmpty(userExists)) {
@@ -118,6 +154,8 @@ export const createComment = async (req: Request, res: Response) => {
         });
       }
     } catch (error) {
+      console.log(error);
+      
       return res.json({
         error: error,
       });

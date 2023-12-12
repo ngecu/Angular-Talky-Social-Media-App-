@@ -239,7 +239,7 @@
                                                 {{ entry.author }} <span class="small">- {{ entry.time }}</span>
                                               </p>
 
-                                             <a *ngIf="entry.replies.length <= 2" style="cursor: pointer;text-decoration: none;"  class="text-primary"   (click)="populateTextArea(entry.author)">
+                                             <a *ngIf="entry.replies.length <= 2" style="cursor: pointer;text-decoration: none;"  class="text-primary"   (click)="replyToComment(entry)">
                                                 <i class="fas fa-reply fa-xs"></i><span class="small"> reply</span>
                                               </a>
 
