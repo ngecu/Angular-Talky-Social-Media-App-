@@ -49,7 +49,7 @@ export const registerUser = async(req:Request, res: Response) =>{
         console.log(error);
         
         return res.status(404).json({
-            error: error
+            error
         })
     }
 }

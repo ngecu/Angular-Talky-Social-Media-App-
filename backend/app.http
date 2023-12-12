@@ -3,13 +3,13 @@ POST http://localhost:4400/user/register
 Content-Type: application/json
 
 {
-    "profile_image_link":"",
-    "name":"Robinson Ngecu",
-    "email": "devngecu@gmail.com",
+    "profileImage":"https://res.cloudinary.com/dqquyjsap/image/upload/v1702401134/x7uybc4bmysvedyzgbvs.jpg",
+    "name":"Christine Nduta",
+    "email": "ngecu16@gmail.com",
     "password": "3W!W.:srzc4r^!P",
-    "username":"devngecu",
-    "phone_no":"0707583092",
-    "created_at":"Now"
+    "username":"christine",
+    "phone_no":"0707583091",
+    "created_at":"2023-12-12T17:12:18"
 }
 
 
@@ -24,21 +24,23 @@ Content-Type: application/json
 
 
 ## TOGGLE FOLLOW USER
+###
 POST http://localhost:4400/user/toggleFollowUser
 Content-Type: application/json
 
 {
-   "following_user_id":"sdfdfsdf", 
-   "followed_user_id":"dsadasd",
-   "created_at":"dasdasdsd"
+   "following_user_id":"b73120f8-6670-4991-9045-85db8962aa56", 
+   "followed_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3",
+    "created_at":"2023-12-12T17:12:18"
 }
 
 ## GET FOLLOWERS
+###
 POST http://localhost:4400/user/getFollowers
 Content-Type: application/json
 
 {
-   "followed_user_id":"dsadasd",
+   "followed_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3"
 }
 
 ## GET FOLLOWINGS
