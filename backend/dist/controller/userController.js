@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllUsers = exports.toggleFollowUser = exports.loginUser = exports.registerUser = void 0;
+exports.getFollowings = exports.getFollowers = exports.toggleFollowUser = exports.getAllUsers = exports.loginUser = exports.registerUser = void 0;
 const validators_1 = require("../validators/validators");
 const mssql_1 = __importDefault(require("mssql"));
 const uuid_1 = require("uuid");
@@ -105,11 +105,27 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.loginUser = loginUser;
+const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);
+        let users = (yield pool.request().execute('fetchAllUsers')).recordset;
+        return res.status(200).json({
+            users: users
+        });
+    }
+    catch (error) {
+        return res.json({
+            error: error
+        });
+    }
+});
+exports.getAllUsers = getAllUsers;
 const toggleFollowUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
     try {
         let follower_id = (0, uuid_1.v4)();
-        let { following_user_id, followed_user_id, created_at } = req.body;
+        let { following_user_id, followed_user_id } = req.body;
+        let created_at = new Date().toISOString();
         const relationsexists = (yield dbhelpers_1.default.query(`SELECT * FROM follower WHERE following_user_id = '${following_user_id}' AND followed_user_id= '${followed_user_id}'`)).recordset;
         if (!(0, lodash_1.isEmpty)(relationsexists)) {
             let result = yield dbhelpers_1.default.execute('unfollowUser', {
@@ -150,12 +166,14 @@ const toggleFollowUser = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.toggleFollowUser = toggleFollowUser;
-const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getFollowers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);
-        let users = (yield pool.request().execute('fetchAllUsers')).recordset;
+        let { followed_user_id } = req.body;
+        let followers = (yield dbhelpers_1.default.execute('fetchFollowers', {
+            followed_user_id
+        })).recordset;
         return res.status(200).json({
-            users: users
+            followers: followers
         });
     }
     catch (error) {
@@ -164,4 +182,21 @@ const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
 });
-exports.getAllUsers = getAllUsers;
+exports.getFollowers = getFollowers;
+const getFollowings = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let { following_user_id } = req.body;
+        let followers = (yield dbhelpers_1.default.execute('fetchFollowings', {
+            following_user_id
+        })).recordset;
+        return res.status(200).json({
+            followers: followers
+        });
+    }
+    catch (error) {
+        return res.json({
+            error: error
+        });
+    }
+});
+exports.getFollowings = getFollowings;

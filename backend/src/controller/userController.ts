@@ -105,14 +105,33 @@ export const loginUser = async(req:Request, res: Response) =>{
 
 
 
+
+export const getAllUsers = async(req:Request, res:Response)=>{
+    try {
+
+        const pool = await mssql.connect(sqlConfig)
+
+        let users = (await pool.request().execute('fetchAllUsers')).recordset
+
+        return res.status(200).json({
+            users: users
+        })
+        
+    } catch (error) {
+        return res.json({
+            error: error
+        })
+    }
+}
+
 export const toggleFollowUser =  async(req:Request, res: Response) =>{
     console.log(req.body);
 
     try {
         let follower_id = v4()
 
-        let {following_user_id, followed_user_id,created_at  } = req.body
-
+        let {following_user_id, followed_user_id  } = req.body
+        let created_at  = new Date().toISOString();
  const relationsexists = (await dbHelper.query(`SELECT * FROM follower WHERE following_user_id = '${following_user_id}' AND followed_user_id= '${followed_user_id}'`)).recordset
 
      if(!isEmpty(relationsexists)){
@@ -158,18 +177,45 @@ export const toggleFollowUser =  async(req:Request, res: Response) =>{
     }
 }
 
-export const getAllUsers = async(req:Request, res:Response)=>{
+
+export const getFollowers = async(req:Request, res:Response)=>{
     try {
 
-        const pool = await mssql.connect(sqlConfig)
+        let {followed_user_id  } = req.body
 
-        let users = (await pool.request().execute('fetchAllUsers')).recordset
+        let followers = (await dbHelper.execute('fetchFollowers', {
+            followed_user_id
+        })).recordset
 
-        return res.status(200).json({
-            users: users
-        })
+     
+            return res.status(200).json({
+                followers: followers
+            })
+        }
         
-    } catch (error) {
+     catch (error) {
+        return res.json({
+            error: error
+        })
+    }
+}
+
+export const getFollowings = async(req:Request, res:Response)=>{
+    try {
+
+        let {following_user_id  } = req.body
+
+        let followers = (await dbHelper.execute('fetchFollowings', {
+            following_user_id
+        })).recordset
+
+     
+            return res.status(200).json({
+                followers: followers
+            })
+        }
+        
+     catch (error) {
         return res.json({
             error: error
         })

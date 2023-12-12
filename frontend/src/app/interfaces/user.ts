@@ -5,11 +5,15 @@ export interface User {
   }
 
   export interface UserDetails{
-    profile_image_link:string,
-    name: string,
+    profileImage:string,
+    fullName: string,
     email: string,
-    password: string,
     username: string,
-    created_at:string,
     phone_no: string,
+    created_at:string,
+}
+
+export interface toggleFollowUserInterface{
+  following_user_id:string,
+   followed_user_id:string
 }

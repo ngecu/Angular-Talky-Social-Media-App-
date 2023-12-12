@@ -6,5 +6,7 @@ const user_router = (0, express_1.Router)();
 user_router.post('/register', userController_1.registerUser);
 user_router.post('/login', userController_1.loginUser);
 user_router.post('/toggleFollowUser', userController_1.toggleFollowUser);
+user_router.post('/getFollowers', userController_1.getFollowers);
+user_router.post('/getFollowings', userController_1.getFollowings);
 user_router.get('/', userController_1.getAllUsers);
 exports.default = user_router;

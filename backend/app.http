@@ -33,6 +33,22 @@ Content-Type: application/json
    "created_at":"dasdasdsd"
 }
 
+## GET FOLLOWERS
+POST http://localhost:5000/user/getFollowers
+Content-Type: application/json
+
+{
+   "followed_user_id":"dsadasd",
+}
+
+## GET FOLLOWINGS
+POST http://localhost:5000/user/getFollowings
+Content-Type: application/json
+
+{
+   "following_user_id":"dsadasd",
+}
+
 ## CREATE POST
 
 POST http://localhost:5000/post/

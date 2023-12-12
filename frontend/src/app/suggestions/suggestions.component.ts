@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { User } from '../interfaces/user';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-suggestions',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./suggestions.component.scss']
 })
 export class SuggestionsComponent {
-  constructor(private route:Router,private toastr: ToastrService){}
+  constructor(private route:Router,private toastr: ToastrService,userService:UserService){}
 
   users: User[] = [
     { username: 'instagram', isFollowing: false, profileImage: 'assets/images/profiles/profile-3.jpg' },
@@ -18,19 +19,7 @@ export class SuggestionsComponent {
   ];
 
   toggleFollow(user: User): void {
-    if (user.isFollowing) {
-      // Toggle the Follow state without a confirmation
-      if (confirm(`Are you sure you want to unfollow ${user.username}?`)) {
-        user.isFollowing = false;
-        this.toastr.error(`Unfollowed ${user.username}`, 'Error');
-
-      }
-    } else {
-      // Toggle the Follow state without a confirmation
-      user.isFollowing = !user.isFollowing;
-      this.toastr.success(`You are now following ${user.username}`, 'Success');
-
-    }
+ 
   }
 
 }
