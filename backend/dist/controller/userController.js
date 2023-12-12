@@ -51,13 +51,15 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             });
         }
         else {
+            console.log("Uder Registered successfully");
             return res.status(200).json({
                 message: 'User registered successfully'
             });
         }
     }
     catch (error) {
-        return res.json({
+        console.log(error);
+        return res.status(404).json({
             error: error
         });
     }

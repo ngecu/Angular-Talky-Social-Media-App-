@@ -35,6 +35,8 @@ export const registerUser = async(req:Request, res: Response) =>{
                 message: "Something went wrong, user not registered"
             })
         }else{
+            console.log("Uder Registered successfully");
+            
             return res.status(200).json({
                 message: 'User registered successfully'
             })
@@ -43,7 +45,9 @@ export const registerUser = async(req:Request, res: Response) =>{
         
         
     } catch (error) {  
-        return res.json({
+        console.log(error);
+        
+        return res.status(404).json({
             error: error
         })
     }

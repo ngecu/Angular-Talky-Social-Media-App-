@@ -10,6 +10,6 @@ CREATE OR ALTER PROCEDURE registerUser(
 )
 AS
 BEGIN
-    INSERT INTO user (user_id, profileImage, fullName, email, password, username, phone_no, created_at)
+    INSERT INTO users (user_id, profileImage, fullName, email, password, username, phone_no, created_at)
     VALUES (@user_id, @profileImage, @fullName, @email, @password, @username, @phone_no, @created_at)
 END
