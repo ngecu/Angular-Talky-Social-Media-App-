@@ -23,14 +23,23 @@ Content-Type: application/json
 }
 
 
+## TOGGLE FOLLOW USER
+POST http://localhost:5000/user/toggleFollowUser
+Content-Type: application/json
+
+{
+   "following_user_id":"sdfdfsdf", 
+   "followed_user_id":"dsadasd",
+   "created_at":"dasdasdsd"
+}
+
 ## CREATE POST
 
 POST http://localhost:5000/post/
 Content-Type: application/json
 
 {
-    "postImage":"", 
-    "created_by_user_id":"",
+    "created_by_user_id":"weaesdasdsd",
     "caption":"This is my first caption",
     "postType":"status",
     "created_at":"now"

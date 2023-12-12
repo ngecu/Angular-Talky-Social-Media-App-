@@ -102,3 +102,58 @@ export const loginUser = async(req:Request, res: Response) =>{
         })
     }
 }
+
+
+
+export const toggleFollowUser =  async(req:Request, res: Response) =>{
+    console.log(req.body);
+
+    try {
+        let follower_id = v4()
+
+        let {following_user_id, followed_user_id,created_at  } = req.body
+
+ const relationsexists = (await dbHelper.query(`SELECT * FROM follower WHERE following_user_id = '${following_user_id}' AND followed_user_id= '${followed_user_id}'`)).recordset
+
+     if(!isEmpty(relationsexists)){
+        let result = await dbHelper.execute('unfollowUser', {
+            following_user_id, followed_user_id
+        })
+
+        if(result.rowsAffected[0] === 0){
+            return res.status(404).json({
+                message: "Something went wrong, user not followed"
+            })
+        }else{
+            return res.status(200).json({
+                message: 'User Unfollowed'
+            })
+        }
+    
+    }
+    else{
+
+        let result = await dbHelper.execute('followUser', {
+            follower_id,following_user_id, followed_user_id,created_at
+        })
+        
+        if(result.rowsAffected[0] === 0){
+            return res.status(404).json({
+                message: "Something went wrong, user not followed"
+            })
+        }else{
+            return res.status(200).json({
+                message: 'User Followed'
+            })
+        }
+
+    }
+
+    } catch (error) {
+        console.log(error);
+
+        return res.json({
+            error
+        })
+    }
+}

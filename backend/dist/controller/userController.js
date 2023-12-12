@@ -23,13 +23,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUser = exports.registerUser = void 0;
+exports.toggleFollowUser = exports.loginUser = exports.registerUser = void 0;
 const validators_1 = require("../validators/validators");
 const mssql_1 = __importDefault(require("mssql"));
 const uuid_1 = require("uuid");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const sqlConfig_1 = require("../config/sqlConfig");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const lodash_1 = require("lodash");
 const dbhelpers_1 = __importDefault(require("../dbhelpers/dbhelpers"));
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -104,3 +105,48 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.loginUser = loginUser;
+const toggleFollowUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body);
+    try {
+        let follower_id = (0, uuid_1.v4)();
+        let { following_user_id, followed_user_id, created_at } = req.body;
+        const relationsexists = (yield dbhelpers_1.default.query(`SELECT * FROM follower WHERE following_user_id = '${following_user_id}' AND followed_user_id= '${followed_user_id}'`)).recordset;
+        if (!(0, lodash_1.isEmpty)(relationsexists)) {
+            let result = yield dbhelpers_1.default.execute('unfollowUser', {
+                following_user_id, followed_user_id
+            });
+            if (result.rowsAffected[0] === 0) {
+                return res.status(404).json({
+                    message: "Something went wrong, user not followed"
+                });
+            }
+            else {
+                return res.status(200).json({
+                    message: 'User Unfollowed'
+                });
+            }
+        }
+        else {
+            let result = yield dbhelpers_1.default.execute('followUser', {
+                follower_id, following_user_id, followed_user_id, created_at
+            });
+            if (result.rowsAffected[0] === 0) {
+                return res.status(404).json({
+                    message: "Something went wrong, user not followed"
+                });
+            }
+            else {
+                return res.status(200).json({
+                    message: 'User Followed'
+                });
+            }
+        }
+    }
+    catch (error) {
+        console.log(error);
+        return res.json({
+            error
+        });
+    }
+});
+exports.toggleFollowUser = toggleFollowUser;
