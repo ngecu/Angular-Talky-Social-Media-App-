@@ -5,6 +5,7 @@ import cors from 'cors'
 import http  from 'http'
 import { Server  } from 'socket.io';
 import user_router from "./routes/userRoutes";
+import post_router from './routes/postRoutes';
 
 
 
@@ -17,7 +18,7 @@ app.use(cors())
 app.use(json())
 
 app.use('/user', user_router)
-app.use('/post', user_router)
+app.use('/post', post_router)
 
 
 const io = new Server(server, {

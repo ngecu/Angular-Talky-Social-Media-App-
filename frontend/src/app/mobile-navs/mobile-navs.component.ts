@@ -38,7 +38,7 @@ postForm!: FormGroup;
   
   constructor(private router: Router,private toastr: ToastrService,private formBuilder: FormBuilder,private upload:CloudinaryuploadService,private postService:PostService) {
     this.postForm = this.formBuilder.group({
-      postImage: [null],
+      postImage: [],
       postType: 'Post', // Set default value
       caption: '',
     });
@@ -104,7 +104,7 @@ postForm!: FormGroup;
           // If all images are uploaded, proceed to createPost
           if (imageUrls.length === this.postFiles.length) {
             // Set the array of image URLs in the form
-            this.postForm.patchValue({ profileImage: imageUrls });
+            this.postForm.value.postImage = imageUrls ;
     
             // Create the post
             let details: PostDetails = this.postForm.value;

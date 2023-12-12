@@ -25,18 +25,31 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             return res.status(404).json({ error: error.details });
         }
         let post_id = (0, uuid_1.v4)();
-        let result = yield dbhelpers_1.default.execute('registerUser', {
-            post_id, postImage, created_by_user_id, caption, postType, created_at
+        let result = yield dbhelpers_1.default.execute('createPost', {
+            post_id, created_by_user_id, caption, postType, created_at
         });
         if (result.rowsAffected[0] === 0) {
             return res.status(404).json({
-                message: "Something went wrong, user not registered"
+                message: "Something went wrong, Post not created"
             });
         }
         else {
-            return res.status(200).json({
-                message: 'Post created successfully'
-            });
+            postImage.forEach((media_file) => __awaiter(void 0, void 0, void 0, function* () {
+                let post_media_id = (0, uuid_1.v4)();
+                let result = yield dbhelpers_1.default.execute('createPostMedia', {
+                    post_media_id, post_id, media_file, created_at
+                });
+                if (result.rowsAffected[0] === 0) {
+                    return res.status(404).json({
+                        message: "Something went wrong, Post Media not created"
+                    });
+                }
+                else {
+                    return res.status(200).json({
+                        message: 'Post created successfully'
+                    });
+                }
+            }));
         }
     }
     catch (error) {

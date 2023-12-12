@@ -20,7 +20,7 @@ exports.loginUserSchema = joi_1.default.object({
     Password: joi_1.default.string().required()
 });
 exports.createPostSchema = joi_1.default.object({
-    postImage: joi_1.default.string(),
+    postImage: joi_1.default.any(),
     created_by_user_id: joi_1.default.string(),
     caption: joi_1.default.string(),
     postType: joi_1.default.string(),

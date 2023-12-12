@@ -2,6 +2,7 @@ import { createPostSchema } from "../validators/validators";
 import { Request, Response } from 'express'
 import {v4} from 'uuid'
 import dbHelper from '../dbhelpers/dbhelpers'
+import { forEach } from "lodash";
 
 export const createPost = async(req:Request, res: Response) =>{
 
@@ -20,18 +21,40 @@ export const createPost = async(req:Request, res: Response) =>{
         let post_id = v4()
 
          
-        let result = await dbHelper.execute('registerUser', {
-            post_id,postImage, created_by_user_id,caption,postType,created_at
+        let result = await dbHelper.execute('createPost', {
+            post_id, created_by_user_id,caption,postType,created_at
         })
         
         if(result.rowsAffected[0] === 0){
+
+
             return res.status(404).json({
-                message: "Something went wrong, user not registered"
+                message: "Something went wrong, Post not created"
             })
         }else{
-            return res.status(200).json({
-                message: 'Post created successfully'
-            })
+
+            postImage.forEach(async (media_file:string) => {
+                let post_media_id = v4()
+                let result = await dbHelper.execute('createPostMedia', {
+                    post_media_id,post_id,media_file, created_at
+                })
+
+                if(result.rowsAffected[0] === 0){
+                    return res.status(404).json({
+                        message: "Something went wrong, Post Media not created"
+                    })
+                }
+
+                else{
+                    return res.status(200).json({
+                        message: 'Post created successfully'
+                    })
+                }
+
+
+            });
+
+          
         }
 
         
