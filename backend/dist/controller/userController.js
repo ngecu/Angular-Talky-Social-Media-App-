@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getFollowings = exports.getFollowers = exports.toggleFollowUser = exports.getAllUsers = exports.loginUser = exports.registerUser = void 0;
+exports.getFollowings = exports.getFollowers = exports.toggleFollowUser = exports.getAllUsers = exports.checkUserDetails = exports.loginUser = exports.registerUser = void 0;
 const validators_1 = require("../validators/validators");
 const mssql_1 = __importDefault(require("mssql"));
 const uuid_1 = require("uuid");
@@ -66,47 +66,59 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.registerUser = registerUser;
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _a, _b, _c, _d, _e;
     console.log(req.body);
     try {
-        const { email, password } = req.body;
+        const { Email, Password } = req.body;
         const { error } = validators_1.loginUserSchema.validate(req.body);
         if (error) {
             return res.status(422).json({ error: error.message });
         }
         const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);
-        let user = yield (yield pool.request().input("email", email).input("password", password).execute('loginUser')).recordset;
-        if (((_a = user[0]) === null || _a === void 0 ? void 0 : _a.email) == email) {
-            const CorrectPwd = yield bcrypt_1.default.compare(password, (_b = user[0]) === null || _b === void 0 ? void 0 : _b.password);
+        let user = yield (yield pool.request().input("email", Email).input("password", Password).execute('loginUser')).recordset;
+        console.log(user);
+        if (((_a = user[0]) === null || _a === void 0 ? void 0 : _a.email) == Email || ((_b = user[0]) === null || _b === void 0 ? void 0 : _b.fullName) == Email || ((_c = user[0]) === null || _c === void 0 ? void 0 : _c.username) == Email || ((_d = user[0]) === null || _d === void 0 ? void 0 : _d.phone_no) == Email) {
+            const CorrectPwd = yield bcrypt_1.default.compare(Password, (_e = user[0]) === null || _e === void 0 ? void 0 : _e.password);
             if (!CorrectPwd) {
                 return res.status(401).json({
                     error: "Incorrect password"
                 });
             }
             const LoginCredentials = user.map(records => {
-                const { phone_no, password, welcomed } = records, rest = __rest(records, ["phone_no", "password", "welcomed"]);
+                const { password, welcomed } = records, rest = __rest(records, ["password", "welcomed"]);
                 return rest;
             });
             const token = jsonwebtoken_1.default.sign(LoginCredentials[0], process.env.SECRET, {
                 expiresIn: '24h'
             });
+            console.log("Logged in successfully");
             return res.status(200).json({
                 message: "Logged in successfully", token
             });
         }
         else {
-            return res.json({
+            return res.status(404).json({
                 error: "User not found"
             });
         }
     }
     catch (error) {
-        return res.json({
-            error: "Internal server error"
+        console.log(error);
+        return res.status(404).json({
+            error
         });
     }
 });
 exports.loginUser = loginUser;
+const checkUserDetails = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.info) {
+        console.log(req.info);
+        return res.json({
+            info: req.info
+        });
+    }
+});
+exports.checkUserDetails = checkUserDetails;
 const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);

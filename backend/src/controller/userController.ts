@@ -7,6 +7,7 @@ import { sqlConfig } from '../config/sqlConfig'
 import jwt from 'jsonwebtoken'
 import { isEmpty } from 'lodash'
 import dbHelper from '../dbhelpers/dbhelpers'
+import { ExtendedUser } from '../middlewares/verifyToken'
 
 export const registerUser = async(req:Request, res: Response) =>{
 
@@ -57,7 +58,7 @@ export const loginUser = async(req:Request, res: Response) =>{
     console.log(req.body);
     
     try {  
-        const {email, password} = req.body
+        const {Email, Password} = req.body
 
         const {error} = loginUserSchema.validate(req.body)
 
@@ -67,11 +68,13 @@ export const loginUser = async(req:Request, res: Response) =>{
 
         const pool = await mssql.connect(sqlConfig)
 
-        let user = await (await pool.request().input("email", email).input("password", password).execute('loginUser')).recordset
+        let user = await (await pool.request().input("email", Email).input("password", Password).execute('loginUser')).recordset
 
+        console.log(user);
         
-        if(user[0]?.email  == email){
-            const CorrectPwd = await bcrypt.compare(password, user[0]?.password)
+
+        if(user[0]?.email  == Email || user[0]?.fullName  == Email || user[0]?.username  == Email || user[0]?.phone_no  == Email ){
+            const CorrectPwd = await bcrypt.compare(Password, user[0]?.password)
 
             if(!CorrectPwd){   
                 return res.status(401).json({
@@ -80,7 +83,7 @@ export const loginUser = async(req:Request, res: Response) =>{
             }
 
             const LoginCredentials = user.map(records =>{
-                const {phone_no, password, welcomed, ...rest}=records
+                const {password, welcomed, ...rest}=records
 
                 return rest
             })
@@ -89,26 +92,39 @@ export const loginUser = async(req:Request, res: Response) =>{
             const token = jwt.sign(LoginCredentials[0], process.env.SECRET as string, {
                 expiresIn: '24h'
             }) 
-
+            console.log("Logged in successfully");
+            
             return res.status(200).json({
                 message: "Logged in successfully", token
             })
             
         }else{
-            return res.json({
+            return res.status(404).json({
                 error: "User not found"
             })
         }
 
     } catch (error) {
-        return res.json({
-            error: "Internal server error"
+        console.log(error);
+        
+        return res.status(404).json({
+            error
         })
     }
 }
 
 
-
+export const checkUserDetails = async (req:ExtendedUser, res:Response)=>{
+    
+    if(req.info){
+        console.log(req.info);
+        
+        return res.json({
+            info: req.info 
+        })
+    }
+    
+}
 
 export const getAllUsers = async(req:Request, res:Response)=>{
     try {
