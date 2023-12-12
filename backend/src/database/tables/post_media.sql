@@ -1,5 +1,3 @@
-USE TALKY
-
 CREATE TABLE post_media (
     post_media_id VARCHAR(500),
     post_id VARCHAR(500),

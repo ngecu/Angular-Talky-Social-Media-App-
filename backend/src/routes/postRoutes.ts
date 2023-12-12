@@ -5,8 +5,8 @@ import { createComment, createPost, followingPosts } from "../controller/postCon
 const post_router = Router()
 
 post_router.post('/', createPost)
-post_router.post('/comment', createComment)
 post_router.get('/:following_user_id', followingPosts)
+post_router.post('/comment', createComment)
 
 
 

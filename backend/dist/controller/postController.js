@@ -29,57 +29,88 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
         let post_id = (0, uuid_1.v4)();
         let result = yield dbhelpers_1.default.execute('createPost', {
-            post_id, created_by_user_id, caption, postType, created_at
+            post_id,
+            created_by_user_id,
+            caption,
+            postType,
+            created_at,
         });
         if (result.rowsAffected[0] === 0) {
             return res.status(404).json({
-                message: "Something went wrong, Post not created"
+                message: "Something went wrong, Post not created",
             });
         }
-        else {
-            postImage.forEach((media_file) => __awaiter(void 0, void 0, void 0, function* () {
-                let post_media_id = (0, uuid_1.v4)();
-                let result = yield dbhelpers_1.default.execute('createPostMedia', {
-                    post_media_id, post_id, media_file, created_at
-                });
-                if (result.rowsAffected[0] === 0) {
-                    return res.status(404).json({
-                        message: "Something went wrong, Post Media not created"
-                    });
-                }
-                else {
-                    return res.status(200).json({
-                        message: 'Post created successfully'
-                    });
-                }
-            }));
-        }
+        // Array to hold promises for media creation
+        const mediaCreationPromises = postImage.map((media_file) => __awaiter(void 0, void 0, void 0, function* () {
+            let post_media_id = (0, uuid_1.v4)();
+            let result = yield dbhelpers_1.default.execute('createPostMedia', {
+                post_media_id,
+                post_id,
+                media_file,
+                created_at,
+            });
+            if (result.rowsAffected[0] === 0) {
+                // If media creation fails, throw an error
+                throw new Error("Something went wrong, Post Media not created");
+            }
+            // Return the created post media ID
+            return post_media_id;
+        }));
+        // Wait for all media creation promises to resolve
+        const postMediaIds = yield Promise.all(mediaCreationPromises);
+        // Send the response after all media is created
+        return res.status(200).json({
+            message: 'Post created successfully',
+            post_id,
+            postMediaIds,
+        });
     }
     catch (error) {
-        return res.json({
-            error: error
+        console.log(error);
+        return res.status(404).json({
+            error: error.message,
         });
     }
 });
 exports.createPost = createPost;
 const followingPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(req.params);
         const { following_user_id } = req.params;
         const followers = (yield dbhelpers_1.default.execute('fetchFollowings', {
             following_user_id
         })).recordset;
-        const userIds = followers.map((follower) => ({ UserId: follower.user_id }));
-        const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);
-        const result = yield pool
-            .request()
-            .input('UserIds', mssql_1.default.TVP, userIds)
-            .execute('fetchPostsForUsers');
-        const followingPosts = result.recordset;
-        return res.status(200).json({
-            posts: followingPosts
-        });
+        console.log("followers ", followers);
+        if (followers.length > 0) {
+            const userIds = followers.map((follower) => ({ UserId: follower.user_id }));
+            const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);
+            const result = yield pool
+                .request()
+                .input('UserIds', mssql_1.default.TVP, userIds)
+                .execute('fetchPostsForUsers');
+            const followingPosts = result.recordset.map((row) => {
+                return {
+                    post_id: row.post_id,
+                    created_by_user_id: row.created_by_user_id,
+                    caption: row.caption,
+                    postType: row.postType,
+                    created_at: row.created_at,
+                    post_media_id: row.post_media_id,
+                    media_file: row.media_file
+                };
+            });
+            return res.status(200).json({
+                posts: followingPosts
+            });
+        }
+        else {
+            return res.status(200).json({
+                posts: []
+            });
+        }
     }
     catch (error) {
+        console.log(error);
         return res.json({
             error: error
         });

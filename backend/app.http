@@ -1,5 +1,5 @@
 ### REGISTER USER
-POST http://localhost:5000/user/register
+POST http://localhost:4400/user/register
 Content-Type: application/json
 
 {
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 
 ## LOGIN USER
-POST http://localhost:5000/user/login
+POST http://localhost:4400/user/login
 Content-Type: application/json
 
 {
@@ -24,7 +24,7 @@ Content-Type: application/json
 
 
 ## TOGGLE FOLLOW USER
-POST http://localhost:5000/user/toggleFollowUser
+POST http://localhost:4400/user/toggleFollowUser
 Content-Type: application/json
 
 {
@@ -34,7 +34,7 @@ Content-Type: application/json
 }
 
 ## GET FOLLOWERS
-POST http://localhost:5000/user/getFollowers
+POST http://localhost:4400/user/getFollowers
 Content-Type: application/json
 
 {
@@ -42,16 +42,25 @@ Content-Type: application/json
 }
 
 ## GET FOLLOWINGS
-POST http://localhost:5000/user/getFollowings
+POST http://localhost:4400/user/getFollowings
 Content-Type: application/json
 
 {
    "following_user_id":"dsadasd",
 }
 
+
+## following Posts
+###
+GET http://localhost:4400/post/64b14daa-ad76-49d8-a5bd-ae298e15dde3
+
+Content-Type: application/json
+
+
+
 ## CREATE POST
 
-POST http://localhost:5000/post/
+POST http://localhost:4400/post/
 Content-Type: application/json
 
 {
