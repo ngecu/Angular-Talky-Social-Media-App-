@@ -56,7 +56,36 @@ export const createPost = async (req: Request, res: Response) => {
     // Wait for all media creation promises to resolve
     const postMediaIds = await Promise.all(mediaCreationPromises);
 
-    // Send the response after all media is created
+    // Check for tagged users in the caption
+    if (caption.includes('@')) {
+      const usernamesTagged = caption.match(/@(\S+)/g) || [];
+      
+      const taggedUserPromises = usernamesTagged.map(async (usernameTagged: string) => {
+        const username = usernameTagged.substring(1); // Remove the @ symbol
+        const userExists = (await dbHelper.query(`SELECT * FROM user WHERE username = '${username}'`)).recordset;
+
+        if (!isEmpty(userExists)) {
+          const user_id = userExists[0].user_id;
+          const post_user_tag_id = v4();
+
+          let result = await dbHelper.execute('addToPostTaggedTable', {
+            post_user_tag_id,
+            post_id,
+            user_id,
+            created_at,
+          });
+
+          if (result.rowsAffected[0] === 0) {
+            throw new Error("Something went wrong, user not added to tags");
+          }
+        }
+      });
+
+      // Wait for all tagged user promises to resolve
+      await Promise.all(taggedUserPromises);
+    }
+
+    // Send the response after all media is created and tagged users are processed
     return res.status(200).json({
       message: 'Post created successfully',
       post_id,
@@ -71,6 +100,86 @@ export const createPost = async (req: Request, res: Response) => {
   }
 };
 
+
+export const editPost = async (req: Request, res: Response) => {
+  try {
+    console.log(req.body);
+
+    let {
+      post_id,
+      updatedCaption,
+      updatedPostType,
+      updated_at,
+    } = req.body;
+
+    // Check if the post_id is provided
+    if (!post_id) {
+      return res.status(400).json({
+        message: 'Post ID is required for editing',
+      });
+    }
+
+    // Perform a database update to edit the post
+    let result = await dbHelper.execute('editPost', {
+      post_id,
+      updatedCaption,
+      updatedPostType,
+      updated_at,
+    });
+
+    if (result.rowsAffected[0] === 0) {
+      return res.status(404).json({
+        message: 'Something went wrong, Post not updated',
+      });
+    } else {
+      return res.status(200).json({
+        message: 'Post updated successfully',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({
+      error: 'Internal Server Error',
+    });
+  }
+};
+
+export const deletePost = async (req: Request, res: Response) => {
+  try {
+    console.log(req.body);
+
+    let { post_id } = req.params;
+
+    // Check if the post_id is provided
+    if (!post_id) {
+      return res.status(400).json({
+        message: 'Post ID is required for deletion',
+      });
+    }
+
+    // Perform a database delete to remove the post
+    let result = await dbHelper.execute('deletePost', {
+      post_id,
+    });
+
+    if (result.rowsAffected[0] === 0) {
+      return res.status(404).json({
+        message: 'Something went wrong, Post not deleted',
+      });
+    } else {
+      return res.status(200).json({
+        message: 'Post deleted successfully',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({
+      error: 'Internal Server Error',
+    });
+  }
+};
 
 export const followingPosts = async (req: Request, res: Response) => {
     try {

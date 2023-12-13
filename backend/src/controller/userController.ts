@@ -139,6 +139,56 @@ export const loginUser = async(req:Request, res: Response) =>{
     }
 }
 
+export const toggleSoftDeleteUser = async (req: Request, res: Response) => {
+    try {
+      console.log(req.body);
+  
+      let { user_id } = req.params;
+  
+      // Check if the user_id is provided
+      if (!user_id) {
+        return res.status(400).json({
+          message: 'User ID is required for toggling soft delete',
+        });
+      }
+  
+      // Check the current active status of the user
+      const user = (await dbHelper.query(`SELECT * FROM user WHERE user_id = '${user_id}'`)).recordset[0];
+  
+      if (!user) {
+        return res.status(404).json({
+          message: 'User not found',
+        });
+      }
+  
+      // Determine the new active status
+      const newActiveStatus = user.active === 1 ? 0 : 1;
+  
+      // Perform a database update to toggle soft delete
+      let result = await dbHelper.execute('toggleSoftDeleteUser', {
+        user_id,
+        newActiveStatus,
+      });
+  
+      if (result.rowsAffected[0] === 0) {
+        return res.status(404).json({
+          message: 'Something went wrong, Soft delete not toggled',
+        });
+      } else {
+        return res.status(200).json({
+          message: `Soft delete toggled successfully for user ${user_id}`,
+          newActiveStatus,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+  
+      return res.status(500).json({
+        error: 'Internal Server Error',
+      });
+    }
+  };
+
 export const updateProfile = async (req: Request, res: Response) => {
     try {
       console.log(req.body);
