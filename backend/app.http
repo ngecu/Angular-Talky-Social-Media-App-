@@ -51,6 +51,14 @@ Content-Type: application/json
    "following_user_id":"dsadasd",
 }
 
+## GET FOLLOWERS
+###
+POST http://localhost:4400/user/reset-password
+Content-Type: application/json
+
+{
+   "Email":"ngecu16@gmail.com"
+}
 
 ## following Posts
 ###

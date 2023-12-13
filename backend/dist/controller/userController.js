@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setNewPassword = exports.verifyResetPassword = exports.sendRestPassword = exports.getFollowings = exports.getFollowers = exports.toggleFollowUser = exports.getAllUsers = exports.checkUserDetails = exports.loginUser = exports.registerUser = void 0;
+exports.verifyResetPassword = exports.sendRestPassword = exports.getFollowings = exports.getFollowers = exports.toggleFollowUser = exports.getAllUsers = exports.checkUserDetails = exports.loginUser = exports.registerUser = void 0;
 const validators_1 = require("../validators/validators");
 const mssql_1 = __importDefault(require("mssql"));
 const uuid_1 = require("uuid");
@@ -36,8 +36,11 @@ const crypto_1 = __importDefault(require("crypto"));
 const fs_1 = __importDefault(require("fs"));
 const handlebars_1 = __importDefault(require("handlebars"));
 const useragent_1 = __importDefault(require("useragent"));
-const sendEmail_js_1 = __importDefault(require("../utils/sendEmail.js"));
-const templateFilePath = "backend/controllers/email-template.hbs";
+const sendEmail_1 = __importDefault(require("../utils/sendEmail"));
+// const templateFilePath = "controller/email-template.hbs"
+const path_1 = __importDefault(require("path"));
+// const templateFilePath = path.join(__dirname, 'controller', 'email-template.hbs');
+const templateFilePath = path_1.default.join(__dirname, "../templates/email-template.hbs");
 const readHTMLFile = (path) => {
     return new Promise((resolve, reject) => {
         fs_1.default.readFile(path, { encoding: 'utf-8' }, (error, htmlContent) => {
@@ -239,18 +242,18 @@ const getFollowings = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.getFollowings = getFollowings;
 const sendRestPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { Email } = req.body;
-    const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);
-    const user = (yield dbhelpers_1.default.query(`SELECT * FROM users WHERE fullName= ${Email} OR email=${Email} OR username =${Email} OR phone_no = ${Email}`)).recordset;
-    console.log(user);
+    const user = (yield dbhelpers_1.default.query(`SELECT * FROM users WHERE email='${Email}' OR username ='${Email}' OR phone_no = '${Email}'`)).recordset;
+    console.log("user is ", user);
     if (user) {
-        const token = (yield dbhelpers_1.default.query(`SELECT * FROM token WHERE user_id = ${user[0].user_id}`)).recordset;
-        if (!token) {
-            const newToken = crypto_1.default.randomBytes(32).toString('hex');
+        const token = (yield dbhelpers_1.default.query(`SELECT * FROM token WHERE user_id = '${user[0].user_id}'`)).recordset;
+        console.log("token is ", token);
+        if ((0, lodash_1.isEmpty)(token)) {
+            const token = crypto_1.default.randomBytes(32).toString('hex');
             let token_id = (0, uuid_1.v4)();
             let user_id = user[0].user_id;
             let created_at = new Date().toISOString();
             let result = yield dbhelpers_1.default.execute('registerToken', {
-                token_id, user_id, created_at
+                token_id, user_id, token, created_at
             });
             if (result.rowsAffected[0] === 0) {
                 return res.status(404).json({
@@ -261,43 +264,45 @@ const sendRestPassword = (req, res) => __awaiter(void 0, void 0, void 0, functio
                 console.log("token added");
             }
         }
-        // const token =  crypto.randomBytes(32).toString("hex")
-        const url = `${process.env.BASE_URL}new-password/${user[0].user_id}/${token[0].token}`;
-        // Example user agent string
-        const userAgentString = req.headers['user-agent'];
-        // Parse the user agent string
-        const agent = useragent_1.default.parse(userAgentString);
-        // Retrieve the browser name
-        const browserName = agent.family;
-        // Retrieve the operating system
-        const operatingSystem = agent.os.toString();
-        console.log(userAgentString);
-        console.log(operatingSystem);
-        readHTMLFile(templateFilePath)
-            .then((templateContent) => {
-            // Define the data for the template variables
-            const templateData = {
-                name: user[0].name,
-                email: user[0].email,
-                browserName,
-                operatingSystem,
-                action_url: url
-            };
-            // Render the email template with the data
-            const renderedTemplate = renderEmailTemplate(templateContent, templateData);
-            // Send the email
-            (0, sendEmail_js_1.default)(user[0].email, "Reset Email", renderedTemplate)
-                .then(() => {
-                console.log('Email sent successfully');
-                res.status(200).send({ message: "Password reset link sent to your email account" });
+        else {
+            // const token =  crypto.randomBytes(32).toString("hex")
+            const url = `${process.env.BASE_URL}new-password/${user[0].user_id}/${token[0].token}`;
+            // Example user agent string
+            const userAgentString = req.headers['user-agent'];
+            // Parse the user agent string
+            const agent = useragent_1.default.parse(userAgentString);
+            // Retrieve the browser name
+            const browserName = agent.family;
+            // Retrieve the operating system
+            const operatingSystem = agent.os.toString();
+            console.log(userAgentString);
+            console.log(operatingSystem);
+            readHTMLFile(templateFilePath)
+                .then((templateContent) => {
+                // Define the data for the template variables
+                const templateData = {
+                    name: user[0].name,
+                    email: user[0].email,
+                    browserName,
+                    operatingSystem,
+                    action_url: url
+                };
+                // Render the email template with the data
+                const renderedTemplate = renderEmailTemplate(templateContent, templateData);
+                // Send the email
+                (0, sendEmail_1.default)(user[0].email, "Reset Email", renderedTemplate)
+                    .then(() => {
+                    console.log('Email sent successfully');
+                    res.status(200).send({ message: "Password reset link sent to your email account" });
+                })
+                    .catch((error) => {
+                    console.log('Failed to send email:', error);
+                });
             })
                 .catch((error) => {
-                console.log('Failed to send email:', error);
+                console.log('Failed to read template file:', error);
             });
-        })
-            .catch((error) => {
-            console.log('Failed to read template file:', error);
-        });
+        }
     }
     else {
         res.status(401);
@@ -317,7 +322,7 @@ const verifyResetPassword = (req, res) => __awaiter(void 0, void 0, void 0, func
         console.log(user[0].user_id.toString());
         const resetPasswordLink = `http://localhost:4200/new-password/${user[0].user_id.toString()}/${token[0].token}`;
         res.redirect(resetPasswordLink);
-        res.status(200).send(`http://localhost:4200/new-password/${user._id.toString()}/${token[0].token}`);
+        res.status(200).send(`http://localhost:4200/new-password/${user[0].user_id.toString()}/${token[0].token}`);
     }
     catch (error) {
         console.log(error);
@@ -325,32 +330,28 @@ const verifyResetPassword = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.verifyResetPassword = verifyResetPassword;
-const setNewPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user = yield User.findOne({ _id: req.params.id });
-        if (!user)
-            return res.status(400).send({ message: "Invalid link" });
-        const token = yield Token.findOne({
-            userId: user._id,
-            token: req.params.token,
-        });
-        if (!token)
-            return res.status(400).send({ message: "Invalid link" });
-        // if (!user.verified) return res.status(400).send({ message: "Invalid link" });
-        // $2a$10$NkwMc8U5nV214hHBIQVNau6POGP2R4mv49Lb9cirTLY/Cb96I9sGi
-        if (req.body.password) {
-            user.password = req.body.password;
-        }
-        // const updatedUser = await user.save()
-        // const salt = await bcrypt.genSalt(Number(process.env.SALT));
-        // const hashPassword = await bcrypt.hash(req.body.password, salt);
-        // user.password = hashPassword;
-        yield user.save();
-        yield token.remove();
-        res.status(200).send({ message: "Password reset successfully" });
-    }
-    catch (error) {
-        res.status(500).send({ message: "Internal Server Error" });
-    }
-});
-exports.setNewPassword = setNewPassword;
+//   export const setNewPassword = async (req:Request, res:Response) => {
+//       try {
+//           const user = await User.findOne({ _id: req.params.id });
+//           if (!user) return res.status(400).send({ message: "Invalid link" });
+//           const token = await Token.findOne({
+//               userId: user._id,
+//               token: req.params.token,
+//           });
+//           if (!token) return res.status(400).send({ message: "Invalid link" });
+//           // if (!user.verified) return res.status(400).send({ message: "Invalid link" });
+//       // $2a$10$NkwMc8U5nV214hHBIQVNau6POGP2R4mv49Lb9cirTLY/Cb96I9sGi
+//       if (req.body.password) {
+//         user.password = req.body.password
+//       }
+//       // const updatedUser = await user.save()
+//           // const salt = await bcrypt.genSalt(Number(process.env.SALT));
+//           // const hashPassword = await bcrypt.hash(req.body.password, salt);
+//           // user.password = hashPassword;
+//           await user.save();
+//           await token.remove();
+//           res.status(200).send({ message: "Password reset successfully" });
+//       } catch (error) {
+//           res.status(500).send({ message: "Internal Server Error" });
+//       }
+//   }
