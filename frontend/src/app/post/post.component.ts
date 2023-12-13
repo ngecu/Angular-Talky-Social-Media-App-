@@ -21,7 +21,6 @@ export class PostComponent {
 
   textAreaVisible: boolean = false;
 
-  // Other component methods and properties...
 
   replyToComment(entry:any) {
     this.textArea = `@${entry.author} `;

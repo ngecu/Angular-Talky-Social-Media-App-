@@ -47,7 +47,6 @@ export const createPost = async (req: Request, res: Response) => {
       });
 
       if (result.rowsAffected[0] === 0) {
-        // If media creation fails, throw an error
         throw new Error("Something went wrong, Post Media not created");
       }
 

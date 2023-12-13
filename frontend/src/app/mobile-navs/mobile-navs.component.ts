@@ -21,6 +21,11 @@ export class MobileNavsComponent {
   postFiles: any[] = [];
 postForm!: FormGroup;
 
+storedUser: string | null = localStorage.getItem('user_details');
+user_id:string = ""
+
+
+
   public isLightTheme = true;
   textArea: string = '';
   textArea2: string = '';
@@ -50,6 +55,14 @@ postForm!: FormGroup;
     ).subscribe(() => {
       this.searchUsers();
     });
+
+    if (this.storedUser) {
+      const user = JSON.parse(this.storedUser);
+      this.user_id = user.user_id
+    } else {
+      console.error('User details not found in local storage');
+    }
+
   }
 
   isActive(route: string): boolean {
@@ -109,7 +122,7 @@ postForm!: FormGroup;
             // Create the post
             let details: PostDetails = this.postForm.value;
             details.created_at = new Date().toISOString();
-            details.created_by_user_id = "Robin";
+            details.created_by_user_id = this.user_id;
 
             this.postService.createPost(details).subscribe(
               (response) => {

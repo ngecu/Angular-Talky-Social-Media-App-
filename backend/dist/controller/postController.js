@@ -50,7 +50,6 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 created_at,
             });
             if (result.rowsAffected[0] === 0) {
-                // If media creation fails, throw an error
                 throw new Error("Something went wrong, Post Media not created");
             }
             // Return the created post media ID

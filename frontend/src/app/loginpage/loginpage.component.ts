@@ -37,9 +37,19 @@ export class LoginpageComponent {
 
       this.authService.loginUser(details).subscribe(
         (response) => {
-          console.log(response);
           
-          this.toastr.success('Sign in successfully! Redirecting to Dashboard', 'Success');
+          this.authService.checkDetails().subscribe(
+            (response) => {
+          console.log(response);
+
+              localStorage.setItem('user_details', JSON.stringify(response.info));
+            }
+          )
+          this.toastr.success(`${response.message}`, 'Success');
+  
+          setTimeout( async() => {             
+            this.router.navigate(['/'])
+          }, 2000);
   
 
         },

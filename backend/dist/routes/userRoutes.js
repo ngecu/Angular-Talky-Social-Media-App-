@@ -10,5 +10,7 @@ user_router.get('/check_user_details', verifyToken_1.verifyToken, userController
 user_router.post('/toggleFollowUser', userController_1.toggleFollowUser);
 user_router.post('/getFollowers', userController_1.getFollowers);
 user_router.post('/getFollowings', userController_1.getFollowings);
+user_router.route('/reset-password').post(userController_1.sendRestPassword);
+user_router.route('/change-password/:id/:token').post(userController_1.setNewPassword);
 user_router.get('/', userController_1.getAllUsers);
 exports.default = user_router;

@@ -10,9 +10,25 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./suggestions.component.scss']
 })
 export class SuggestionsComponent {
-  constructor(private route:Router,private toastr: ToastrService,private userService:UserService){}
+  storedUser: string | null = localStorage.getItem('user_details');
+  username : string = ""
+  fullName : string = ""
+  profileImage:string = ""
+
+  constructor(private route:Router,private toastr: ToastrService,private userService:UserService){
+    if (this.storedUser) {
+      const user = JSON.parse(this.storedUser);
+      this.username = user.username
+      this.fullName = user.fullName
+      this.profileImage = user.profileImage
+    } else {
+      console.error('User details not found in local storage');
+    }
+  }
   users: UserDetails[] = [];
   my_user_id = "";
+
+  
   
   ngOnInit() {
     this.userService.getAllUsers().subscribe(

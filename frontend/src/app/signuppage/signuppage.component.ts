@@ -75,6 +75,9 @@ export class SignuppageComponent {
             this.toastr.success('Form submitted successfully! Redirecting to login', 'Success');
             console.log('Form submitted successfully, redirect to login!', details);
     
+            setTimeout( async() => {             
+            this.router.navigate(['/login'])
+          }, 2000);
   
           },
           (error) => {
