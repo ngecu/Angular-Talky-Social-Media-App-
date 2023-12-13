@@ -1,7 +1,3 @@
-USE TALKY
-SELECT * FROM USER
-drop TABLE user
-
 CREATE TABLE comment (
     comment_id VARCHAR(500) PRIMARY KEY,
     created_by_user_id VARCHAR(500) NOT NULL,

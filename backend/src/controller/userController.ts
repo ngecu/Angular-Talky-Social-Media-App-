@@ -309,7 +309,7 @@ export const sendRestPassword = async (req:Request, res:Response) => {
   
   
   
-      const url = `${process.env.BASE_URL}new-password/${user[0].user_id}/${token[0].token}`;
+      const url = `http://localhost:4200/new-password/${user[0].user_id}/${token[0].token}`;
   
       // Example user agent string
       const userAgentString = req.headers['user-agent'];
@@ -330,7 +330,7 @@ export const sendRestPassword = async (req:Request, res:Response) => {
     .then((templateContent) => {
       // Define the data for the template variables
       const templateData = {
-        name: user[0].name,
+        name: user[0].fullName,
         email: user[0].email,
         browserName,
         operatingSystem,

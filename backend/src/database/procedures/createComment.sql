@@ -7,6 +7,6 @@ CREATE OR ALTER PROCEDURE createComment
     @created_at VARCHAR(20)
 AS
 BEGIN
-    INSERT INTO comments (comment_id, created_by_user_id, post_id, comment, comment_replied_to_id, created_at)
+    INSERT INTO comment (comment_id, created_by_user_id, post_id, comment, comment_replied_to_id, created_at)
     VALUES (@comment_id, @created_by_user_id, @post_id, @comment, @comment_replied_to_id, @created_at);
 END

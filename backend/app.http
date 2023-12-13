@@ -80,3 +80,15 @@ Content-Type: application/json
     "created_at":"now"
 }
 
+###
+POST http://localhost:4400/post/comment
+Content-Type: application/json
+
+{
+    "post_id":"696f552d-1720-4dc9-9d9c-3f81569c0498",
+    "created_by_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3",
+    "comment":"This is my first caption",
+    "created_at":"now"
+}
+
+
