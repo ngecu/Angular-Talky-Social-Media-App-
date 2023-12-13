@@ -380,36 +380,35 @@ export  const verifyResetPassword = async (req:Request,res:Response)=>{
       }
   }
   
-//   export const setNewPassword = async (req:Request, res:Response) => {
-//       try {
-  
-//           const user = await User.findOne({ _id: req.params.id });
-//           if (!user) return res.status(400).send({ message: "Invalid link" });
-  
-//           const token = await Token.findOne({
-//               userId: user._id,
-//               token: req.params.token,
-//           });
-//           if (!token) return res.status(400).send({ message: "Invalid link" });
-  
-//           // if (!user.verified) return res.status(400).send({ message: "Invalid link" });
-//       // $2a$10$NkwMc8U5nV214hHBIQVNau6POGP2R4mv49Lb9cirTLY/Cb96I9sGi
-//       if (req.body.password) {
-//         user.password = req.body.password
-//       }
-  
-//       // const updatedUser = await user.save()
-  
-//           // const salt = await bcrypt.genSalt(Number(process.env.SALT));
-//           // const hashPassword = await bcrypt.hash(req.body.password, salt);
-  
-//           // user.password = hashPassword;
-//           await user.save();
-//           await token.remove();
-  
-//           res.status(200).send({ message: "Password reset successfully" });
-//       } catch (error) {
-//           res.status(500).send({ message: "Internal Server Error" });
-//       }
-//   }
+  export const setNewPassword = async (req:Request, res:Response) => {
+    try {
+        const { user_id } = req.params;
+      
+        // Select user information
+        const userResult = await dbHelper.query(`SELECT * FROM users WHERE user_id='${user_id}'`);
+        const user = userResult.recordset[0];
+      
+        if (!user) return res.status(400).send({ message: "Invalid link" });
+      
+        // Select token information
+        const tokenResult = await dbHelper.query(`SELECT * FROM token WHERE user_id = '${user.user_id}'`);
+        const token = tokenResult.recordset[0];
+      
+        if (!token) return res.status(400).send({ message: "Invalid link" });
+      
+        // Update user password if provided in the request body
+        if (req.body.password) {
+          await dbHelper.query(`UPDATE users SET password='${req.body.password}' WHERE user_id='${user.user_id}'`);
+        }
+      
+        // Delete the token
+        await dbHelper.query(`DELETE FROM token WHERE user_id='${user.user_id}'`);
+      
+        res.status(200).send({ message: "Password reset successfully" });
+      } catch (error) {
+        console.error("Error updating user and deleting token:", error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+      
+  }
   
