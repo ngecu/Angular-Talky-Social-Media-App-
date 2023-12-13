@@ -14,9 +14,7 @@ import handlebars from 'handlebars'
 import useragent from 'useragent'
 import sendEmail from '../utils/sendEmail'
 
-// const templateFilePath = "controller/email-template.hbs"
 import path from 'path'
-// const templateFilePath = path.join(__dirname, 'controller', 'email-template.hbs');
 const templateFilePath = path.join(__dirname,"../templates/email-template.hbs")
 
 const readHTMLFile = (path:string) => {
@@ -140,6 +138,63 @@ export const loginUser = async(req:Request, res: Response) =>{
         })
     }
 }
+
+export const updateProfile = async (req: Request, res: Response) => {
+    try {
+      console.log(req.body);
+  
+      let {
+        user_id,
+        newProfileImage,
+        newFullName,
+        newEmail,
+        newPassword,
+        newUsername,
+        newPhoneNo,
+        updated_at,
+      } = req.body;
+  
+      // Check if the user_id is provided
+      if (!user_id) {
+        return res.status(400).json({
+          message: 'User ID is required for updating profile',
+        });
+      }
+  
+      // Hash the new password if provided
+    //   let hashedPwd:string;
+    //   if (newPassword) {
+        // hashedPwd = await bcrypt.hash(newPassword, 5) ;
+    //   }
+  
+      let result = await dbHelper.execute('updateUserProfile', {
+        user_id,
+        newProfileImage,
+        newFullName,
+        newEmail,
+        // newPassword: hashedPwd,
+        newUsername,
+        newPhoneNo,
+        updated_at,
+      });
+  
+      if (result.rowsAffected[0] === 0) {
+        return res.status(404).json({
+          message: 'Something went wrong, Profile not updated',
+        });
+      } else {
+        return res.status(200).json({
+          message: 'Profile updated successfully',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+  
+      return res.status(500).json({
+        error: 'Internal Server Error',
+      });
+    }
+  };
 
 
 export const checkUserDetails = async (req:ExtendedUser, res:Response)=>{

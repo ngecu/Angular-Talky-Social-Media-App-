@@ -1,7 +1,3 @@
-USE TALKY
-SELECT * FROM USER
-drop TABLE user
-
 CREATE TABLE reaction (
     reaction_id VARCHAR(500) PRIMARY KEY,
     user_id VARCHAR(500) ,

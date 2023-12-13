@@ -2,7 +2,6 @@ import { createPostSchema } from "../validators/validators";
 import { Request, Response } from 'express'
 import {v4} from 'uuid'
 import dbHelper from '../dbhelpers/dbhelpers'
-import { forEach } from "lodash";
 import { isEmpty } from 'lodash'
 import mssql from 'mssql'
 import { sqlConfig } from '../config/sqlConfig'
@@ -186,5 +185,162 @@ export const createComment = async (req: Request, res: Response) => {
       });
     }
   };
+
+export const editComment = async (req: Request, res: Response) => {
+    try {
+      console.log(req.body);
   
+      let { comment_id, updated_comment, updated_at } = req.body;
+  
+      // Check if the comment_id is provided
+      if (!comment_id) {
+        return res.status(400).json({
+          message: 'Comment ID is required for editing',
+        });
+      }
+  
+      // Perform a database update to edit the comment
+      let result = await dbHelper.execute('editComment', {
+        comment_id,
+        updated_comment,
+        updated_at,
+      });
+  
+      if (result.rowsAffected[0] === 0) {
+        return res.status(404).json({
+          message: 'Something went wrong, Comment not updated',
+        });
+      } else {
+        return res.status(200).json({
+          message: 'Comment updated successfully',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+  
+      return res.status(500).json({
+        error: 'Internal Server Error',
+      });
+    }
+  };
+
+  export const deleteComment = async (req: Request, res: Response) => {
+    try {
+      console.log(req.body);
+  
+      let { comment_id } = req.params;
+  
+
+      if (!comment_id) {
+        return res.status(400).json({
+          message: 'Comment ID is required for deletion',
+        });
+      }
+  
+
+      let result = await dbHelper.execute('deleteComment', {
+        comment_id,
+      });
+  
+      if (result.rowsAffected[0] === 0) {
+        return res.status(404).json({
+          message: 'Something went wrong, Comment not deleted',
+        });
+      } else {
+        return res.status(200).json({
+          message: 'Comment deleted successfully',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+  
+      return res.status(500).json({
+        error: 'Internal Server Error',
+      });
+    }
+  };
+
+  export const toggleLikePost =  async(req:Request, res: Response) =>{
+    console.log(req.body);
+
+    try {
+        let reaction_id = v4()
+
+        let {user_id, post_id  } = req.body
+        let created_at  = new Date().toISOString();
+ const likeexists = (await dbHelper.query(`SELECT * FROM reaction WHERE user_id = '${user_id}' AND post_id= '${post_id}'`)).recordset
+
+     if(!isEmpty(likeexists)){
+        let result = await dbHelper.execute('unLikePost', {
+          user_id, post_id 
+        })
+
+        if(result.rowsAffected[0] === 0){
+            return res.status(404).json({
+                message: "Something went wrong, Pots not unliked"
+            })
+        }else{
+            return res.status(200).json({
+                message: 'Post Unliked'
+            })
+        }
+    
+    }
+    else{
+
+        let result = await dbHelper.execute('likePost', {
+          reaction_id,user_id, post_id ,created_at
+        })
+        
+        if(result.rowsAffected[0] === 0){
+            return res.status(404).json({
+                message: "Something went wrong, Post not lked"
+            })
+        }else{
+            return res.status(200).json({
+                message: 'Post Liked'
+            })
+        }
+
+    }
+
+    } catch (error) {
+        console.log(error);
+
+        return res.json({
+            error
+        })
+    }
+}
+
+export const getPostLikes = async (req: Request, res: Response) => {
+  try {
+    const { post_id } = req.params; 
+
+    const likes = await dbHelper.query(`
+      SELECT user_id, created_at
+      FROM reaction
+      WHERE post_id = '${post_id}'
+    `);
+
+    // Check if there are any likes for the post
+    if (likes.recordset.length === 0) {
+      return res.status(404).json({
+        message: 'No likes found for the specified post',
+      });
+    }
+
+    // Return the likes information
+    return res.status(200).json({
+      likes: likes.recordset,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      error: 'Internal Server Error',
+    });
+  }
+};
+
+
 
