@@ -1,0 +1,115 @@
+################################################################################################################################
+
+### REGISTER USER
+POST http://localhost:4400/user/register
+Content-Type: application/json
+
+{
+    "profileImage":"https://res.cloudinary.com/dqquyjsap/image/upload/v1702401134/x7uybc4bmysvedyzgbvs.jpg",
+    "fullName":"Rebecca Kariuki",
+    "email": "wanjirubecky.rw@gmail.com",
+    "password": "3W!W.:srzc4r^!P",
+    "username":"becky",
+    "phone_no":"0791885527"
+}
+
+
+### LOGIN USER
+POST http://localhost:4400/user/login
+Content-Type: application/json
+
+{
+    "Email": "devngecu@gmail.com",
+    "Password": "3W!W.:srzc4r^!P"
+}
+
+### TOGGLE SOFT DELETE USER
+PUT http://localhost:4400/user/toggleSoftDeleteUser/64b14daa-ad76-49d8-a5bd-ae298e15dde3
+Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
+
+### UPDATE USER PROFILE
+PUT http://localhost:4400/user/cf8ff26a-fbad-40a8-9bc9-0bb19c1b262f/profile
+Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
+
+{
+       "profileImage":"https://res.cloudinary.com/dqquyjsap/image/upload/v1702401134/x7uybc4bmysvedyzgbvs.jpg",
+    "fullName":"Rebecca Kariuki2",
+    "username":"becky",
+    "phone_no":"0791885527"
+
+}
+
+
+### GET ALL USERS
+GET http://localhost:4400/user
+
+### TOGGLE FOLLOW USER
+POST http://localhost:4400/user/toggleFollowUser
+Content-Type: application/json
+
+{
+   "following_user_id":"b73120f8-6670-4991-9045-85db8962aa56", 
+   "followed_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3",
+    "created_at":"2023-12-12T17:12:18"
+}
+
+## GET FOLLOWERS
+###
+POST http://localhost:4400/user/getFollowers
+Content-Type: application/json
+
+{
+   "followed_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3"
+}
+
+### GET FOLLOWINGS
+POST http://localhost:4400/user/getFollowings
+Content-Type: application/json
+
+{
+   "following_user_id":"dsadasd",
+}
+
+## GET FOLLOWERS
+###
+POST http://localhost:4400/user/reset-password
+Content-Type: application/json
+
+{
+   "Email":"ngecu16@gmail.com"
+}
+
+## following Posts
+###
+GET http://localhost:4400/post/64b14daa-ad76-49d8-a5bd-ae298e15dde3
+
+Content-Type: application/json
+
+
+
+## CREATE POST
+
+POST http://localhost:4400/post/
+Content-Type: application/json
+
+{
+    "created_by_user_id":"weaesdasdsd",
+    "caption":"This is my first caption",
+    "postType":"status",
+    "created_at":"now"
+}
+
+###
+POST http://localhost:4400/post/comment
+Content-Type: application/json
+
+{
+    "post_id":"696f552d-1720-4dc9-9d9c-3f81569c0498",
+    "created_by_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3",
+    "comment":"This is my first caption",
+    "created_at":"now"
+}
+
+

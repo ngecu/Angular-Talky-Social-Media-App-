@@ -100,7 +100,6 @@ export const createPost = async (req: Request, res: Response) => {
   }
 };
 
-
 export const editPost = async (req: Request, res: Response) => {
   try {
     console.log(req.body);
@@ -450,6 +449,3 @@ export const getPostLikes = async (req: Request, res: Response) => {
     });
   }
 };
-
-
-

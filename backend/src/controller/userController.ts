@@ -1,4 +1,4 @@
-import { loginUserSchema, registerUserSchema } from '../validators/validators'
+import { loginUserSchema, registerUserSchema, updateProfileSchema } from '../validators/validators'
 import { Request, Response } from 'express'
 import mssql from 'mssql'
 import {v4} from 'uuid'
@@ -29,7 +29,7 @@ const readHTMLFile = (path:string) => {
     });
   };
   
-  // Function to compile and render the email template
+
   const renderEmailTemplate = (template:any, data:any) => {
     const compiledTemplate = handlebars.compile(template);
     return compiledTemplate(data);
@@ -40,8 +40,8 @@ export const registerUser = async(req:Request, res: Response) =>{
     try {
         console.log(req.body);
         
-        let {profileImage, fullName,email,password,username, phone_no,created_at  } = req.body
-
+        let {profileImage, fullName,email,password,username, phone_no  } = req.body
+        let created_at  = new Date().toISOString();
         let {error} = registerUserSchema.validate(req.body)
 
         if(error){
@@ -140,20 +140,20 @@ export const loginUser = async(req:Request, res: Response) =>{
 }
 
 export const toggleSoftDeleteUser = async (req: Request, res: Response) => {
-    try {
-      console.log(req.body);
-  
+    try {  
       let { user_id } = req.params;
+      
+      console.log(req.params);
+      
   
-      // Check if the user_id is provided
+
       if (!user_id) {
         return res.status(400).json({
           message: 'User ID is required for toggling soft delete',
         });
       }
   
-      // Check the current active status of the user
-      const user = (await dbHelper.query(`SELECT * FROM user WHERE user_id = '${user_id}'`)).recordset[0];
+      const user = (await dbHelper.query(`SELECT * FROM users WHERE user_id = '${user_id}'`)).recordset[0];
   
       if (!user) {
         return res.status(404).json({
@@ -161,13 +161,11 @@ export const toggleSoftDeleteUser = async (req: Request, res: Response) => {
         });
       }
   
-      // Determine the new active status
-      const newActiveStatus = user.active === 1 ? 0 : 1;
+      const active = user.active === 1 ? 0 : 1;
   
-      // Perform a database update to toggle soft delete
       let result = await dbHelper.execute('toggleSoftDeleteUser', {
         user_id,
-        newActiveStatus,
+        active,
       });
   
       if (result.rowsAffected[0] === 0) {
@@ -177,7 +175,7 @@ export const toggleSoftDeleteUser = async (req: Request, res: Response) => {
       } else {
         return res.status(200).json({
           message: `Soft delete toggled successfully for user ${user_id}`,
-          newActiveStatus,
+          active,
         });
       }
     } catch (error) {
@@ -192,40 +190,34 @@ export const toggleSoftDeleteUser = async (req: Request, res: Response) => {
 export const updateProfile = async (req: Request, res: Response) => {
     try {
       console.log(req.body);
-  
+      const {user_id} = req.params
+      let {error} = updateProfileSchema.validate(req.body)
+      if(error){
+        console.log(error);
+        
+        return res.status(404).json({error: error.details})
+    }
       let {
-        user_id,
-        newProfileImage,
-        newFullName,
-        newEmail,
-        newPassword,
-        newUsername,
-        newPhoneNo,
-        updated_at,
+        
+        profileImage,
+        fullName,
+        username,
+        phone_no,
       } = req.body;
   
-      // Check if the user_id is provided
       if (!user_id) {
         return res.status(400).json({
           message: 'User ID is required for updating profile',
         });
       }
   
-      // Hash the new password if provided
-    //   let hashedPwd:string;
-    //   if (newPassword) {
-        // hashedPwd = await bcrypt.hash(newPassword, 5) ;
-    //   }
   
       let result = await dbHelper.execute('updateUserProfile', {
         user_id,
-        newProfileImage,
-        newFullName,
-        newEmail,
-        // newPassword: hashedPwd,
-        newUsername,
-        newPhoneNo,
-        updated_at,
+        profileImage,
+        fullName,
+        username,
+        phone_no
       });
   
       if (result.rowsAffected[0] === 0) {
@@ -408,7 +400,6 @@ export const sendRestPassword = async (req:Request, res:Response) => {
             }
         }
         else{
-        // const token =  crypto.randomBytes(32).toString("hex")
               
           
   

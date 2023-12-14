@@ -7,7 +7,7 @@ export const registerUserSchema = joi.object({
         password: joi.string(),
         confirmPassword: joi.string(),
         username:joi.string(),
-        phone_no: joi.string().min(10),
+        phone_no: joi.number().min(10),
         created_at : joi.string(),
 })
 
@@ -24,4 +24,11 @@ export const createPostSchema = joi.object({
     caption : joi.string(),
     postType: joi.string(),
     created_at : joi.string(),
+})
+
+export const updateProfileSchema = joi.object({
+    profileImage: joi.string(),    
+    fullName: joi.string(),
+    username:joi.string(),
+    phone_no: joi.number().min(10),
 })
