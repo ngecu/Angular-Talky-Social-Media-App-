@@ -2,7 +2,7 @@ CREATE OR ALTER PROCEDURE fetchFollowings
     @following_user_id VARCHAR(255)
 AS
 BEGIN
-    SELECT followed_user_id, created_at
+    SELECT *
     FROM follower
-    WHERE follower_id = @following_user_id;
+    WHERE following_user_id = @following_user_id;
 END

@@ -326,7 +326,7 @@ export const toggleFollowUser =  async(req:Request, res: Response) =>{
 export const getFollowers = async(req:Request, res:Response)=>{
     try {
 
-        let {followed_user_id  } = req.body
+        let {followed_user_id  } = req.params
 
         let followers = (await dbHelper.execute('fetchFollowers', {
             followed_user_id
@@ -348,15 +348,15 @@ export const getFollowers = async(req:Request, res:Response)=>{
 export const getFollowings = async(req:Request, res:Response)=>{
     try {
 
-        let {following_user_id  } = req.body
+        let {following_user_id  } = req.params
 
-        let followers = (await dbHelper.execute('fetchFollowings', {
+        let followings = (await dbHelper.execute('fetchFollowings', {
             following_user_id
         })).recordset
 
      
             return res.status(200).json({
-                followers: followers
+                followings: followings
             })
         }
         
@@ -375,7 +375,9 @@ export const sendRestPassword = async (req:Request, res:Response) => {
     const user = (await dbHelper.query(`SELECT * FROM users WHERE email='${Email}' OR username ='${Email}' OR phone_no = '${Email}'`)).recordset
 
     console.log("user is ",user);  
-    if (user) {
+    if (isEmpty(user)) return res.status(400).send({ message: "No such user details" });
+
+    else {
 
         const token = (await dbHelper.query(`SELECT * FROM token WHERE user_id = '${user[0].user_id}'`)).recordset
 
@@ -451,53 +453,53 @@ export const sendRestPassword = async (req:Request, res:Response) => {
       console.log('Failed to read template file:', error);
     });
 }
-    } else {
-      res.status(401)
-      throw new Error('User Does Not Exist')
     }
   }
   
-export  const verifyResetPassword = async (req:Request,res:Response)=>{
-      try {
-        const {Email } = req.body
-        const user = (await dbHelper.query(`SELECT * FROM users WHERE fullName= ${Email} OR email=${Email} OR username =${Email} OR phone_no = ${Email}`)).recordset
-        if (!user) return res.status(400).send({ message: "Invalid link" });
+// export  const verifyResetPassword = async (req:Request,res:Response)=>{
+//       try {
+//         const {Email } = req.body
+//         const user = (await dbHelper.query(`SELECT * FROM users WHERE fullName= ${Email} OR email=${Email} OR username =${Email} OR phone_no = ${Email}`)).recordset
+//         if (!user) return res.status(400).send({ message: "Invalid link" });
   
-        const token = (await dbHelper.query(`SELECT * FROM token WHERE user_id = ${user[0].user_id}`)).recordset
+//         const token = (await dbHelper.query(`SELECT * FROM token WHERE user_id = ${user[0].user_id}`)).recordset
 
-          if (!token) return res.status(400).send({ message: "Invalid link" });
-      console.log(user[0].user_id.toString())
-      const resetPasswordLink = `http://localhost:4200/new-password/${user[0].user_id.toString()}/${token[0].token}`;
-      res.redirect(resetPasswordLink);
-      res.status(200).send(`http://localhost:4200/new-password/${user[0].user_id.toString()}/${token[0].token}`);
-      } catch (error) {
-      console.log(error)
-          res.status(500).send({ message: "Internal Server Error ",error });
-      }
-  }
+//         if (isEmpty(token)) return res.status(400).send({ message: "Invalid link" });
+//       console.log(user[0].user_id.toString())
+//       const resetPasswordLink = `http://localhost:4200/new-password/${user[0].user_id.toString()}/${token[0].token}`;
+//       res.redirect(resetPasswordLink);
+//       res.status(200).send(`http://localhost:4200/new-password/${user[0].user_id.toString()}/${token[0].token}`);
+//       } catch (error) {
+//       console.log(error)
+//           res.status(500).send({ message: "Internal Server Error ",error });
+//       }
+//   }
   
   export const setNewPassword = async (req:Request, res:Response) => {
     try {
         const { user_id } = req.params;
-      
-        // Select user information
+        const {password} = req.body        
+
         const userResult = await dbHelper.query(`SELECT * FROM users WHERE user_id='${user_id}'`);
         const user = userResult.recordset[0];
+        console.log(user.user_id);
+        
       
-        if (!user) return res.status(400).send({ message: "Invalid link" });
+        if (!user) return res.status(400).send({ message: "User doesn't exist" });
       
-        // Select token information
+
         const tokenResult = await dbHelper.query(`SELECT * FROM token WHERE user_id = '${user.user_id}'`);
         const token = tokenResult.recordset[0];
       
-        if (!token) return res.status(400).send({ message: "Invalid link" });
+        if (isEmpty(token)) return res.status(400).send({ message: "Invalid link" });
       
-        // Update user password if provided in the request body
-        if (req.body.password) {
-          await dbHelper.query(`UPDATE users SET password='${req.body.password}' WHERE user_id='${user.user_id}'`);
+
+        if (password) {
+          const hashedPwd = await bcrypt.hash(password, 5)
+          await dbHelper.query(`UPDATE users SET password='${hashedPwd}' WHERE user_id='${user.user_id}'`);
         }
       
-        // Delete the token
+        
         await dbHelper.query(`DELETE FROM token WHERE user_id='${user.user_id}'`);
       
         res.status(200).send({ message: "Password reset successfully" });
