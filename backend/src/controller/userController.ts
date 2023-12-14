@@ -491,7 +491,7 @@ export const sendRestPassword = async (req:Request, res:Response) => {
         const tokenResult = await dbHelper.query(`SELECT * FROM token WHERE user_id = '${user.user_id}'`);
         const token = tokenResult.recordset[0];
       
-        if (isEmpty(token)) return res.status(400).send({ message: "Invalid link" });
+        if (isEmpty(token)) return res.status(400).send({ message: "Invalid link or token expired" });
       
 
         if (password) {

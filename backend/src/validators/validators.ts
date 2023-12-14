@@ -22,8 +22,7 @@ export const createPostSchema = joi.object({
     postImage: joi.any(),    
     created_by_user_id: joi.string(),
     caption : joi.string(),
-    postType: joi.string(),
-    created_at : joi.string(),
+    postType: joi.string()
 })
 
 export const updateProfileSchema = joi.object({
@@ -32,3 +31,11 @@ export const updateProfileSchema = joi.object({
     username:joi.string(),
     phone_no: joi.number().min(10),
 })
+
+export const updatePostSchema = joi.object({
+    postImage: joi.any(),    
+    created_by_user_id: joi.string(),
+    caption : joi.string(),
+    postType: joi.string()
+})
+

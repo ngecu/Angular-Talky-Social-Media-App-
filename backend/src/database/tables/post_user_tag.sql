@@ -6,7 +6,7 @@ CREATE TABLE post_user_tag (
     created_at VARCHAR(500) NOT NULL,
 
  FOREIGN KEY (post_id) REFERENCES post(post_id),
- FOREIGN KEY (user_id) REFERENCES user(user_id),
+ FOREIGN KEY (user_id) REFERENCES userS(user_id),
 
 
 );

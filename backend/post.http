@@ -1,32 +1,82 @@
-## following Posts
-###
-GET http://localhost:4400/post/64b14daa-ad76-49d8-a5bd-ae298e15dde3
-
-Content-Type: application/json
-
-
-
-## CREATE POST
-
+### CREATE POST
 POST http://localhost:4400/post/
 Content-Type: application/json
 
 {
-    "created_by_user_id":"weaesdasdsd",
+    "postImage":["https://c4.wallpaperflare.com/wallpaper/193/556/883/car-neon-chevrolet-corvette-race-cars-hd-wallpaper-preview.jpg","https://w0.peakpx.com/wallpaper/135/1018/HD-wallpaper-car-sports-car-neon-backlight-asphalt.jpg"],
+    "created_by_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3",
     "caption":"This is my first caption",
-    "postType":"status",
-    "created_at":"now"
+    "postType":"post"
 }
 
-###
+### UPDATE POST
+PUT http://localhost:4400/post/c7c3e30d-6ff6-46e2-b45b-d101f1b0266c
+Content-Type: application/json
+
+{
+    "postImage":["https://c4.wallpaperflare.com/wallpaper/193/556/883/car-neon-chevrolet-corvette-race-cars-hd-wallpaper-preview.jpg","https://w0.peakpx.com/wallpaper/135/1018/HD-wallpaper-car-sports-car-neon-backlight-asphalt.jpg"],
+    "caption":"This is my first caption"
+}
+
+### DELETE POST
+DELETE http://localhost:4400/post/696f552d-1720-4dc9-9d9c-3f81569c0498
+Content-Type: application/json
+
+
+
+#### FOLLOWING POSTS
+GET http://localhost:4400/post/followingPosts/64b14daa-ad76-49d8-a5bd-ae298e15dde3
+Content-Type: application/json
+
+### COMMEMT ON POST
 POST http://localhost:4400/post/comment
 Content-Type: application/json
 
 {
-    "post_id":"696f552d-1720-4dc9-9d9c-3f81569c0498",
+    "post_id":"e09a012f-6946-4e08-aa92-15d872c12034",
+    "created_by_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3",
+    "comment":"This is my first caption"
+}
+
+### COMMEMT ON COMMENT
+POST http://localhost:4400/post/comment
+Content-Type: application/json
+
+{
+    "post_id":"e09a012f-6946-4e08-aa92-15d872c12034",
     "created_by_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3",
     "comment":"This is my first caption",
-    "created_at":"now"
+    "comment_replied_to_id":"527ab3a8-ed89-4040-a80a-cc720383c941"
+}
+
+### EDIT COOMENT 
+PUT http://localhost:4400/post/comment/527ab3a8-ed89-4040-a80a-cc720383c941
+Content-Type: application/json
+
+{
+    "post_id":"e09a012f-6946-4e08-aa92-15d872c12034",
+    "created_by_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3",
+    "comment":"This is my first caption",
+    "comment_replied_to_id":"527ab3a8-ed89-4040-a80a-cc720383c941"
 }
 
 
+### DELETE COmMENT 
+DELETE http://localhost:4400/post/comment/6c62a0b8-d08e-48c8-b3de-196aee5227d3
+Content-Type: application/json
+
+
+
+### TOGGLE LIKE POST
+POST http://localhost:4400/post/toggleLikePost
+Content-Type: application/json
+
+{
+    "post_id":"e09a012f-6946-4e08-aa92-15d872c12034",
+    "user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3"
+}
+
+
+### get Post Likes
+GET http://localhost:4400/post/like/e09a012f-6946-4e08-aa92-15d872c12034
+Content-Type: application/json
