@@ -217,7 +217,9 @@ export const deletePost = async (req: Request, res: Response) => {
       post_id,
     });
 
-    if (result.rowsAffected[0] === 0) {
+    console.log(result);
+    
+    if (result.rowsAffected.length < 1) {
       return res.status(404).json({
         message: 'Something went wrong, Post not deleted',
       });
