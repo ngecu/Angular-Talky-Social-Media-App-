@@ -6,10 +6,10 @@ Content-Type: application/json
 
 {
     "profileImage":"https://res.cloudinary.com/dqquyjsap/image/upload/v1702401134/x7uybc4bmysvedyzgbvs.jpg",
-    "fullName":"Rebecca Kariuki",
-    "email": "wanjirubecky.rw@gmail.com",
-    "password": "3W!W.:srzc4r^!P",
-    "username":"becky",
+    "fullName":"Sandra Mwihaki",
+    "email": "9superbikes@gmail.com",
+    "password": "12345678",
+    "username":"Sandra",
     "phone_no":"0791885527"
 }
 
@@ -19,24 +19,24 @@ POST http://localhost:4400/user/login
 Content-Type: application/json
 
 {
-    "Email": "devngecu@gmail.com",
-    "Password": "3W!W.:srzc4r^!P"
+    "Email": "9superbikes@gmail.com",
+    "Password": "12345678"
 }
 
 ### TOGGLE SOFT DELETE USER
 PUT http://localhost:4400/user/toggleSoftDeleteUser/64b14daa-ad76-49d8-a5bd-ae298e15dde3
 Content-Type: application/json
-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNWM3NGZkYzYtZDU4Zi00ZTQ3LTgxMzItOGVmMWIyMGU5ZWRiIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlNhbmRyYSBNd2loYWtpIiwiZW1haWwiOiI5c3VwZXJiaWtlc0BnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNhbmRyYSIsInBob25lX25vIjoiMDc5MTg4NTUyNyIsImFjdGl2ZSI6MSwiY3JlYXRlZF9hdCI6IjIwMjMtMTItMTVUMDY6MzE6MjUuIiwiaWF0IjoxNzAyNjIxOTA5LCJleHAiOjE3MDI3MDgzMDl9.Z2SzMlK5EQctiz5VoiGyuwVT5rKXoST0-kfW-qTFgK4
 
 ### UPDATE USER PROFILE
-PUT http://localhost:4400/user/cf8ff26a-fbad-40a8-9bc9-0bb19c1b262f/profile
+PUT http://localhost:4400/user/5c74fdc6-d58f-4e47-8132-8ef1b20e9edb/profile
 Content-Type: application/json
 token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
 
 {
-       "profileImage":"https://res.cloudinary.com/dqquyjsap/image/upload/v1702401134/x7uybc4bmysvedyzgbvs.jpg",
-    "fullName":"Rebecca Kariuki2",
-    "username":"becky",
+    "profileImage":"https://res.cloudinary.com/dqquyjsap/image/upload/v1702401134/x7uybc4bmysvedyzgbvs.jpg",
+    "fullName":"Sandra Mwihaki",
+    "username":"sandrA",
     "phone_no":"0791885527"
 
 }
@@ -44,10 +44,13 @@ token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00O
 
 ### GET ALL USERS
 GET http://localhost:4400/user
+Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
 
 ### TOGGLE FOLLOW USER
 POST http://localhost:4400/user/toggleFollowUser
 Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
 
 {
    "following_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3", 
@@ -58,60 +61,30 @@ Content-Type: application/json
 ###
 GET http://localhost:4400/user/getFollowers/64b14daa-ad76-49d8-a5bd-ae298e15dde3
 Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
 
 
 ### GET FOLLOWINGS
 GET http://localhost:4400/user/getFollowings/b73120f8-6670-4991-9045-85db8962aa56
 Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
 
 
 ### SEND RESET PASSWORD TOKEN LINK
 POST http://localhost:4400/user/reset-password
 Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
 
 {
-   "Email":"jkhkj@gmail.com"
+   "Email":"9superbikes@gmail.com"
 }
 
 
 ### SET NEW PASSWORD
 POST http://localhost:4400/user/setNewPassword/b73120f8-6670-4991-9045-85db8962aa56
 Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
 
 {
    "password":"ngecu16@gmail.com"
 }
-
-
-
-###
-GET http://localhost:4400/post/64b14daa-ad76-49d8-a5bd-ae298e15dde3
-
-Content-Type: application/json
-
-
-
-## CREATE POST
-
-POST http://localhost:4400/post/
-Content-Type: application/json
-
-{
-    "created_by_user_id":"weaesdasdsd",
-    "caption":"This is my first caption",
-    "postType":"status",
-    "created_at":"now"
-}
-
-###
-POST http://localhost:4400/post/comment
-Content-Type: application/json
-
-{
-    "post_id":"696f552d-1720-4dc9-9d9c-3f81569c0498",
-    "created_by_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3",
-    "comment":"This is my first caption",
-    "created_at":"now"
-}
-
-

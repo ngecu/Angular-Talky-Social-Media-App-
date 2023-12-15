@@ -299,8 +299,9 @@ export const createComment = async (req: Request, res: Response) => {
         
         console.log("username_tagged is ",username_tagged);
         
-        const userExists = (await dbHelper.query(`SELECT * FROM user WHERE username = '${username_tagged}'`)).recordset;
-
+        const userExists = (await dbHelper.query(`SELECT * FROM users WHERE username = '${username_tagged}'`)).recordset;
+        console.log(userExists);
+        
         if (!isEmpty(userExists)) {
           const user_id = userExists[0].user_id;
           const post_user_tag_id = v4();
