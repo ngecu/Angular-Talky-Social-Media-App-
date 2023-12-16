@@ -28,6 +28,7 @@
     "boxicons": "^2.1.4",
     "ng-emoji-picker": "^6.0.1",
     "ngx-dropzone": "^3.1.0",
+    "ngx-smart-popover": "^1.5.0",
     "ngx-toastr": "^18.0.0",
     "ngx-webcam": "^0.4.1",
     "rxjs": "~7.8.0",

@@ -17,13 +17,15 @@ export class HomepageComponent {
       this.showSpinners = false;
     }, 3000);
 
-    //  // Check if the user is logged in
-    //  const isLoggedIn = localStorage.getItem('isLoggined') === 'true';
+     // Check if the user is logged in
+     const isLoggedIn = localStorage.getItem('isLoggined') === 'true';
 
-    //  // If not logged in, redirect to the login page
-    //  if (!isLoggedIn) {
-    //    this.router.navigate(['/login']);
-    //  }
+     // If not logged in, redirect to the login page
+     if (!isLoggedIn) {
+       this.router.navigate(['/login']);
+     }
+
+     
 
   }
 

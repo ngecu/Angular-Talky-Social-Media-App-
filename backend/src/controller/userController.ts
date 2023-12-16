@@ -103,6 +103,7 @@ export const loginUser = async(req:Request, res: Response) =>{
             const CorrectPwd = await bcrypt.compare(Password, user[0]?.password)
 
             if(!CorrectPwd){   
+              console.log("Incorrect Password");
                 return res.status(401).json({
                     error: "Incorrect password"
                 })
@@ -237,6 +238,40 @@ export const updateProfile = async (req: Request, res: Response) => {
       });
     }
   };
+  
+  export const getUserDetails = async (req: Request, res: Response) => {
+    try {
+      const { user_id } = req.params;
+  
+      if (!user_id) {
+        return res.status(400).json({
+          message: 'User ID is required to fetch user details',
+        });
+      }
+  
+      const result = await dbHelper.execute('getUserDetails', {
+        user_id,
+      });
+  
+      if (result.rowsAffected[0] !== 0) {
+        const userDetails = result.recordset[0];
+        return res.status(200).json({
+          userDetails,
+        });
+      } else {
+        return res.status(404).json({
+          message: 'User not found',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+  
+      return res.status(500).json({
+        error: 'Internal Server Error',
+      });
+    }
+  };
+  
 
 
 export const checkUserDetails = async (req:ExtendedUser, res:Response)=>{

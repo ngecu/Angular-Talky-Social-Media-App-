@@ -2,13 +2,13 @@
     <div class=" d-flex justify-content-start">
         <div class="scroll-container">
         <ul class="list-unstyled mb-0">
-            <li class="list-inline-item" *ngFor="let user of users" style="cursor: pointer;">
-                <button class="btn p-0 m-0" data-bs-toggle="modal" [attr.data-bs-target]="'#user_' + user.id">
+            <li class="list-inline-item" *ngFor="let user of stories" style="cursor: pointer;">
+                <button class="btn p-0 m-0" data-bs-toggle="modal" [attr.data-bs-target]="'#user_' + user.post_id">
                   <div class="d-flex flex-column align-items-center">
                     <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger story-profile-photo">
                       <img [src]="user.profileImage" alt="Profile" style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
                     </div>
-                    <small>{{ user.name }}</small>
+                    <small>{{ user.username }}</small>
                   </div>
                 </button>
               </li>
@@ -19,8 +19,8 @@
     </div>
 </div>
 
-<div *ngFor="let user of users">
-    <div class="modal fade" [id]="'user_' + user.id">
+<div *ngFor="let user of stories">
+    <div class="modal fade" [id]="'user_' + user.post_id">
       <div class="modal-dialog">
         <div class="modal-content">
   
@@ -30,7 +30,7 @@
                 <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger story-profile-photo">
                   <img [src]="user.profileImage" alt="Profile" style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
                 </div>
-                <small>{{ user.name }}</small>
+                <!-- <small>{{ user.creator_username }}</small> -->
               </div>
               
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -39,7 +39,30 @@
           <!-- Modal body -->
           <div class="modal-body p-2">
             <!-- "To:" label and input -->
-            <img [src]="user.img" class="w-100" alt="{{ user.name }}">
+
+            <ng-container >
+              <!-- Carousel for multiple images -->
+              <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                  <li *ngFor="let mediaFile of user.mediaFiles; let i = index" [attr.data-target]="'#carouselExampleIndicators'" [attr.data-slide-to]="i" [class.active]="i === 0"></li>
+                </ol>
+                <div class="carousel-inner">
+                  <div *ngFor="let mediaFile of user.mediaFiles; let i = index" class="carousel-item" [class.active]="i == 0">
+                    <img class="d-block w-100" [src]="mediaFile.media_file" [alt]="'Image ' + (i + 1)">
+                    <!-- Add caption or other content here if needed -->
+                  </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+            </ng-container>
+
           </div>
   
         </div>

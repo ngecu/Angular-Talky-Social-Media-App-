@@ -1,14 +1,13 @@
 import joi from 'joi'
 
 export const registerUserSchema = joi.object({
-        profileImage: joi.string(),    
-        fullName: joi.string(),
-        email : joi.string().email(),
-        password: joi.string(),
-        confirmPassword: joi.string(),
-        username:joi.string(),
-        phone_no: joi.number().min(10),
-        created_at : joi.string(),
+        profileImage: joi.string().required(),    
+        fullName: joi.string().required(),
+        email : joi.string().email().required(),
+        password: joi.string().required(),
+        confirmPassword: joi.string().required(),
+        username:joi.string().required(),
+        phone_no: joi.number().min(10).required(),
 })
 
 

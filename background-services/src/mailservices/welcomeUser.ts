@@ -6,9 +6,11 @@ import { sendMail } from '../helpers/emailHelpers'
 dotenv.config()
 
 export const welcomeUser = async() =>{
+    console.log("sdsdsd");
+    
     const pool = await mssql.connect(sqlConfig)
 
-    const users = await (await pool.request().query('SELECT * FROM Users WHERE welcomed = 0')).recordset
+    const users = await (await pool.request().query('SELECT * FROM users WHERE welcomed = 0')).recordset
 
     console.log(users);
     

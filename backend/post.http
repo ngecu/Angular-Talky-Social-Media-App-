@@ -6,10 +6,21 @@ token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00O
 
 {
     "postImage":["https://c4.wallpaperflare.com/wallpaper/193/556/883/car-neon-chevrolet-corvette-race-cars-hd-wallpaper-preview.jpg","https://w0.peakpx.com/wallpaper/135/1018/HD-wallpaper-car-sports-car-neon-backlight-asphalt.jpg"],
-    "created_by_user_id":"5c74fdc6-d58f-4e47-8132-8ef1b20e9edb",
-    "caption":"This is my first caption today",
-    "postType":"status"
+    "created_by_user_id":"34a5bb26-e5b6-45a1-9041-39054e94707c",
+    "caption":"Saturday vybz and inshallah",
+    "postType":"post"
 }
+
+
+### ALL POSTS
+GET  http://localhost:4400/post/
+
+### POSTS BY USER
+GET http://localhost:4400/post/user/64b14daa-ad76-49d8-a5bd-ae298e15dde3
+Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
+
+
 
 ### UPDATE POST
 PUT http://localhost:4400/post/8562f2e4-d27e-4331-a571-57726ea7a92d
@@ -40,13 +51,13 @@ token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00O
 ### COMMEMT ON POST
 POST http://localhost:4400/post/comment
 Content-Type: application/json
-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMzRhNWJiMjYtZTViNi00NWExLTkwNDEtMzkwNTRlOTQ3MDdjIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjcyNDc4My9nc2ZycDltdjh1Y3Bqb2pld3Bkei5qcGciLCJmdWxsTmFtZSI6IlJvYmluc29uIE5nZWN1IiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xNlQxMTowNjoyMS4iLCJpYXQiOjE3MDI3MzIwMzUsImV4cCI6MTcwMjgxODQzNX0.CUaEOAPMM5f8cX-TocP74AbIhQABt5LlpHD7eRrGs_s
 
 
 {
-    "post_id":"e09a012f-6946-4e08-aa92-15d872c12034",
-    "created_by_user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3",
-    "comment":"This is my first caption"
+    "post_id":"ba4f38b1-7361-4984-9d7f-5335f6d73d1c",
+    "created_by_user_id":"34a5bb26-e5b6-45a1-9041-39054e94707c",
+    "comment":"Sema walaii aki"
 }
 
 ### COMMEMT ON POST AND TAG SOMEONE
@@ -76,7 +87,7 @@ token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00O
 ### COMMEMT ON COMMENT
 POST http://localhost:4400/post/comment
 Content-Type: application/json
-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMzRhNWJiMjYtZTViNi00NWExLTkwNDEtMzkwNTRlOTQ3MDdjIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjcyNDc4My9nc2ZycDltdjh1Y3Bqb2pld3Bkei5qcGciLCJmdWxsTmFtZSI6IlJvYmluc29uIE5nZWN1IiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xNlQxMTowNjoyMS4iLCJpYXQiOjE3MDI3MzIwMzUsImV4cCI6MTcwMjgxODQzNX0.CUaEOAPMM5f8cX-TocP74AbIhQABt5LlpHD7eRrGs_s
 
 
 {
@@ -87,7 +98,7 @@ token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00O
 }
 
 ### EDIT COOMENT 
-PUT http://localhost:4400/post/comment/527ab3a8-ed89-4040-a80a-cc720383c941
+PUT http://localhost:4400/post/comment/12bf9cc2-69db-4810-be4b-da29264e686e
 Content-Type: application/json
 token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
 
@@ -115,8 +126,8 @@ token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00O
 
 
 {
-    "post_id":"e09a012f-6946-4e08-aa92-15d872c12034",
-    "user_id":"64b14daa-ad76-49d8-a5bd-ae298e15dde3"
+    "post_id":"c8bebfd7-d34a-4c09-9caf-128d6759329b",
+    "user_id":"5c74fdc6-d58f-4e47-8132-8ef1b20e9edb"
 }
 
 

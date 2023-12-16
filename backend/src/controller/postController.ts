@@ -198,6 +198,52 @@ export const editPost = async (req: Request, res: Response) => {
   }
 };
 
+export const getAllPosts = async (req: Request, res: Response) => {
+  try {
+    const pool = await mssql.connect(sqlConfig);
+    const result = await pool.request().execute('fetchAllPosts');
+    const posts = result.recordset;
+
+    const postsWithDetails = await Promise.all(posts.map(async (post) => {
+      // Fetch comments
+      const commentsResult = await pool
+        .request()
+        .input('post_id', mssql.VarChar(500), post.post_id)
+        .execute('fetchCommentsByPostId');
+      const comments = commentsResult.recordset;
+
+      // Fetch media files
+      const mediaResult = await pool
+        .request()
+        .input('post_id', mssql.VarChar(500), post.post_id)
+        .execute('fetchMediaByPostId');
+      const mediaFiles = mediaResult.recordset;
+
+      // Fetch likes
+      const likesResult = await pool
+        .request()
+        .input('post_id', mssql.VarChar(500), post.post_id)
+        .execute('fetchLikesByPostId');
+      const likes = likesResult.recordset;
+
+      return {
+        ...post,
+        comments: comments,
+        mediaFiles: mediaFiles,
+        likes: likes,
+      };
+    }));
+
+    return res.status(200).json({
+      posts: postsWithDetails,
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    return res.status(500).json({
+      error: 'Internal Server Error',
+    });
+  } 
+};
 
 export const deletePost = async (req: Request, res: Response) => {
   try {
@@ -236,6 +282,42 @@ export const deletePost = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getPostsByUser = async (req: Request, res: Response) => {
+  try {
+    const { user_id } = req.params;
+
+    if (!user_id) {
+      return res.status(400).json({
+        message: 'User ID is required to fetch posts',
+      });
+    }
+
+    const result = await dbHelper.execute('getPostsByUser', {
+      user_id,
+    });
+
+    console.log(result);
+    
+    if (result.rowsAffected[0] !== 0) {
+      const posts = result.recordset;
+      return res.status(200).json({
+        posts,
+      });
+    } else {
+      return res.status(200).json({
+        posts: [],
+      });
+    }
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({
+      error: 'Internal Server Error',
+    });
+  }
+};
+
 
 export const followingPosts = async (req: Request, res: Response) => {
   try {

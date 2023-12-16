@@ -6,10 +6,10 @@ Content-Type: application/json
 
 {
     "profileImage":"https://res.cloudinary.com/dqquyjsap/image/upload/v1702401134/x7uybc4bmysvedyzgbvs.jpg",
-    "fullName":"Sandra Mwihaki",
-    "email": "9superbikes@gmail.com",
+    "fullName":"Caleb ",
+    "email": "caleb@gmail.com",
     "password": "12345678",
-    "username":"Sandra",
+    "username":"caleb",
     "phone_no":"0791885527"
 }
 
@@ -19,9 +19,15 @@ POST http://localhost:4400/user/login
 Content-Type: application/json
 
 {
-    "Email": "9superbikes@gmail.com",
-    "Password": "12345678"
+    "Email": "devngecu@gmail.com",
+    "Password": "I@mrich254"
 }
+
+###
+GET http://localhost:4400/user/check_user_details
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6ImRmZTI4ZDA3LTJhM2EtNDdmNC05MDBjLWNmMzc2ZTE5OThkYiIsIm5hbWUiOiJEYW5pZWwgS2l0aGVrYSIsImVtYWlsIjoiZGFuQHlvcG1haWwuY29tIiwicm9sZSI6ImVtcGxveWVlIiwiaXNEZWxldGVkIjp0cnVlLCJpYXQiOjE3MDA0NjQwOTIsImV4cCI6MTcwMDU1MDQ5Mn0.q3gT-P3dN8R3pilhSYbJD576jMg1KxN6xKgNNNVMCps
+
 
 ### TOGGLE SOFT DELETE USER
 PUT http://localhost:4400/user/toggleSoftDeleteUser/cf8ff26a-fbad-40a8-9bc9-0bb19c1b262f

@@ -18,9 +18,44 @@ export class PostComponent {
   public openPopup: Function | undefined;
   textArea: string = '';
   textArea2: string = '';
-
+  posts:any[] = []
   textAreaVisible: boolean = false;
+  loggedInuser = ""
+  user_id = ""
 
+  postComment(post: Post) {
+    if (post.comment) {
+      console.log(post);
+      
+      // Assuming you have a service to handle posting comments
+      this.postService.createComment(post,this.user_id).subscribe(
+        (response) => {
+          console.log(response);
+          post.comment = '';
+        },
+        (error) => {
+          console.error('Error posting comment:', error);
+          // Handle error as needed
+        }
+      );
+    }
+  }
+
+  isLoggedInUser(username:string){
+    if(username == this.loggedInuser) console.log("khkj");
+     return 
+  }
+
+  getAllPosts(){
+    this.postService.allPosts().subscribe(
+      (response) => {
+       console.log("response is ",response.posts);
+       this.posts = response.posts.filter(post => post.postType == "post");
+       
+       
+      }
+    )
+  }
 
   replyToComment(entry:any) {
     this.textArea = `@${entry.author} `;
@@ -28,7 +63,7 @@ export class PostComponent {
   }
 
 
-  editextArea(author: string) {
+  editTextArea(author: string) {
     this.textArea = `${author} `;
     this.textAreaVisible = true;
   }
@@ -37,24 +72,7 @@ export class PostComponent {
       this.openPopup = fn;
   }
 
-  postComment(post: Post){
-    console.log(this.textArea2);
-    const comment_body = {
-      created_by_user_id:"Robin",
-      post_id:post.id,
-      comment : this.textArea2,
-      comment_replied_to_id:"",
-      created_at:new Date().toISOString()
-    }
-    this.postService.createComment(comment_body).subscribe(
-      (response) => {
-        post.comments.length = post.comments.length + 1
-        this.toastr.success("response", 'Success');
-      }
-    )
 
-
-  }
 
   onEnterFunction(){
 
@@ -68,89 +86,22 @@ export class PostComponent {
   }
 
 
-  posts: Post[] = [
-    {
-     id:"1",
-      username: 'Jonathan Mwaniki',
-
-      verified:true,
-      profileImage: 'assets/images/profiles/profile-1.jpg',
-      timeAgo: '3 days',
-      images: [
-        'https://www.hdcarwallpapers.com/walls/super_sports_cars-HD.jpg',
-        'https://www.hdcarwallpapers.com/walls/super_sports_cars-HD.jpg',
-        'https://www.hdcarwallpapers.com/walls/super_sports_cars-HD.jpg'
-      ],
-      likes: 365354,
-      description: 'Swipe 😂😂 #memes',
-      comments: ['Comment 1', 'Comment 2'],
-      isLiked: false,
-      isBookmarked: false
-    },
-
-    {
-      id:"2",
-      username: 'Dev Ngecu',
-      verified:false,
-      profileImage: 'assets/images/profiles/profile-1.jpg',
-      timeAgo: '3 days ago',
-      images: [
-        'https://www.hdcarwallpapers.com/walls/super_sports_cars-HD.jpg',      ],
-      likes: 365354,
-      description: 'Lil drone shot I got a while back but never posted.',
-      comments: ['Comment 1', 'Comment 2'],
-      isLiked: false,
-      isBookmarked: false
-    },
-
-    {
-      id:"3",
-      username: 'Marioo',
-      verified:true,
-      profileImage: 'assets/images/profiles/profile-1.jpg',
-      timeAgo: '3 days',
-      images: [
-        'assets/video/1.mp4'
-            ],
-      likes: 365354,
-      description: 'Lil drone shot I got a while back but never posted.',
-      comments: ['Comment 1', 'Comment 2'],
-      isLiked: false,
-      isBookmarked: false
-    },
-
-    {
-      id:"4",
-      username: 'Marioo',
-      verified:true,
-      profileImage: 'assets/images/profiles/profile-1.jpg',
-      timeAgo: '3 days',
-      images: [],
-      likes: 365354,
-      description: 'Lil drone shot I got a while back but never posted.',
-      comments: ['Comment 1', 'Comment 2'],
-      isLiked: false,
-      isBookmarked: false
-    },
-
-    
-
-    // Add more posts as needed
-  ];
 
   toggleLike(post: Post): void {
-    post.isLiked = !post.isLiked;
-    post.likes += post.isLiked ? 1 : -1;
+    // post.isLiked = !post.isLiked;
+    // post.likes += post.isLiked ? 1 : -1;
     this.toastr.success('Likes Updated', 'Success');
 
   }
 
   addComment(post: Post, comment: string): void {
-    post.comments.push(comment);
+    console.log("hgj");
+    
+    // post.comments.push(comment);
   }
 
   toggleBookmark(post: Post): void {
-    post.isBookmarked = !post.isBookmarked;
+    // post.isBookmarked = !post.isBookmarked;
     this.toastr.success('Bookmark Updated', 'Success');
 
   }
@@ -195,7 +146,15 @@ export class PostComponent {
     ).subscribe(() => {
       this.searchUsers();
     });
-    
+    this.getAllPosts()
+
+    const storedUser = localStorage.getItem('user_details');
+    if(storedUser){
+      const user = JSON.parse(storedUser);
+      this.loggedInuser = user.username
+      this.user_id = user.user_id
+
+    }
   }
 
 

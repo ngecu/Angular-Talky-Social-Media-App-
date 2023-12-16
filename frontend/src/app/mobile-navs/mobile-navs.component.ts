@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CloudinaryuploadService } from '../services/cloudinaryupload.service';
 import { PostDetails } from '../interfaces/post';
 import { PostService } from '../services/post.service';
-
+import {PopoverModule} from "ngx-smart-popover";
 @Component({
   selector: 'app-mobile-navs',
   templateUrl: './mobile-navs.component.html',
@@ -20,6 +20,7 @@ export class MobileNavsComponent {
   files: any[] = [];
   postFiles: any[] = [];
 postForm!: FormGroup;
+html: string = `<h1>Heading h1</h1><h2>Heading h2</h2><h3>Heading h3</h3><h4>Heading h4</h4><h5>Heading h5</h5><h6>Heading h6</h6>`;
 
 storedUser: string | null = localStorage.getItem('user_details');
 user_id:string = ""
@@ -101,48 +102,71 @@ user_id:string = ""
   
     if (this.postForm.valid) {
       const imageUrls: string[] = [];
-    
-      // Upload all images
-      for (let index = 0; index < this.postFiles.length; index++) {
-        const data = new FormData();
-        const file_data = this.postFiles[index];
-        data.append('file', file_data);
-        data.append('upload_preset', 'f3gqwyzn');
-        data.append('cloud_name', 'dqquyjsap');
-    
-        this.upload.uploadImage(data).subscribe((res) => {
-          console.log(res.secure_url);
-          imageUrls.push(res.secure_url);
-    
-          // If all images are uploaded, proceed to createPost
-          if (imageUrls.length === this.postFiles.length) {
-            // Set the array of image URLs in the form
-            this.postForm.value.postImage = imageUrls ;
-    
-            // Create the post
-            let details: PostDetails = this.postForm.value;
-            details.created_at = new Date().toISOString();
-            details.created_by_user_id = this.user_id;
+    if(this.postFiles.length > 0 ){
+   // Upload all images
+   for (let index = 0; index < this.postFiles.length; index++) {
+    const data = new FormData();
+    const file_data = this.postFiles[index];
+    data.append('file', file_data);
+    data.append('upload_preset', 'f3gqwyzn');
+    data.append('cloud_name', 'dqquyjsap');
 
-            this.postService.createPost(details).subscribe(
-              (response) => {
-                console.log(response);
-                this.toastr.success('Form submitted successfully!', 'Success');
-    
-                // Clear the form or take other actions as needed
-                this.postForm.reset();
-                this.postFiles = []; // Clear the array of uploaded files
-    
-              },
-              (error) => {
-                // Handle error
-                this.toastr.error(`${error}`, 'Error');
-                console.error('Error submitting form:', error);
-              }
-            );
+    this.upload.uploadImage(data).subscribe((res) => {
+      console.log(res.secure_url);
+      imageUrls.push(res.secure_url);
+
+      // If all images are uploaded, proceed to createPost
+      if (imageUrls.length === this.postFiles.length) {
+        // Set the array of image URLs in the form
+        this.postForm.value.postImage = imageUrls ;
+
+        // Create the post
+        let details: PostDetails = this.postForm.value;
+        details.created_by_user_id = this.user_id;
+
+        this.postService.createPost(details).subscribe(
+          (response) => {
+            console.log(response);
+            this.toastr.success('Form submitted successfully!', 'Success');
+
+            // Clear the form or take other actions as needed
+            this.postForm.reset();
+            this.postFiles = []; // Clear the array of uploaded files
+
+          },
+          (error) => {
+            // Handle error
+            this.toastr.error(`${error}`, 'Error');
+            console.error('Error submitting form:', error);
           }
-        });
+        );
       }
+    });
+  }
+    }
+    else{
+
+              let details: PostDetails = this.postForm.value;
+              details.created_by_user_id = this.user_id;
+       this.postForm.value.postImage = [] ;
+              this.postService.createPost(details).subscribe(
+                (response) => {
+                  console.log(response);
+                  this.toastr.success('Form submitted successfully!', 'Success');
+      
+                  // Clear the form or take other actions as needed
+                  this.postForm.reset();
+                  this.postFiles = []; // Clear the array of uploaded files
+      
+                },
+                (error) => {
+                  // Handle error
+                  this.toastr.error(`${error}`, 'Error');
+                  console.error('Error submitting form:', error);
+                }
+              );
+    }
+   
     }
     
 

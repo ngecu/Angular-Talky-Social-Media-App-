@@ -194,32 +194,36 @@
                           <div class="col-12">
                             <label for="postType">Post Type</label>
                             <select class="form-control" formControlName="postType" id="postType">
-                              <option value="Post">Post</option>
+                              <option value="post">Post</option>
                               <option value="Status">Status</option>
                             </select>
                           </div>
                   
-                          <div class="col-12">
-                            <label for="caption">Caption</label>
-                            <textarea class="w-100 p-3 input-post" placeholder="Add a comment..." formControlName="caption"></textarea>
-                            <div class="input-group-append">
-                              <button data-toggle="collapse" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#emoji" aria-expanded="false" type="button">😀</button>
+
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="form-group">
+                                <input type="text" class="form-control w-100 p-3 input-post" placeholder="Add a comment..." formControlName="caption">
+                              </div>
                             </div>
+                            <!-- <div class="col-2">
+                              <div class="input-group">
+                                <div class="input-group-append">
+                                  <button data-toggle="collapse" class="btn" data-bs-toggle="collapse" data-bs-target="#emoji" aria-expanded="false" type="button">😀</button>
+                                </div>
+                                <div id="emoji" class="collapse">
+                                  <div class="form-group">
+                                    <emoji-mart
+                                      class="emoji-mart w-100"
+                                      (emojiSelect)="addEmoji($event)"
+                                      title="Choose your emoji"
+                                    ></emoji-mart>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> -->
                           </div>
-                  
-                          <div id="emoji" class="collapse">
-                            <div class="row">
-                              <div class="col-12">
-                                <emoji-mart
-                                class="emoji-mart w-100"
-                                
-                                (emojiSelect)="addEmoji($event)"
-                                title="Choose your emoji"
-                              ></emoji-mart>
-                            
-                            </div>
-                            </div>
-                          </div>
+                          
                   
                           <div class="col-12">
                             <button type="submit" class="btn btn-primary btn-block w-100">Share</button>

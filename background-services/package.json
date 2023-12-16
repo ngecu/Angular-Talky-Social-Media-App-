@@ -2,11 +2,11 @@
   "name": "background-services",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:build": "tsc -w",
-    "start:run": "nodemon dist/server.js",
+    "start:run": "nodemon ts-node src/server.ts",
     "start": "concurrently npm:start:*"
   },
   "keywords": [],

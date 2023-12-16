@@ -41,6 +41,8 @@ export class LoginpageComponent {
           this.authService.checkDetails().subscribe(
             (response) => {
           console.log(response);
+          
+          localStorage.setItem('isLoggined', `${true}`);
 
               localStorage.setItem('user_details', JSON.stringify(response.info));
             }
@@ -55,7 +57,7 @@ export class LoginpageComponent {
         },
         (error) => {
           // Handle error
-          this.toastr.error(`${error}`, 'Error');
+          this.toastr.error(`${error.error.error}`, 'Error');
 
           console.error('Error submitting form:', error);
         }

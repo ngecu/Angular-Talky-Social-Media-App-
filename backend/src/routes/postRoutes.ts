@@ -1,19 +1,24 @@
 import { Router } from "express";
-import { createComment, createPost, deleteComment, deletePost, editComment, editPost, followingPosts, getPostLikes, toggleLikePost } from "../controller/postController";
+import { createComment, createPost, deleteComment, deletePost, editComment, editPost, followingPosts, getAllPosts, getPostLikes, getPostsByUser, toggleLikePost } from "../controller/postController";
 import { verifyToken } from "../middlewares/verifyToken";
 
 
 const post_router = Router()
 
 post_router.post('/', createPost)
+post_router.get('/', getAllPosts)
+
+post_router.get('/:post_id',verifyToken, followingPosts)
+
 post_router.put('/:post_id',verifyToken, editPost);
 post_router.delete('/:post_id',verifyToken, deletePost);
 
 post_router.get('/followingPosts/:following_user_id',verifyToken, followingPosts)
+
 post_router.post('/comment',verifyToken, createComment)
 post_router.post('/toggleLikePost',verifyToken, toggleLikePost)
 post_router.get('/like/:post_id',verifyToken, getPostLikes)
-
+post_router.get('/user/:user_id',verifyToken, getPostsByUser)
 
 post_router.put('/comment/:comment_id',verifyToken, editComment);
 post_router.delete('/comment/:comment_id',verifyToken, deleteComment);

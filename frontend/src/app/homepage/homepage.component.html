@@ -1,35 +1,38 @@
-<app-mobile-navs></app-mobile-navs>
-<div class="container-fluid">
-
+<div class="my-2">
+  <app-mobile-navs></app-mobile-navs>
+  <div class="container-fluid">
   
-    <div class="row">
-
-
-  <app-sidebar  class="col-md-2 col-sm-0 d-md-block sidebar" style="border-right: solid 1px #DBDBDB;"></app-sidebar>
-
-  <div *ngIf="showSpinners">
-    <div class="container d-flex justify-content-center">
-     <span class="loader"></span>
+    
+      <div class="row">
+  
+  
+    <app-sidebar  class="col-md-2 d-md-block sidebar" style="border-right: solid 1px #DBDBDB;"></app-sidebar>
+  
+    <div *ngIf="showSpinners">
+      <div class="container d-flex justify-content-center">
+       <span class="loader"></span>
+     </div>
    </div>
- </div>
- <div *ngIf="!showSpinners" class="col-md-10 col-sm-12">
-    <main class="w-100">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8 col-sm-12">
-            <app-story></app-story>
-            <app-post style="margin: 0 0;"></app-post>
+   <div *ngIf="!showSpinners" class="col-md-10">
+      <main class="w-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-sm-12">
+              <app-story></app-story>
+              <app-post style="margin: 0 0;"></app-post>
+            </div>
+            <div class="col-md-4 col-sm-12">
+              <app-suggestions id="suggestion-selector"></app-suggestions>
+            </div>
           </div>
-          <div class="col-md-4 col-sm-12">
-            <app-suggestions id="suggestion-selector"></app-suggestions>
-          </div>
-        </div>
-        
+          
+      </div>
+      </main>
     </div>
-    </main>
+  </div>
   </div>
 </div>
-</div>
+
 
 
 
