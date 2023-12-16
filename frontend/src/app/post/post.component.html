@@ -123,7 +123,7 @@
                     <input class="w-100 border-0 p-3 input-post" placeholder="Add a comment..."
                            type="text" [name]="'textarea2_' + i"
                            [(ngModel)]="post.comment">
-                    <button (click)="postComment(post,'sdfsdff')" class="btn btn-primary position-absolute btn-ig">Post</button>
+                    <button (click)="postComment(post)" class="btn btn-primary position-absolute btn-ig">Post</button>
                   </form>
                 </div>
                 
@@ -144,17 +144,7 @@
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
   
-          <!-- Modal Header -->
-          <div class="modal-header text-center">
-            <div class="d-flex flex-column align-items-center">
-                <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger story-profile-photo">
-                  <img [src]="post.profileImage" alt="Profile" style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
-                </div>
-                <small>{{ post.creator_username }}</small>
-              </div>
-              
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
+       
   
           <!-- Modal body -->
           <div class="modal-body p-2">
@@ -248,7 +238,7 @@
                                       edit 
                                     </small>
                                 
-                                    <small class="text-muted mx-2" (click)="deleteEntry(entry)" style="cursor: pointer;">
+                                    <small class="text-muted mx-2" (click)="deleteEntry(entry.comment_id,i)" style="cursor: pointer;">
                                      delete
                                     </small>
                                   </p>
@@ -294,20 +284,7 @@
          
           </div>
       </div>
-  
-                 
-      <!-- Number of likes -->
-    
-  
-      <!-- Input with emoji button selector -->
-      <div class="input-group mt-3">
-        <input class="w-100 border-0 p-3 input-post" placeholder="Add a comment..."
-        type="text" [name]="'textarea2_' + i"
-        [(ngModel)]="post.comment">
- <button (click)="postComment(post,'hjgjhgj')" class="btn btn-primary position-absolute btn-ig">Post</button>
-
-      </div>
-     
+       
     </div>
   </div>  
 </div>

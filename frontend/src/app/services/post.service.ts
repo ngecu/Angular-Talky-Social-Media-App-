@@ -59,4 +59,14 @@ export class PostService {
     return this.http.put<Post>(`http://localhost:4400/post/comment${comment_id}`, commentData, { headers });
   }
 
+  deleteComment(comment_id:string){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': `${localStorage.getItem('token')}`, // Add the token from localStorage
+    });
+
+    return this.http.delete<Post>(`http://localhost:4400/post/comment/${comment_id}`, { headers });
+
+  }
+
 }

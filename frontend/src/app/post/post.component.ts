@@ -23,51 +23,18 @@ export class PostComponent {
   loggedInuser = ""
   user_id = ""
   editingCommentIndex!: number 
-  // postComment(post: Post) {
-  //   if (post.comment) {
-  //     console.log(post);
+  postComment(post: Post) {
+    if (post.comment) {
+      console.log(post);
       
-  //     // Assuming you have a service to handle posting comments
-  //     this.postService.createComment(post,this.user_id).subscribe(
-  //       (response) => {
-  //         console.log(response);
-  //         post.comment = '';
-  //         this.getAllPosts()
-  //         this.toastr.success('Comment added', 'Success');
-
-  //       },
-  //       (error) => {
-  //         console.error('Error posting comment:', error);
-  //         // Handle error as needed
-  //       }
-  //     );
-  //   }
-  // }
-
-  postComment(post: Post,comment_id:string) {
-    if (this.editingCommentIndex !== null) {
-      // You are in edit mode, handle update logic here
-      const editedPost = { ...post }; // Create a copy to avoid modifying the original post
-      editedPost.comment = post.comment; // Assuming commentText is the property where the edited comment is stored
-      this.postService.updateComment(editedPost,comment_id).subscribe(
-        (response) => {
-          // Assuming the server returns the updated post
-          if (this.editingCommentIndex) {
-            this.posts[this.editingCommentIndex] = response;
-  
-          }
-        },
-        (error) => {
-          console.error('Error updating comment:', error);
-          // Handle error as needed
-        }
-      );
-    } else {
-      // You are in normal comment mode, handle post logic here
+      // Assuming you have a service to handle posting comments
       this.postService.createComment(post,this.user_id).subscribe(
         (response) => {
-          // Assuming the server returns the newly created post
-          this.posts.push(response);
+          console.log(response);
+          post.comment = '';
+          this.getAllPosts()
+          this.toastr.success('Comment added', 'Success');
+
         },
         (error) => {
           console.error('Error posting comment:', error);
@@ -76,6 +43,39 @@ export class PostComponent {
       );
     }
   }
+
+  // postComment(post: Post,comment_id:string) {
+  //   if (this.editingCommentIndex !== null) {
+  //     // You are in edit mode, handle update logic here
+  //     const editedPost = { ...post }; // Create a copy to avoid modifying the original post
+  //     editedPost.comment = post.comment; // Assuming commentText is the property where the edited comment is stored
+  //     this.postService.updateComment(editedPost,comment_id).subscribe(
+  //       (response) => {
+  //         // Assuming the server returns the updated post
+  //         if (this.editingCommentIndex) {
+  //           this.posts[this.editingCommentIndex] = response;
+  
+  //         }
+  //       },
+  //       (error) => {
+  //         console.error('Error updating comment:', error);
+  //         // Handle error as needed
+  //       }
+  //     );
+  //   } else {
+  //     // You are in normal comment mode, handle post logic here
+  //     this.postService.createComment(post,this.user_id).subscribe(
+  //       (response) => {
+  //         // Assuming the server returns the newly created post
+  //         this.posts.push(response);
+  //       },
+  //       (error) => {
+  //         console.error('Error posting comment:', error);
+  //         // Handle error as needed
+  //       }
+  //     );
+  //   }
+  // }
 
 
   isLoggedInUser(username:string){
@@ -91,6 +91,7 @@ export class PostComponent {
        
        
       }
+     
     )
   }
 
@@ -173,10 +174,25 @@ export class PostComponent {
   ];
 
 
-  deleteEntry(entry: any) {
+  deleteEntry(comment_id: string, index: number) {
     // Implement your delete logic here
-    this.discussionData.splice(entry);
+    console.log("delete");
+    this.postService.deleteComment(comment_id).subscribe(
+      (response) => {
+        console.log(response);
+  
+        // Remove the deleted comment from the array
+        this.posts[index].comments.splice(index, 1);
+        this.toastr.success('Comment deleted', 'Success');
+
+      },
+      (error) => {
+        console.error(error, error);
+        // Handle error as needed
+      }
+    );
   }
+  
 
   constructor(private router: Router,private toastr: ToastrService,private postService:PostService) {
     this.searchSubject.pipe(
