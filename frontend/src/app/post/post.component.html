@@ -123,7 +123,7 @@
                     <input class="w-100 border-0 p-3 input-post" placeholder="Add a comment..."
                            type="text" [name]="'textarea2_' + i"
                            [(ngModel)]="post.comment">
-                    <button (click)="postComment(post)" class="btn btn-primary position-absolute btn-ig">Post</button>
+                    <button (click)="postComment(post,'sdfsdff')" class="btn btn-primary position-absolute btn-ig">Post</button>
                   </form>
                 </div>
                 
@@ -139,7 +139,7 @@
 </div>
 
 
-<div *ngFor="let post of posts">
+<div *ngFor="let post of posts;;let i = index">
     <div class="modal fade" [id]="'post_' + post.post_id">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -237,26 +237,22 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                   <p class="mb-1">
                                     <span class="font-weight-bold">{{ entry.comment_creator_username }}</span>
-                                    <span class="small"> -  {{ entry.comment }}    <a class="text-warning mx-2" (click)="editTextArea(entry)">
-                                      <i class="fa-solid fa-pen-to-square"></i> 
-                                    </a>
-                                
-                                    <a class="text-danger mx-2" (click)="deleteEntry(entry)">
-                                      <i class="fa-solid fa-pen-to-square"></i> 
-                                    </a></span>
+                                    <span class="small">   {{ entry.comment }}</span>
                                   </p>
-                              
-                                  <!-- Display edit and delete buttons for the logged-in user -->
-                                  <div *ngIf="isLoggedInUser(entry.comment_creator_username)" class="d-flex">
-                                    <a style="cursor: pointer; text-decoration: none;" class="text-warning mx-2" (click)="editTextArea(entry)">
-                                      <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                    <a style="cursor: pointer; text-decoration: none;" class="text-danger mx-2" (click)="deleteEntry(entry)">
-                                      <i class="fa-solid fa-pen-to-square"></i> 
-                                    </a>
-                                  </div>
+
                                 </div>
                               
+                                <div>
+                                  <p class="text-muted">
+                                    <small class="text-muted mx-2" (click)="editTextArea(post, i)" style="cursor: pointer;">
+                                      edit 
+                                    </small>
+                                
+                                    <small class="text-muted mx-2" (click)="deleteEntry(entry)" style="cursor: pointer;">
+                                     delete
+                                    </small>
+                                  </p>
+                                </div>
                                
                               </div>
                               
@@ -305,11 +301,10 @@
   
       <!-- Input with emoji button selector -->
       <div class="input-group mt-3">
-        <input class="w-100 border-0 p-3 input-post" placeholder="Add a comment..." 
-        type="text"
-        name="textarea2"
-        [(ngModel)]="textArea2">
-        <button (click)="postComment(post)" class="btn btn-primary position-absolute btn-ig">Post</button>
+        <input class="w-100 border-0 p-3 input-post" placeholder="Add a comment..."
+        type="text" [name]="'textarea2_' + i"
+        [(ngModel)]="post.comment">
+ <button (click)="postComment(post,'hjgjhgj')" class="btn btn-primary position-absolute btn-ig">Post</button>
 
       </div>
      

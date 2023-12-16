@@ -22,16 +22,52 @@ export class PostComponent {
   textAreaVisible: boolean = false;
   loggedInuser = ""
   user_id = ""
-
-  postComment(post: Post) {
-    if (post.comment) {
-      console.log(post);
+  editingCommentIndex!: number 
+  // postComment(post: Post) {
+  //   if (post.comment) {
+  //     console.log(post);
       
-      // Assuming you have a service to handle posting comments
+  //     // Assuming you have a service to handle posting comments
+  //     this.postService.createComment(post,this.user_id).subscribe(
+  //       (response) => {
+  //         console.log(response);
+  //         post.comment = '';
+  //         this.getAllPosts()
+  //         this.toastr.success('Comment added', 'Success');
+
+  //       },
+  //       (error) => {
+  //         console.error('Error posting comment:', error);
+  //         // Handle error as needed
+  //       }
+  //     );
+  //   }
+  // }
+
+  postComment(post: Post,comment_id:string) {
+    if (this.editingCommentIndex !== null) {
+      // You are in edit mode, handle update logic here
+      const editedPost = { ...post }; // Create a copy to avoid modifying the original post
+      editedPost.comment = post.comment; // Assuming commentText is the property where the edited comment is stored
+      this.postService.updateComment(editedPost,comment_id).subscribe(
+        (response) => {
+          // Assuming the server returns the updated post
+          if (this.editingCommentIndex) {
+            this.posts[this.editingCommentIndex] = response;
+  
+          }
+        },
+        (error) => {
+          console.error('Error updating comment:', error);
+          // Handle error as needed
+        }
+      );
+    } else {
+      // You are in normal comment mode, handle post logic here
       this.postService.createComment(post,this.user_id).subscribe(
         (response) => {
-          console.log(response);
-          post.comment = '';
+          // Assuming the server returns the newly created post
+          this.posts.push(response);
         },
         (error) => {
           console.error('Error posting comment:', error);
@@ -40,6 +76,7 @@ export class PostComponent {
       );
     }
   }
+
 
   isLoggedInUser(username:string){
     if(username == this.loggedInuser) console.log("khkj");
@@ -63,9 +100,11 @@ export class PostComponent {
   }
 
 
-  editTextArea(author: string) {
-    this.textArea = `${author} `;
-    this.textAreaVisible = true;
+  editTextArea(entry: Post, index: number) {
+    // Set the comment text to the post being edited
+    entry.comment = entry.comment;
+    // Set the editingCommentIndex to indicate that you are in edit mode
+    this.editingCommentIndex = index;
   }
 
   setPopupAction(fn: any) {
@@ -182,5 +221,4 @@ export class PostComponent {
     return url.toLowerCase().endsWith('.mp4');
   }
   
-
 }
