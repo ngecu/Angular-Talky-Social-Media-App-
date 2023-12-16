@@ -130,6 +130,23 @@ export class PostComponent {
   toggleLike(post: Post): void {
     // post.isLiked = !post.isLiked;
     // post.likes += post.isLiked ? 1 : -1;
+
+    
+
+    this.postService.toggleLikePost(post.post_id,this.user_id).subscribe(
+      (response) => {
+        console.log(response);
+        post.comment = '';
+        this.getAllPosts()
+        this.toastr.success(`${response}`, 'Success');
+
+      },
+      (error) => {
+        console.error('Error posting comment:', error);
+        // Handle error as needed
+      }
+    );
+
     this.toastr.success('Likes Updated', 'Success');
 
   }

@@ -69,4 +69,19 @@ export class PostService {
 
   }
 
+  toggleLikePost(post_id:string,user_id:string): Observable<Post> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': `${localStorage.getItem('token')}`, // Add the token from localStorage
+    });
+
+    const postData = {
+      post_id: post_id,
+      user_id: user_id,
+    };
+
+    return this.http.post<Post>(`http://localhost:4400/post/toggleLikePost`,postData, { headers });
+
+  }
+
 }
