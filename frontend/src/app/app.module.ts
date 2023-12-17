@@ -30,6 +30,7 @@ import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { HttpClientModule } from '@angular/common/http';
 import { MobileNavsComponent } from './mobile-navs/mobile-navs.component';
+import { PostpageComponent } from './postpage/postpage.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MobileNavsComponent } from './mobile-navs/mobile-navs.component';
     ProfilepageComponent,
     SignuppageComponent,
     ForgetpwdComponent,
-    MobileNavsComponent
+    MobileNavsComponent,
+    PostpageComponent
   ],
   imports: [
     BrowserModule,

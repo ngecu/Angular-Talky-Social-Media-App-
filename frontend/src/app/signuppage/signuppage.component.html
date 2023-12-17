@@ -18,7 +18,7 @@
                    
                     <div class="col-12">
                       <div class="form-group">
-                        <ngx-dropzone (change)="onSelect($event)">
+                        <ngx-dropzone data-cy="profilepic" (change)="onSelect($event)">
                           <ngx-dropzone-label>Drop Profile Image</ngx-dropzone-label>
                           <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
                               <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
@@ -36,35 +36,35 @@
 
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="text" class="form-control" id="yourName" placeholder="Phone Number"  formControlName="phone_no" />
+                        <input type="text" class="form-control" id="yourName" placeholder="Phone Number" data-cy="phone_no"  formControlName="phone_no" />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Full Name"  formControlName="fullName" />
-                      </div>
-                    </div>
-                  
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Username" value="@" formControlName="username" />
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email address" formControlName="email"  />
+                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Full Name" data-cy="fullName"  formControlName="fullName" />
                       </div>
                     </div>
                   
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" formControlName="password" />
+                        <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Username" value="@" data-cy="username" formControlName="username" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email address" data-cy="email" formControlName="email"  />
                       </div>
                     </div>
                   
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" formControlName="confirmPassword" />
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" data-cy="password" formControlName="password" />
+                      </div>
+                    </div>
+                  
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" data-cy="confirmPassword" formControlName="confirmPassword" />
                       </div>
                     </div>
                   
@@ -72,7 +72,7 @@
                   
 
                   
-                <button type="submit" class="btn btn-primary btn-block w-100">Register</button>
+                <button type="submit" data-cy="reg-btn" class="btn btn-primary btn-block w-100">Register</button>
             </form>
         </div>
         <p class="text-center"> Have An Account? <a routerLink="/login">Login</a></p>

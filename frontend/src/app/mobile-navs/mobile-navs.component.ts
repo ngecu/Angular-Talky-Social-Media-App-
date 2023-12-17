@@ -8,7 +8,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CloudinaryuploadService } from '../services/cloudinaryupload.service';
 import { PostDetails } from '../interfaces/post';
 import { PostService } from '../services/post.service';
-import {PopoverModule} from "ngx-smart-popover";
 @Component({
   selector: 'app-mobile-navs',
   templateUrl: './mobile-navs.component.html',

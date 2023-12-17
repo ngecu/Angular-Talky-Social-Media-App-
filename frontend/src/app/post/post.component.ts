@@ -85,17 +85,27 @@ export class PostComponent {
      return 
   }
 
-  getAllPosts(){
+  getAllPosts() {
     this.postService.allPosts().subscribe(
       (response) => {
-       console.log("response is ",response.posts);
-       this.posts = response.posts.filter(post => post.postType == "post");
-       
-       
+        console.log("response is ", response.posts);
+  
+        // Filter posts of type 'post'
+        const filteredPosts = response.posts.filter(post => post.postType == "post");
+  
+        // Sort posts by created_at in descending order
+        this.posts = filteredPosts.sort((a, b) => {
+          const dateA = new Date(a.created_at);
+          const dateB = new Date(b.created_at);
+          return dateB.getTime() - dateA.getTime();
+        });
+      },
+      (error) => {
+        console.error("Error fetching posts:", error);
       }
-     
-    )
+    );
   }
+  
   replyToUsername: string = '';
   replyToCommentId:string = ''
   replyToComment(post:Post,entry: Comment,reply:boolean) {

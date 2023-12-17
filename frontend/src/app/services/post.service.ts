@@ -29,6 +29,11 @@ export class PostService {
   allPosts(): Observable<PostResponse> {
     return this.http.get<PostResponse>('http://localhost:4400/post/');
   }
+  singlePost(post_id:string): Observable<PostResponse> {
+    return this.http.get<PostResponse>(`http://localhost:4400/post/single/${post_id}`);
+  }
+
+  
 
   createComment(post: Post, user_id: string): Observable<Post> {
     const headers = new HttpHeaders({

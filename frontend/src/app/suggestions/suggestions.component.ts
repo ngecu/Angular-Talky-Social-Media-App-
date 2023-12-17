@@ -48,23 +48,26 @@ export class SuggestionsComponent {
   
 
   toggleFollow(user: UserDetails): void {
-   const body = {
-      following_user_id:this.my_user_id,
-       followed_user_id:user.user_id
-    }
-
-console.log(body);
-
-    this.userService.toggleFollowUser(body).subscribe(
-      (response) => {
-        console.log(response);
-        this.userService.getSuggestions().subscribe(
-          (allUsersResponse) => {
-            this.users = allUsersResponse
-          })
-        
+    if(user.user_id){
+      const body = {
+        following_user_id:this.my_user_id,
+         followed_user_id:user.user_id
       }
-    )
+  
+  console.log(body);
+  
+      this.userService.toggleFollowUser(body).subscribe(
+        (response) => {
+          console.log(response);
+          this.userService.getSuggestions().subscribe(
+            (allUsersResponse) => {
+              this.users = allUsersResponse
+            })
+          
+        }
+      )
+    }
+   
   }
 
 }

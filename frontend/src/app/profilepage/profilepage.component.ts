@@ -16,6 +16,10 @@ export class ProfilepageComponent {
   showSpinners: boolean = true;
   images: any[] = [];
   files: any[] = ['assets/images/profiles/profile-2.jpg'];
+  storedUser: string | null = localStorage.getItem('user_details');
+  username : string = ""
+  fullName : string = ""
+  profileImage:string = ""
 
   ngOnInit() {
     // Set a timeout to hide the spinners after 5 seconds
@@ -24,30 +28,7 @@ export class ProfilepageComponent {
     }, 3000);
   }
 
-  galleryItems = [
-    'https://wallpapers.com/images/hd/beautiful-black-woman-with-the-sky-wrcmewxu2vjopsav.jpg',
-    'https://c1.wallpaperflare.com/preview/432/737/233/beautiful-african-woman.jpg',
-    'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    'https://wallpapers.com/images/hd/1920x1080-hd-car-bvswz2skd2mquyjc.jpg',
-    'https://wallpapers.com/images/hd/beautiful-black-woman-with-the-sky-wrcmewxu2vjopsav.jpg',
-    'https://c1.wallpaperflare.com/preview/432/737/233/beautiful-african-woman.jpg',
-    'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    'https://wallpapers.com/images/hd/1920x1080-hd-car-bvswz2skd2mquyjc.jpg',
-    'https://wallpapers.com/images/hd/beautiful-black-woman-with-the-sky-wrcmewxu2vjopsav.jpg',
-    'https://c1.wallpaperflare.com/preview/432/737/233/beautiful-african-woman.jpg',
-    'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    'https://wallpapers.com/images/hd/1920x1080-hd-car-bvswz2skd2mquyjc.jpg',
-    'https://wallpapers.com/images/hd/beautiful-black-woman-with-the-sky-wrcmewxu2vjopsav.jpg',
-    'https://c1.wallpaperflare.com/preview/432/737/233/beautiful-african-woman.jpg',
-    'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    'https://wallpapers.com/images/hd/1920x1080-hd-car-bvswz2skd2mquyjc.jpg',
-    'https://wallpapers.com/images/hd/beautiful-black-woman-with-the-sky-wrcmewxu2vjopsav.jpg',
-    'https://c1.wallpaperflare.com/preview/432/737/233/beautiful-african-woman.jpg',
-    'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    'https://wallpapers.com/images/hd/1920x1080-hd-car-bvswz2skd2mquyjc.jpg'
-    // Add more image URLs as needed
-  ];
-  
+
 
   prepopulatedData = {
     profileImage: 'path/to/image.jpg',
@@ -60,7 +41,15 @@ export class ProfilepageComponent {
   };
 
   constructor(private router:Router,private formBuilder: FormBuilder,private toastr: ToastrService,private route: ActivatedRoute) {
-    
+    if (this.storedUser) {
+      const user = JSON.parse(this.storedUser);
+      this.username = user.username
+      this.fullName = user.fullName
+      this.profileImage = user.profileImage
+    } else {
+      console.error('User details not found in local storage');
+    }
+
     this.updateProfileForm = this.formBuilder.group({
       profileImage: [this.prepopulatedData.profileImage],
       mobile: [this.prepopulatedData.mobile, Validators.required],

@@ -68,37 +68,20 @@
 
   <div *ngIf="!showSpinners" class="col-md-10">
     <main class="w-100">
-      <div class="container">
-      <div class="row my-2 align-items-center container">
-        <div class="col-2">
-            <div class=" rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger">
-                <img src="assets/images/profiles/profile-2.jpg" alt="..." class="img-fluid" style="transform: scale(1.2);">
-            </div>
-        </div>
-        
-        <div class="col-md-10 mx-auto">
-         
-        </div>
-    </div>
-    
-    <div class="gallery-container">
-      <div class="gallery-item" style="cursor: pointer;"  *ngFor="let imageUrl of galleryItems">
-        <img data-bs-toggle="modal" [attr.data-bs-target]="'#post_' + imageUrl" [src]="imageUrl" alt="Gallery Image" class="img-fluid">
-        <div class="overlay">
-          <div class="overlay-content">
-            <i class="far fa-heart"></i> 5
-            <i class="far fa-comment"></i> 15
+     
+      <div class="left_row">
+        <div class="left_row_profile">
+          <img id="portada" src="../../assets/images/portada.jpg" />
+          <div class="left_row_profile">
+        <img id="profile_pic" src="{{profileImage}}" />
+            <span
+              >{{fullName}}<br />
+              <p>150k followers / 50 follow</p></span
+            >
           </div>
         </div>
-      </div>
-    </div>
-    
-    
+        </div>
 
-          
-    
-    </div>
-  
 
    </main>
  </div>
@@ -195,29 +178,3 @@
 
 
 
-<div *ngFor="let imageUrl of galleryItems">
-  <div class="modal fade" [id]="'post_' + imageUrl">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-
-        <!-- Modal Header -->
-        <div class="modal-header text-center">
-          <div class="d-flex flex-column align-items-center">
-              <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger story-profile-photo">
-              </div>
-            </div>
-            
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-
-        <!-- Modal body -->
-        <div class="modal-body p-2">
-<div class="w-100">
-    <img [src]="imageUrl" alt="">   
-  </div>
-                </div>
-
-      </div>
-    </div>
-  </div>
-</div>

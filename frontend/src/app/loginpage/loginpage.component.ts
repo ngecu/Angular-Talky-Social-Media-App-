@@ -65,7 +65,7 @@ export class LoginpageComponent {
       
 
     }else{
-      this.toastr.error('Form is invalid. Please check the fields.', 'Error');     
+      this.toastr.error('Form is invalid', 'Error');     
       console.log(this.loginForm.value);
         
       

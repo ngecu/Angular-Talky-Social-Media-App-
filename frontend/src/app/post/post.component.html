@@ -3,6 +3,7 @@
     <div *ngFor="let post of posts ;let i = index" class="d-flex flex-column mt-4 mb-4">
     
         <div class="card">
+          <a routerLink="post/{{post.post_id}}">
             <div class="card-header p-3">
                 <div class="d-flex flex-row align-items-center">
                     <div
@@ -15,6 +16,7 @@
 <!-- <span class="text-muted">{{post.created_at}}</span> -->
                 </div>
             </div>
+          </a>
             <div class="card-body p-0">
               <ng-container *ngIf="post.mediaFiles.length > 1; else singleMedia">
                 <!-- Carousel for multiple images -->
@@ -50,19 +52,10 @@
               </div>
               </ng-container>
               <ng-template #singleMedia>
-                <ng-container *ngIf="post.mediaFiles.length === 1">
-                  <!-- Check if the first item in post.images is a video -->
-                  <ng-container *ngIf="isVideo(post.mediaFiles[0])">
-                    <vg-player>
-                      <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>
-                        <source [src]="post.mediaFiles[0]" type="video/mp4">
-                      </video>
-                    </vg-player>
-                  </ng-container>
-                  <!-- If it's not a video, assume it's an image -->
-                  <ng-container *ngIf="!isVideo(post.mediaFiles[0]) && post.mediaFiles.length > 0">
-                    <img [src]="post.mediaFiles[0]" alt="Post Media" class="d-block w-100">
-                  </ng-container>
+                <ng-container *ngIf="post.mediaFiles.length == 1">
+
+                    <img [src]="post.mediaFiles[0].media_file" alt="Post Media" class="d-block w-100">
+                 
                 </ng-container>
               </ng-template>
     
@@ -130,8 +123,9 @@
     
     
             </div>
+         
         </div>
-    
+      
     </div>
 
   
