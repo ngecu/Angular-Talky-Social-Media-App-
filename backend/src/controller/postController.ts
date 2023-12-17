@@ -211,6 +211,9 @@ export const getAllPosts = async (req: Request, res: Response) => {
         .input('post_id', mssql.VarChar(500), post.post_id)
         .execute('fetchCommentsByPostId');
       const comments = commentsResult.recordset;
+      const commentsWithSubcomments = groupCommentsByParentId(comments);
+      console.log("comments are ",comments);
+      
 
       // Fetch media files
       const mediaResult = await pool
@@ -228,7 +231,7 @@ export const getAllPosts = async (req: Request, res: Response) => {
 
       return {
         ...post,
-        comments: comments,
+        comments: commentsWithSubcomments,
         mediaFiles: mediaFiles,
         likes: likes,
       };
@@ -243,6 +246,29 @@ export const getAllPosts = async (req: Request, res: Response) => {
       error: 'Internal Server Error',
     });
   } 
+};
+
+const groupCommentsByParentId = (comments:any[]) => {
+  const commentMap = new Map();
+  const topLevelComments:any[] = [];
+
+  comments.forEach((comment) => {
+    const parentId = comment.comment_replied_to_id;
+    if (parentId) {
+      const parentComment = commentMap.get(parentId);
+      if (parentComment) {
+        if (!parentComment.subcomments) {
+          parentComment.subcomments = [];
+        }
+        parentComment.subcomments.push(comment);
+      }
+    } else {
+      topLevelComments.push(comment);
+    }
+    commentMap.set(comment.comment_id, comment);
+  });
+
+  return topLevelComments;
 };
 
 export const deletePost = async (req: Request, res: Response) => {

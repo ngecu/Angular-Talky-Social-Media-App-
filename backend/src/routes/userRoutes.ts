@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getPostsByUser } from "../controller/postController";
-import { checkUserDetails, getAllUsers, getFollowers, getFollowings, getUserDetails, loginUser, registerUser, sendRestPassword, setNewPassword, toggleFollowUser, toggleSoftDeleteUser, updateProfile } from "../controller/userController";
+import { checkUserDetails, getAllUsers, getFollowers, getFollowings, getFollowSuggestions, getUserDetails, loginUser, registerUser, sendRestPassword, setNewPassword, toggleFollowUser, toggleSoftDeleteUser, updateProfile } from "../controller/userController";
 import { verifyToken } from "../middlewares/verifyToken";
 
 
@@ -24,6 +24,7 @@ user_router.post('/setNewPassword/:user_id',verifyToken, setNewPassword)
 
 user_router.get('/', getAllUsers)
 user_router.get('/:user_id', getUserDetails)
+user_router.get('/getFollowSuggestions/:user_id', getFollowSuggestions)
 
 
 

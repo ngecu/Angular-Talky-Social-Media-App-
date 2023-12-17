@@ -84,4 +84,20 @@ export class PostService {
 
   }
 
+  commentOnComment(post:Post,comment_id: string, user_id: string,actualtext:string): Observable<Post> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': `${localStorage.getItem('token')}`, // Add the token from localStorage
+    });
+
+    const commentData = {
+      post_id: post.post_id,
+      created_by_user_id: user_id,
+      comment: actualtext,
+      comment_replied_to_id:comment_id
+    };
+
+    return this.http.post<Post>(`http://localhost:4400/post/comment`, commentData, { headers });
+  }
+
 }

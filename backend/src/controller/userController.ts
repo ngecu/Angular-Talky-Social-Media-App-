@@ -544,4 +544,28 @@ export const sendRestPassword = async (req:Request, res:Response) => {
       }
       
   }
+
+  export const getFollowSuggestions = async (req: Request, res: Response) => {
+    try {
+      const { user_id } = req.params;
+  
+      const pool = await mssql.connect(sqlConfig);
+  
+      const result = await pool
+        .request()
+        .input('user_id', mssql.VarChar(500), user_id)
+        .execute('GetFollowSuggestions');
+  
+      const suggestions = result.recordset;
+  
+      return res.status(200).json({
+        suggestions: suggestions,
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      return res.status(500).json({
+        error: 'Internal Server Error',
+      });
+    } 
+  };
   

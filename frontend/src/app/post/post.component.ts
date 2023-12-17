@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable, Subject, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { PostService } from '../services/post.service';
+import { Comment } from '../interfaces/comment';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class PostComponent {
   loggedInuser = ""
   user_id = ""
   editingCommentIndex!: number 
+
   postComment(post: Post) {
     if (post.comment) {
       console.log(post);
@@ -94,12 +96,35 @@ export class PostComponent {
      
     )
   }
+  replyToUsername: string = '';
+  replyToCommentId:string = ''
+  replyToComment(post:Post,entry: Comment,reply:boolean) {
+    if(reply){
+      this.replyToUsername = `@${entry.comment_creator_username}`;
+      this.replyToCommentId = entry.comment_id
+    }
+    else{
+      this.replyToUsername = `@${entry.comment_creator_username} ${entry.comment}`;
 
-  replyToComment(entry:any) {
-    this.textArea = `@${entry.author} `;
-    this.textAreaVisible = true;
+    }
   }
 
+  sendCommentOnComment(post:Post,reply:boolean) {
+    this.postService.commentOnComment(post,this.replyToCommentId,this.user_id,this.replyToUsername).subscribe(
+      (response) => {
+        console.log(response);
+        this.replyToUsername = ""
+        // this.getAllPosts()
+        this.toastr.success('Comment added', 'Success');
+
+      },
+      (error) => {
+        console.error('Error posting comment:', error);
+        // Handle error as needed
+      }
+    );
+  }
+  
 
   editTextArea(entry: Post, index: number) {
     // Set the comment text to the post being edited
@@ -163,32 +188,6 @@ export class PostComponent {
 
   }
 
-  discussionData = [
-
-
-    {
-      avatar: 'https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp',
-      author: 'Maria Smantha',
-      time: '2 hours ago',
-      content: 'It is a long established fact that a reader will be distracted by the readable content of a page.',
-      replies: [
-        {
-          avatar: 'https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp',
-          author: 'Simona Disa',
-          time: '3 hours ago',
-          content: "letters, as opposed to using 'Content here, content here', making it look like readable English."
-        },
-        {
-          avatar: 'https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp',
-          author: 'John Smith',
-          time: '4 hours ago',
-          content: 'the majority have suffered alteration in some form, by injected humour, or randomised words.'
-        }
-      ]
-    },
-
-    // ... Add more discussion entries as needed
-  ];
 
 
   deleteEntry(comment_id: string, index: number) {

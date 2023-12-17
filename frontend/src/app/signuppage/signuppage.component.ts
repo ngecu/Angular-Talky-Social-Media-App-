@@ -67,7 +67,7 @@ export class SignuppageComponent {
             console.log(res.secure_url);
             this.registrationForm.value.profileImage = res.secure_url
             let details: UserDetails = this.registrationForm.value
-            details.created_at = new Date().toISOString();
+
              this.authService.createUser(details).subscribe(
           (response) => {
             console.log(response);

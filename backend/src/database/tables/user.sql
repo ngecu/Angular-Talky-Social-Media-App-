@@ -2,7 +2,7 @@ USE TALKY
 SELECT * FROM USER
 drop TABLE user
 
-CREATE TABLE user (
+CREATE TABLE users (
     user_id VARCHAR(500) PRIMARY KEY,
     profileImage VARCHAR(500) NOT NULL,
     fullName VARCHAR(255) NOT NULL,

@@ -66,7 +66,7 @@
   </div>
   
 
-  <div *ngIf="!showSpinners" class="col-md-10 col-sm-12">
+  <div *ngIf="!showSpinners" class="col-md-10">
     <main class="w-100">
       <div class="container">
       <div class="row my-2 align-items-center container">
@@ -76,43 +76,8 @@
             </div>
         </div>
         
-        <div class="col-10 mx-auto">
-            <div class="d-flex align-items-center">
-                <div>
-                    <span class="text-dark">Dev.Ngecu</span>
-                </div>
-                <div>
-                  <div class="btn-group mr-2" role="group" aria-label="First group">
-                    <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightr" type="button" class="btn btn-light mx-2">Edit Profile</button>
-                    <button *ngIf="user_id != 'devngecu'" type="button" class="btn btn-primary mx-2">Follow</button>
-                    <button *ngIf="user_id != 'devngecu'" routerLink="/direct/inbox" type="button" class="btn btn-light mx-2">Message</button>
-                  </div>
-
-                    <!-- <button type="button" class="btn btn-light mx-2">Edit Profile</button> -->
-                </div>
-            </div>
-            <div class="d-flex w-50">
-                <div class="col">
-                    <strong>32</strong> posts
-                </div>
-                <div class="col mx-2">
-                    <strong>32</strong> followers
-                </div>
-                <div class="col mx-2">
-                    <strong>32</strong> following
-                </div>
-            </div>
-    
-            <div class="badge">
-                @devngecu
-            </div>
-            <div class="profile_details">
-                <p>Robin Ngecu👑</p>
-                <small class="text-muted">
-                  Full Stack Developer || Fashion || Lifestyle📸 || Nrb,Kenya🇰🇪
-                </small>
-              
-            </div>
+        <div class="col-md-10 mx-auto">
+         
         </div>
     </div>
     

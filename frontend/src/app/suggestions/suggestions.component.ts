@@ -20,37 +20,24 @@ export class SuggestionsComponent {
       const user = JSON.parse(this.storedUser);
       this.username = user.username
       this.fullName = user.fullName
+      this.my_user_id = user.user_id
       this.profileImage = user.profileImage
     } else {
       console.error('User details not found in local storage');
     }
   }
-  users: UserDetails[] = [];
+  users: any[] = [];
   my_user_id = "";
 
   
   
   ngOnInit() {
-    this.userService.getAllUsers().subscribe(
+    this.userService.getSuggestions().subscribe(
       (allUsersResponse) => {
+        this.users = allUsersResponse
         console.log(allUsersResponse);
   
-        // Get followers for the current user
-        this.userService.getFollowers(this.my_user_id).subscribe(
-          (followersResponse) => {
-            console.log(followersResponse);
-  
-            // Extract follower IDs
-            const followerIds = followersResponse.map(follower => follower.user_id);
-  
-            // Filter out users who are followers
-            this.users = allUsersResponse.filter(user => !followerIds.includes(user.user_id));
-          },
-          (followersError) => {
-            this.toastr.error(`${followersError}`, 'Error');
-            console.error('Error getting followers:', followersError);
-          }
-        );
+    
       },
       (allUsersError) => {
         this.toastr.error(`${allUsersError}`, 'Error');
@@ -61,7 +48,23 @@ export class SuggestionsComponent {
   
 
   toggleFollow(user: UserDetails): void {
- 
+   const body = {
+      following_user_id:this.my_user_id,
+       followed_user_id:user.user_id
+    }
+
+console.log(body);
+
+    this.userService.toggleFollowUser(body).subscribe(
+      (response) => {
+        console.log(response);
+        this.userService.getSuggestions().subscribe(
+          (allUsersResponse) => {
+            this.users = allUsersResponse
+          })
+        
+      }
+    )
   }
 
 }

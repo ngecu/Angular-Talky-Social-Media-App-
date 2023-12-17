@@ -63,7 +63,38 @@ export class UserService {
 
 
   toggleFollowUser (usersDetails:toggleFollowUserInterface){
-    return this.http.post('http://localhost:4400/user/toggleFollowUser',usersDetails)
+    let token = localStorage.getItem('token') as string;
+    return this.http.post('http://localhost:4400/user/toggleFollowUser',usersDetails, {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        'token': token
+      })
+    })
   }
+
+  getSuggestions() {
+    let token = localStorage.getItem('token') as string;
+    let user_id
+    const storedUser = localStorage.getItem('user_details');
+    if(storedUser){
+      const user = JSON.parse(storedUser)
+      user_id = user.user_id
+
+    }
+
+    return this.http.get<{ suggestions: any[] }>(
+      `http://localhost:4400/user/getFollowSuggestions/${user_id}`,
+     
+      {
+        headers: new HttpHeaders({
+          'Content-type': 'application/json',
+          'token': token
+        })
+      }
+    ).pipe(
+      map(response => response.suggestions)
+    );
+  }
+
 
 }
