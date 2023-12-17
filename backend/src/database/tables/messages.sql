@@ -8,7 +8,7 @@ CREATE TABLE message (
     created_at VARCHAR(500) NOT NULL,
     status VARCHAR(500) NOT NULL,
 
-     FOREIGN KEY (from_user_id) REFERENCES user(user_id),
-     FOREIGN KEY (to_user_id) REFERENCES user(user_id),
+     FOREIGN KEY (from_user_id) REFERENCES users(user_id),
+     FOREIGN KEY (to_user_id) REFERENCES users(user_id),
 
 );

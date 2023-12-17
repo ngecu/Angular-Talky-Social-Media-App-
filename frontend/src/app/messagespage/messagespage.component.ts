@@ -1,7 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, NgZone, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ChartService } from '../chart.service';
+import { ChartService } from '../services/chart.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { UserService } from '../services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 interface User {
   id: number;
@@ -33,125 +35,20 @@ export class MessagespageComponent {
 
   public showScreen = false;
   public phone!: string;
-  public currentUser!:User | undefined;
+  public currentUser:any;
   public selectedUser!:any;
+  storedUser: string | null = localStorage.getItem('user_details');
 
   public rooms = ["room1"]
-
-  public userList = [
-    {
-      id: 1,
-      name: 'The Swag Coder',
-      phone: '9876598765',
-      image: 'assets/user/user-1.png',
-      rooms: this.rooms
-    },
-    {
-      id: 2,
-      name: 'Wade Warren',
-      phone: '9876543210',
-      image: 'assets/user/user-2.png',
-      rooms: this.rooms
-    },
-    {
-      id: 3,
-      name: 'Albert Flores',
-      phone: '9988776655',
-      image: 'assets/user/user-3.png',
-      rooms: this.rooms
-    },
-    {
-      id: 4,
-      name: 'Dianne Russell',
-      phone: '9876556789',
-      image: 'assets/user/user-4.png',
-      rooms: this.rooms
-    }
-    ,
-    {
-      id: 1,
-      name: 'The Swag Coder',
-      phone: '9876598765',
-      image: 'assets/user/user-1.png',
-      rooms: this.rooms
-    },
-    {
-      id: 2,
-      name: 'Wade Warren',
-      phone: '9876543210',
-      image: 'assets/user/user-2.png',
-      rooms: this.rooms
-    },
-    {
-      id: 3,
-      name: 'Albert Flores',
-      phone: '9988776655',
-      image: 'assets/user/user-3.png',
-      rooms: this.rooms
-    },
-    {
-      id: 4,
-      name: 'Dianne Russell',
-      phone: '9876556789',
-      image: 'assets/user/user-4.png',
-      rooms: this.rooms
-    },
-    {
-      id: 1,
-      name: 'The Swag Coder',
-      phone: '9876598765',
-      image: 'assets/user/user-1.png',
-      rooms: this.rooms
-    },
-    {
-      id: 2,
-      name: 'Wade Warren',
-      phone: '9876543210',
-      image: 'assets/user/user-2.png',
-      rooms: this.rooms
-    },
-    {
-      id: 3,
-      name: 'Albert Flores',
-      phone: '9988776655',
-      image: 'assets/user/user-3.png',
-      rooms: this.rooms
-    },
-    {
-      id: 4,
-      name: 'Dianne Russell',
-      phone: '9876556789',
-      image: 'assets/user/user-4.png',
-      rooms: this.rooms
-    },
-
-    {
-      id: 2,
-      name: 'Wade Warren',
-      phone: '9876543210',
-      image: 'assets/user/user-2.png',
-      rooms: this.rooms
-    },
-    {
-      id: 3,
-      name: 'Albert Flores',
-      phone: '9988776655',
-      image: 'assets/user/user-3.png',
-      rooms: this.rooms
-    },
-    {
-      id: 4,
-      name: 'Dianne Russell',
-      phone: '9876556789',
-      image: 'assets/user/user-4.png',
-      rooms: this.rooms
-    }
-  ];
+  
+  public userList:any[] = []
 
   constructor(
- 
+    private toastr: ToastrService,
+    private userService:UserService,
     private chatService: ChartService,
-    private cdr: ChangeDetectorRef  
+    private cdr: ChangeDetectorRef ,
+    private zone: NgZone 
   ) {
   }
 
@@ -161,6 +58,27 @@ export class MessagespageComponent {
     setTimeout(() => {
       this.showSpinners = false;
     }, 3000);
+
+    if (this.storedUser) {
+      const user = JSON.parse(this.storedUser);
+      this.currentUser = user
+    } else {
+      console.error('User details not found in local storage');
+    }
+
+
+    this.userService.getSuggestions().subscribe(
+      (allUsersResponse) => {
+        this.userList = allUsersResponse
+        console.log(allUsersResponse);
+  
+    
+      },
+      (allUsersError) => {
+        this.toastr.error(`${allUsersError}`, 'Error');
+        console.error('Error getting all users:', allUsersError);
+      }
+    );
 
     
     this.chatService.getMessage()
@@ -183,9 +101,9 @@ export class MessagespageComponent {
 
 
   selectUserHandler(phone: string): void {
-    this.selectedUser = this.userList.find(user => user.phone === phone);
+    this.selectedUser = this.userList.find(user => user.phone_no === phone);
     if(this.currentUser){
-      this.roomId = this.selectedUser.roomId[this.currentUser.id];
+      this.roomId = this.selectedUser.user_id;
 
     }
     this.messageArray = [];
@@ -197,16 +115,21 @@ export class MessagespageComponent {
     if (storeIndex > -1) {
       this.messageArray = this.storageArray[storeIndex].chats;
     }
+
+    this.join(this.currentUser.usernsme, this.roomId);
    
   }
 
 
+  join(username: string, roomId: string): void {
+    this.chatService.joinRoom({user: username, room: roomId});
+  }
 
   sendMessage(): void {
 
     this.chatService.sendMessage({
-      user: "Robinson",
-      room: "this.roomId",
+      user: this.currentUser,
+      room: this.roomId,
       message: this.messageText
     })
   
@@ -245,7 +168,10 @@ export class MessagespageComponent {
 
     this.chatService.setStorage(this.storageArray);
     this.messageText = '';
-    this.cdr.detectChanges();
+    this.zone.run(() => {
+      // Update UI-related code here
+      this.cdr.detectChanges(); // Trigger change detection if needed
+    });
   }
 
   

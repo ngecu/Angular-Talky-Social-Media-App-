@@ -27,7 +27,7 @@ export class ChartService {
     return new Observable<{user: string, message: string}>(observer => {
       
       this.socket.on('new message', (data) => {
-      console.log(data);
+      console.log("sfdfdsfs ",data);
 
         observer.next(data);
       });

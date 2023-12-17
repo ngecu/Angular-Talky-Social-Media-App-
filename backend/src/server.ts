@@ -1,12 +1,12 @@
 import express, { NextFunction, Request, Response, json } from 'express'
 // import { testConnection } from "./config/sqlConfig";
 import cors from 'cors'
-
+import {v4} from 'uuid'
 import http  from 'http'
 import { Server  } from 'socket.io';
 import user_router from "./routes/userRoutes";
 import post_router from './routes/postRoutes';
-
+import dbHelper from './dbhelpers/dbhelpers'
 
 
 
@@ -46,11 +46,30 @@ io.on('connection', (socket) => {
       socket.broadcast.to(data.room).emit('user joined');
   });
 
-  socket.on('message', (data) => {
+  socket.on('message', async(data,req:Request,res:Response) => {
     console.log(data);
- 
-    
-      io.in(data.room).emit('new message', {user: data.user, message: data.message});
+    let created_at  = new Date().toISOString();
+    let message_id = v4()
+    let from_user_id = data.user.user_id;
+    let to_user_id = data.room
+    let message_text = data.message
+
+            let result = await dbHelper.execute('sendMessage', {
+              message_id,from_user_id, to_user_id,message_text,created_at
+        })
+
+        console.log(result);
+        
+        
+        if(result.rowsAffected[0] === 0){
+            return res.status(404).json({
+                message: "Something went wrong, user not registered"
+            })
+        }else{
+          io.in(data.room).emit('new message', {user: data.user.fullName, message: data.message});
+
+        }
+
   });
 });
 

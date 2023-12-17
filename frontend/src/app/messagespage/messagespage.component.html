@@ -74,7 +74,7 @@
       <div class="scroll-container">
       <ul class="list-unstyled mb-0">
           <li *ngFor="let user of userList" class="list-inline-item" style="cursor: pointer;">
-              <button class="btn p-0 m-0 " style="cursor: pointer;"  (click)="selectUserHandler(user.phone)">
+              <button class="btn p-0 m-0 " style="cursor: pointer;"  (click)="selectUserHandler(user.phone_no)">
                   <div class="d-flex flex-column align-items-center">
                       <div
                           class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger story-profile-photo">
@@ -163,61 +163,29 @@
 
                       <ng-container *ngIf="selectedUser; else noSelectedUser">
                         <ul class="chat-list">
-                            <li class="in">
-                                <div class="chat-img">
-                                  <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
-                                    <img src="assets/images/profiles/profile-1.jpg" alt="..." style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
-                                  </div>
-                                </div>
-                                <div class="chat-body">
-                                    <div class="chat-message">
-                                        <h5>{{selectedUser?.name}}</h5>
-                                        <p>Raw denim heard of them tofu master cleanse</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="out">
-                                <div class="chat-img">
-                                    <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar6.png">
-                                </div>
-                                <div class="chat-body">
-                                    <div class="chat-message">
-                                        <h5>Me</h5>
-                                        <p>Next level veard</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="in">
-                                <div class="chat-img">
-                                  <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
-                                    <img src="assets/images/profiles/profile-1.jpg" alt="..." style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
-                                  </div>                                </div>
-                                <div class="chat-body">
-                                    <div class="chat-message">
-                                        <h5 class="name">{{selectedUser?.name}}</h5>
-                                        <p>Will stumptown scenes coffee viral.</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="out">
-                                <div class="chat-img">
-                                    <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar6.png">
-                                </div>
-                                <div class="chat-body">
-                                    <div class="chat-message">
-                                        <h5>Me</h5>
-                                        <p>Tofu master best deal</p>
-                                    </div>
-                                </div>
-                            </li>
+                          <li *ngFor="let message of messageArray" [ngClass]="{'in': message.user !== 'Me', 'out': message.user === 'Me'}">
+                            <div class="chat-img">
+                              <!-- Assuming you have user avatars, adjust this part accordingly -->
+                              <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
+                                <img src="assets/images/profiles/profile-1.jpg" alt="..." style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                              </div>
+                            </div>
+                            <div class="chat-body">
+                              <div class="chat-message">
+                                <h5>{{ message.user }}</h5>
+                                <p>{{ message.message }}</p>
+                              </div>
+                            </div>
+                          </li>
                         </ul>
                         <input type="text"
-                        placeholder="Type a message"
-                        class="form-control"
-                        [(ngModel)]="messageText"
-                        (keyup)="$event.keyCode === 13 && sendMessage()"
-                 />
-                 </ng-container>
+                               placeholder="Type a message"
+                               class="form-control"
+                               [(ngModel)]="messageText"
+                               (keyup)="$event.keyCode === 13 && sendMessage()"
+                        />
+                      </ng-container>
+                      
 
                  <ng-template #noSelectedUser>
                   <!-- Show default image when no user is selected -->
