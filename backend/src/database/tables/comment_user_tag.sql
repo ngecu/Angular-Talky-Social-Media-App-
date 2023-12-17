@@ -3,7 +3,7 @@ CREATE TABLE comment_user_tag (
     comment_id VARCHAR(500),
     user_id VARCHAR(500),
     sent INT Default 0,
-    created_at VARCHAR(500) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
  FOREIGN KEY (comment_id) REFERENCES comment(comment_id),
  FOREIGN KEY (user_id) REFERENCES user(user_id),

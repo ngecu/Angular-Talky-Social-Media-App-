@@ -41,11 +41,10 @@ export const registerUser = async(req:Request, res: Response) =>{
         console.log(req.body);
         
         let {profileImage, fullName,email,password,username, phone_no  } = req.body
-        let created_at  = new Date().toISOString();
         let {error} = registerUserSchema.validate(req.body)
 
         if(error){
-            return res.status(404).json({error: error.details})
+            return res.status(404).json({error: error.details[0].message})
         }
 
 
@@ -54,7 +53,7 @@ export const registerUser = async(req:Request, res: Response) =>{
         const hashedPwd = await bcrypt.hash(password, 5)
          
         let result = await dbHelper.execute('registerUser', {
-            user_id,profileImage, fullName, email,password:hashedPwd,username, phone_no,created_at
+            user_id,profileImage, fullName, email,password:hashedPwd,username, phone_no
         })
         
         if(result.rowsAffected[0] === 0){

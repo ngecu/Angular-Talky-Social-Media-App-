@@ -1,7 +1,3 @@
-USE TALKY
-SELECT * FROM USER
-drop TABLE user
-
 CREATE TABLE users (
     user_id VARCHAR(500) PRIMARY KEY,
     profileImage VARCHAR(500) NOT NULL,
@@ -12,6 +8,6 @@ CREATE TABLE users (
     phone_no VARCHAR(20) NOT NULL,
     welcomed INT Default 0,
     active INT Default 1,
-    created_at VARCHAR(20) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     -- resetPassword BIT
 );

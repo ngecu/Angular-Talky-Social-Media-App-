@@ -5,7 +5,7 @@ CREATE TABLE message (
 
 
     message_text VARCHAR(500) NOT NULL,
-    created_at VARCHAR(500) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(500) NOT NULL,
 
      FOREIGN KEY (from_user_id) REFERENCES users(user_id),

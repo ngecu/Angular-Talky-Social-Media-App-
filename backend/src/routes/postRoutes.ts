@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createComment, createPost, deleteComment, deletePost, editComment, editPost, followingPosts, getAllPosts, getPostLikes, getPostsByUser, toggleLikePost } from "../controller/postController";
+import { createComment, createPost, deleteComment, deletePost, editComment, editPost, followingPosts, getAllPosts, getPostLikes, getPostsByUser, getSinglePost, toggleLikePost } from "../controller/postController";
 import { verifyToken } from "../middlewares/verifyToken";
 
 
@@ -7,6 +7,7 @@ const post_router = Router()
 
 post_router.post('/', createPost)
 post_router.get('/', getAllPosts)
+post_router.get('/single/:post_id', getSinglePost)
 
 post_router.get('/:post_id',verifyToken, followingPosts)
 

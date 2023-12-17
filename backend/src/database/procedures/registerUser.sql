@@ -5,11 +5,10 @@ CREATE OR ALTER PROCEDURE registerUser(
     @email VARCHAR(255),
     @password VARCHAR(255),
     @username VARCHAR(255),
-    @phone_no VARCHAR(20),
-    @created_at VARCHAR(20)
+    @phone_no VARCHAR(20)
 )
 AS
 BEGIN
-    INSERT INTO users (user_id, profileImage, fullName, email, password, username, phone_no, created_at)
-    VALUES (@user_id, @profileImage, @fullName, @email, @password, @username, @phone_no, @created_at)
+    INSERT INTO users (user_id, profileImage, fullName, email, password, username, phone_no )
+    VALUES (@user_id, @profileImage, @fullName, @email, @password, @username, @phone_no)
 END

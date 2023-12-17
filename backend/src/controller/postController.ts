@@ -248,6 +248,66 @@ export const getAllPosts = async (req: Request, res: Response) => {
   } 
 };
 
+export const getSinglePost = async (req: Request, res: Response) => {
+  try {
+    const postId = req.params.post_id; // Assuming the postId is passed in the request parameters
+    const pool = await mssql.connect(sqlConfig);
+
+    // Fetch the post details
+    const postResult = await pool
+      .request()
+      .input('post_id', mssql.VarChar(500), postId)
+      .execute('fetchSinglePost'); // Create a stored procedure for fetching a single post
+
+    const post = postResult.recordset[0];
+
+    if (!post) {
+      return res.status(404).json({
+        error: 'Post not found',
+      });
+    }
+
+    // Fetch comments
+    const commentsResult = await pool
+      .request()
+      .input('post_id', mssql.VarChar(500), postId)
+      .execute('fetchCommentsByPostId');
+    const comments = commentsResult.recordset;
+    const commentsWithSubcomments = groupCommentsByParentId(comments);
+
+    // Fetch media files
+    const mediaResult = await pool
+      .request()
+      .input('post_id', mssql.VarChar(500), postId)
+      .execute('fetchMediaByPostId');
+    const mediaFiles = mediaResult.recordset;
+
+    // Fetch likes
+    const likesResult = await pool
+      .request()
+      .input('post_id', mssql.VarChar(500), postId)
+      .execute('fetchLikesByPostId');
+    const likes = likesResult.recordset;
+
+    const postWithDetails = {
+      ...post,
+      comments: commentsWithSubcomments,
+      mediaFiles: mediaFiles,
+      likes: likes,
+    };
+
+    return res.status(200).json({
+      post: postWithDetails,
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    return res.status(500).json({
+      error: 'Internal Server Error',
+    });
+  }
+};
+
+
 const groupCommentsByParentId = (comments:any[]) => {
   const commentMap = new Map();
   const topLevelComments:any[] = [];
@@ -548,6 +608,8 @@ export const editComment = async (req: Request, res: Response) => {
       let result = await dbHelper.execute('deleteComment', {
         comment_id,
       });
+      console.log(result);
+      
   
       if (result.rowsAffected[0] === 0) {
         return res.status(404).json({

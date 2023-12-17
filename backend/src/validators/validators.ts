@@ -5,7 +5,7 @@ export const registerUserSchema = joi.object({
         fullName: joi.string().required(),
         email : joi.string().email().required(),
         password: joi.string().required(),
-        confirmPassword: joi.string().required(),
+        confirmPassword: joi.string(),
         username:joi.string().required(),
         phone_no: joi.number().min(10).required(),
 })

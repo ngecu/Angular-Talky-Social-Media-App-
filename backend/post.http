@@ -15,6 +15,10 @@ token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00O
 ### ALL POSTS
 GET  http://localhost:4400/post/
 
+
+### INDIVIDUAL POST
+GET  http://localhost:4400/post/single/1bcd806d-4b13-4ad6-9fae-8d2f075fb828
+
 ### POSTS BY USER
 GET http://localhost:4400/post/user/64b14daa-ad76-49d8-a5bd-ae298e15dde3
 Content-Type: application/json
