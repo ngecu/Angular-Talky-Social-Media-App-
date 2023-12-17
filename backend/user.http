@@ -19,8 +19,8 @@ POST http://localhost:4400/user/login
 Content-Type: application/json
 
 {
-    "Email": "devngecu@gmail.com",
-    "Password": "I@mrich254"
+    "Email":  "caleb@gmail.com",
+    "Password": "12345678"
 }
 
 ###
