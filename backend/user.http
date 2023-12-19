@@ -92,9 +92,8 @@ Content-Type: application/json
 
 
 ### SET NEW PASSWORD
-POST http://localhost:4400/user/setNewPassword/b73120f8-6670-4991-9045-85db8962aa56
+POST http://localhost:4400/user/setNewPassword/21960f9e-1e17-4bbb-aad3-732792f75372
 Content-Type: application/json
-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
 
 {
    "password":"ngecu16@gmail.com"

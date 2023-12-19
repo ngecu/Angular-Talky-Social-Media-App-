@@ -124,6 +124,23 @@ export class UserService {
       map(response => response.message)
     );
   }
+
+  resetPwd(user_id: string, password: string): Observable<any> {
+    let token = localStorage.getItem('token') as string;
+    const body = {
+      password
+    };
+  
+    return this.http.post<{ message: string }>(
+      `http://localhost:4400/user/setNewPassword/${user_id}`,
+      body     
+    ).pipe(
+      map(response => response.message)
+    );
+  }
+  
+
+  
 }
 
 
