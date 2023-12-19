@@ -182,19 +182,28 @@ export class PostComponent {
       }
     );
 
-    this.toastr.success('Likes Updated', 'Success');
 
   }
 
-  addComment(post: Post, comment: string): void {
-    console.log("hgj");
-    
-    // post.comments.push(comment);
-  }
 
-  toggleBookmark(post: Post): void {
+  deletePost(post: Post): void {
     // post.isBookmarked = !post.isBookmarked;
-    this.toastr.success('Bookmark Updated', 'Success');
+    if (confirm('Are you sure you want to delete this post?')) {
+      // User clicked OK, proceed with deletion
+      this.postService.deletePost(post.post_id).subscribe(
+        (response) => {
+          console.log(response);
+          post.comment = '';
+          this.getAllPosts();
+          this.toastr.success(`${response}`, 'Success');
+        },
+        (error) => {
+          console.error('Error deleting post:', error);
+          // Handle error as needed
+        }
+      );
+    }
+
 
   }
 

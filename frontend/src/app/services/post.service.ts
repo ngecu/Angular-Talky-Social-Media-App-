@@ -16,8 +16,8 @@ export class PostService {
 
   constructor(private http:HttpClient) { }
 
-  createPost (post: PostDetails){
-    return this.http.post('http://localhost:4400/post/', post)
+  createPost (post: PostDetails): Observable<any>{
+    return this.http.post<any>('http://localhost:4400/post/', post)
   }
 
  
@@ -129,4 +129,16 @@ export class PostService {
      })
    );
   }
+
+  deletePost(postId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': `${localStorage.getItem('token')}`
+    });
+
+    const url = `http://localhost:4400/post/${postId}`;
+
+    return this.http.delete(url, { headers });
+  }
+
 }

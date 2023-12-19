@@ -12,14 +12,14 @@ const run = async()=>{
         console.log('Checking for a new user');
         
         await welcomeUser()
-        // console.log('Checking for expired status');
-        // await deleteStatus()
-        // console.log('Checking for post tagged users');
+        console.log('Checking for expired status');
+        await deleteStatus()
+        console.log('Checking for post tagged users');
 
-        // await sendToPostTaggedUsers()
-        // console.log('Checking for comment tagged users');
+        await sendToPostTaggedUsers()
+        console.log('Checking for comment tagged users');
 
-        // await sendToCommentTaggedUsers()
+        await sendToCommentTaggedUsers()
 
     })
     

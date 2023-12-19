@@ -178,7 +178,7 @@
                 <form [formGroup]="postForm" (ngSubmit)="sharePost()">
 
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-12">
                         <div class="form-group">
                           <ngx-dropzone (change)="onSelectPostImage($event)">
                             <ngx-dropzone-label>Drop Post Image</ngx-dropzone-label>
@@ -189,7 +189,7 @@
                         </div>
                       </div>
                   
-                      <div class="col-6">
+                      <div class="col-12">
                         <div class="row">
                           <div class="col-12">
                             <label for="postType">Post Type</label>
@@ -226,7 +226,7 @@
                           
                   
                           <div class="col-12">
-                            <button type="submit" class="btn btn-primary btn-block w-100">Share</button>
+                            <button type="submit"  data-bs-dismiss="modal" class="btn btn-primary btn-block w-100">Share</button>
                           </div>
                         </div>
                       </div>

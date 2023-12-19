@@ -80,20 +80,18 @@
                         </li>
                         <li class="list-inline-item ml-2">
                             <button class="btn p-0" data-bs-toggle="modal" data-bs-target="#share">
-                              <i class="fa-regular fa-paper-plane"></i>
+                              <i class="fa-solid fa-pen-to-square"></i>
                             
                             </button>
                         </li>
                     </ul>
                     <div>
-                        <button class="btn p-0 m-2" (click)="toggleBookmark(post)">
-                          <span *ngIf="post.isBookmarked">
-                            <i class="fa-solid fa-bookmark" style="color: black;"></i>
+                        <button class="btn p-0 m-2" (click)="deletePost(post)">
+                          <span >
+                            <i class="fa-solid fa-trash" style="color: red;"></i>
                           </span>
 
-                          <span *ngIf="!post.isBookmarked">
-                          <i class="fa-regular fa-bookmark"></i>                        
-                        </span>
+                         
                         </button>
                     </div>
                 </div>
@@ -144,22 +142,9 @@
           <div class="modal-body p-2">
             <div class="d-flex">
 <div class="w-100">
-  <ng-template #singleMedia>
-    <ng-container *ngIf="post.mediaFiles.length === 1">
-      <!-- Check if the first item in post.images is a video -->
-      <ng-container *ngIf="isVideo(post.mediaFiles[0])">
-        <vg-player>
-          <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>
-            <source [src]="post.mediaFiles[0]" type="video/mp4">
-          </video>
-        </vg-player>
-      </ng-container>
-      <!-- If it's not a video, assume it's an image -->
-      <ng-container *ngIf="!isVideo(post.mediaFiles[0]) && post.mediaFiles.length > 0">
-        <img [src]="post.mediaFiles[0]" alt="Post Media" class="d-block w-100">
-      </ng-container>
-    </ng-container>
-  </ng-template>
+  
+  <img [src]="post.mediaFiles[0].media_file" alt="Post Media" class="d-block w-100">
+
 </div>
 <div class="w-100">
   <div class="w-100 position-relative">

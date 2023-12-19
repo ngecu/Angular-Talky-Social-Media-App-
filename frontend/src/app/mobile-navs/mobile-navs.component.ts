@@ -14,7 +14,7 @@ import { PostService } from '../services/post.service';
   styleUrls: ['./mobile-navs.component.scss']
 })
 export class MobileNavsComponent {
-
+  posts:any[] = []
   registrationForm!: FormGroup;
   files: any[] = [];
   postFiles: any[] = [];
@@ -63,6 +63,7 @@ user_id:string = ""
       console.error('User details not found in local storage');
     }
 
+    this.getAllPosts()
   }
 
   isActive(route: string): boolean {
@@ -95,6 +96,28 @@ user_id:string = ""
 
   }
 
+  getAllPosts() {
+    this.postService.allPosts().subscribe(
+      (response) => {
+        console.log("response is ", response.posts);
+  
+        // Filter posts of type 'post'
+        const filteredPosts = response.posts.filter(post => post.postType == "post");
+  
+        // Sort posts by created_at in descending order
+        this.posts = filteredPosts.sort((a, b) => {
+          const dateA = new Date(a.created_at);
+          const dateB = new Date(b.created_at);
+          return dateB.getTime() - dateA.getTime();
+        });
+      },
+      (error) => {
+        console.error("Error fetching posts:", error);
+      }
+    );
+  }
+
+
   sharePost() {
     // Your logic to share the post
     console.log(this.postForm.value);
@@ -125,13 +148,13 @@ user_id:string = ""
 
         this.postService.createPost(details).subscribe(
           (response) => {
-            console.log(response);
-            this.toastr.success('Form submitted successfully!', 'Success');
-
+            console.log(response.post);
+            this.toastr.success('Post added successfully!', 'Success');
+            window.location.reload();
             // Clear the form or take other actions as needed
             this.postForm.reset();
             this.postFiles = []; // Clear the array of uploaded files
-
+           
           },
           (error) => {
             // Handle error
