@@ -56,10 +56,12 @@ export class AuthService {
 deactivateAccount(): Observable<any>{
  const storedUser: string | null = localStorage.getItem('user_details');
  const token = localStorage.getItem('token') as string;
+ console.log("token is ",token);
+ 
   let user_id = ""
  const headers = new HttpHeaders({
   'Content-Type': 'application/json',
-  'token': token
+  'token': `${token}`,
 });
 
  if(storedUser){
@@ -68,7 +70,7 @@ deactivateAccount(): Observable<any>{
 
  }
 
- return this.http.put<any>(`http://localhost:4400/user/toggleSoftDeleteUser/${user_id}`,{headers}).pipe(
+ return this.http.put<any>(`http://localhost:4400/user/toggleSoftDeleteUser/${user_id}`,{},{headers}).pipe(
   catchError(error => {
     console.error('Error checking details:', error);
     return throwError(error); 

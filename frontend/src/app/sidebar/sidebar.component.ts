@@ -91,6 +91,12 @@ export class SidebarComponent {
 
           this.router.navigate(['login']);
           localStorage.clear();
+        },
+        (error) => {
+          // Handle error
+          this.toastr.error(`${error.error.error}`, 'Error');
+
+          console.error('Error submitting form:', error);
         }
       )
       
