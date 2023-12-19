@@ -615,15 +615,17 @@ export const editComment = async (req: Request, res: Response) => {
         comment_id,
       });
       console.log(result);
-      
+    
+      if (result.recordset[0].success === 1) {
   
-      if (result.rowsAffected[0] === 0) {
-        return res.status(404).json({
-          message: 'Something went wrong, Comment not deleted',
-        });
-      } else {
+
         return res.status(200).json({
           message: 'Comment deleted successfully',
+        });
+
+      } else {
+             return res.status(404).json({
+          message: 'Something went wrong, Comment not deleted',
         });
       }
     } catch (error) {
@@ -655,6 +657,8 @@ export const editComment = async (req: Request, res: Response) => {
                 message: "Something went wrong, Pots not unliked"
             })
         }else{
+          console.log("post unliked");
+          
             return res.status(200).json({
                 message: 'Post Unliked'
             })
@@ -672,6 +676,8 @@ export const editComment = async (req: Request, res: Response) => {
                 message: "Something went wrong, Post not lked"
             })
         }else{
+          console.log("post liked");
+
             return res.status(200).json({
                 message: 'Post Liked'
             })

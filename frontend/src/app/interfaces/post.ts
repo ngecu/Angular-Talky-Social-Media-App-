@@ -9,6 +9,7 @@ export interface Post {
 }
 
   export interface PostDetails{
+    post_id?:string,
     postImage:string,
     created_by_user_id:string,
     caption: string,

@@ -20,6 +20,9 @@ export class PostService {
     return this.http.post<any>('http://localhost:4400/post/', post)
   }
 
+  editPost (post: PostDetails): Observable<any>{
+    return this.http.put<any>(`http://localhost:4400/post/${post.post_id}`, post)
+  }
  
 
   followingPosts(following_user_id:string){

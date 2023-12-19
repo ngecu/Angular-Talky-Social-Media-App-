@@ -9,11 +9,11 @@
                     <div
                         class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
                         <img src="{{post.profileImage}}" alt="..."
-                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0">
                     </div>
-                    <span class="font-weight-bold px-2">{{post.creator_username}} <span *ngIf="post.verified" style="color: Dodgerblue;"> <i class="fa-solid fa-circle-check"></i> </span></span>
+                    <span class="font-weight-bold px-2">{{post.creator_username}} <span style="color: Dodgerblue;"> <i class="fa-solid fa-circle-check"></i> </span></span>
 <span class="text-muted"> &middot; </span>
-<!-- <span class="text-muted">{{post.created_at}}</span> -->
+<span class="text-muted">Recent</span>
                 </div>
             </div>
           </a>
@@ -54,7 +54,7 @@
               <ng-template #singleMedia>
                 <ng-container *ngIf="post.mediaFiles.length == 1">
 
-                    <img [src]="post.mediaFiles[0].media_file" alt="Post Media" class="d-block w-100">
+                    <img [src]="post.mediaFiles[0].media_file" alt="Post Media" class="d-block w-100" style="max-height: 560px;">
                  
                 </ng-container>
               </ng-template>
@@ -63,11 +63,11 @@
                     <ul class="list-inline d-flex flex-row align-items-center m-0">
                         <li class="list-inline-item">
                             <button class="btn p-0" (click)="toggleLike(post)">
-                              <span *ngIf="post.likes.length > 0">
+                              <span *ngIf="post.liked">
                                 <i class="fa-solid fa-heart"  style="color: red;"></i>
                           
                               </span>
-                              <span *ngIf="post.likes.length == 0">
+                              <span *ngIf="!post.liked">
                                 <i class="fa-regular fa-heart"></i>
                               </span>
                               
@@ -78,22 +78,22 @@
                               <i class="fa-regular fa-comment"></i>
                             </button>
                         </li>
-                        <li class="list-inline-item ml-2">
-                            <button class="btn p-0" data-bs-toggle="modal" data-bs-target="#share">
+                        <li *ngIf="post.created_by_user_id === user_id" class="list-inline-item ml-2">
+                            <button class="btn p-0" data-bs-toggle="modal" [attr.data-bs-target]="'#edit_' + post.post_id">
                               <i class="fa-solid fa-pen-to-square"></i>
                             
                             </button>
                         </li>
                     </ul>
                     <div>
-                        <button class="btn p-0 m-2" (click)="deletePost(post)">
-                          <span >
-                            <i class="fa-solid fa-trash" style="color: red;"></i>
-                          </span>
-
-                         
-                        </button>
+                      <button *ngIf="post.created_by_user_id === user_id" class="btn p-0 m-2" (click)="deletePost(post)">
+                      
+                        <span>
+                          <i class="fa-solid fa-trash" style="color: red;"></i>
+                        </span>
+                      </button>
                     </div>
+                    
                 </div>
     
                 <div class="pl-3 pr-3 pb-2">
@@ -131,7 +131,7 @@
 </div>
 
 
-<div *ngFor="let post of posts;;let i = index">
+<div *ngFor="let post of posts;let i = index">
     <div class="modal fade" [id]="'post_' + post.post_id">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -141,23 +141,32 @@
           <!-- Modal body -->
           <div class="modal-body p-2">
             <div class="d-flex">
-<div class="w-100">
+<div class="w-50">
   
   <img [src]="post.mediaFiles[0].media_file" alt="Post Media" class="d-block w-100">
 
 </div>
-<div class="w-100">
+<div class="w-50">
   <div class="w-100 position-relative">
-            
+    <div class="d-flex flex-row align-items-center">
+      <div
+          class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
+          <img src="{{post.profileImage}}" alt="..."
+              style="transform: scale(1.5); width: 100%; position: absolute; left: 0">
+      </div>
+      <span class="font-weight-bold px-2">{{post.creator_username}} <span style="color: Dodgerblue;"> <i class="fa-solid fa-circle-check"></i> </span></span>
+<span class="text-muted"> &middot; </span>
+<!-- <span class="text-muted">{{post.created_at}}</span> -->
+  </div>    
               
     <!-- Content container for comments and other elements -->
     <div class="ml-auto">
       <!-- List of comments (scrollable) -->
       <div class="comments-container overflow-auto" style="max-height: 400px;">
         <div>
-          <section class="gradient-custom">
+         
            
-              <div class="row d-flex justify-content-center">
+              <div class="row w-100 d-flex justify-content-center">
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
@@ -182,15 +191,15 @@
                                   <p class="text-muted">
                                   
 
-                                    <small class="text-muted mx-2" (click)="replyToComment(post,entry,false)" style="cursor: pointer;">
+                                    <small class="text-muted mx-2" *ngIf="entry.created_by_user_id == user_id" (click)="replyToComment(post,entry,false)" style="cursor: pointer;">
                                       Edit 
                                     </small>
 
-                                    <small class="text-muted mx-2" (click)="replyToComment(post,entry,true)" style="cursor: pointer;">
+                                    <small class="text-muted mx-2"   (click)="replyToComment(post,entry,true)" style="cursor: pointer;">
                                       Reply 
                                     </small>
                                 
-                                    <small class="text-muted mx-2" (click)="deleteEntry(entry.comment_id,i)" style="cursor: pointer;">
+                                    <small class="text-muted mx-2" *ngIf="entry.created_by_user_id == user_id" (click)="deleteEntry(entry.comment_id,i)" style="cursor: pointer;">
                                      Delete
                                     </small>
                                   </p>
@@ -208,11 +217,11 @@
                                   <div>
                                     <div class="d-flex justify-content-between align-items-center">
                                       <p class="mb-1">
-                                        {{ reply.creator_username }} <span class="small">- {{ reply.time }}</span>
+                                        {{ reply.comment_creator_username }} 
                                       </p>
                                     </div>
                                     <p class="small mb-0">
-                                     {{ reply.creator_username }} {{ reply.comment }}
+                                     {{ reply.comment }}
                                     </p>
                                   </div>
                                 </div>
@@ -229,7 +238,7 @@
                 </div>
               </div>
            
-          </section>
+      
 
           </div>
       </div>
@@ -243,6 +252,102 @@
         </form>
       </div>
        
+    </div>
+  </div>  
+</div>
+            </div>
+          
+            <!-- Comments on the right -->
+                  
+            
+            </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngFor="let post of posts;let i = index">
+    <div class="modal fade" [id]="'edit_' + post.post_id">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+  
+       
+  
+          <!-- Modal body -->
+          <div class="modal-body p-2">
+            <div class="d-flex">
+<div class="w-50">
+  
+  <img [src]="post.mediaFiles[0].media_file" alt="Post Media" class="d-block w-100">
+
+</div>
+<div class="w-50">
+  <div class="w-100 position-relative">
+    <div class="d-flex flex-row align-items-center">
+      <div
+          class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
+          <img src="{{post.profileImage}}" alt="..."
+              style="transform: scale(1.5); width: 100%; position: absolute; left: 0">
+      </div>
+      <span class="font-weight-bold px-2">{{post.creator_username}} <span style="color: Dodgerblue;"> <i class="fa-solid fa-circle-check"></i> </span></span>
+<span class="text-muted"> &middot; </span>
+<!-- <span class="text-muted">{{post.created_at}}</span> -->
+  </div>    
+              
+    <!-- Content container for comments and other elements -->
+    <div class="ml-auto">
+      <!-- List of comments (scrollable) -->
+      <div class="comments-container overflow-auto" style="max-height: 400px;">
+        <div>
+         
+           
+              <div class="row w-100 d-flex justify-content-center">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      
+          
+                      <form [formGroup]="editPostForm" (ngSubmit)="editPost(post.post_id)">
+
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="form-group">
+                           
+                            </div>
+                          </div>
+                      
+                          <div class="col-12">
+                            <div class="row">
+                                               
+    
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="form-group">
+                                    <input type="text" class="form-control w-100 p-3 input-post" placeholder="Add a comment..." formControlName="caption"  [(ngModel)]="post.caption">
+                                  </div>
+                                </div>
+                               
+                              </div>
+                              
+                      
+                              <div class="col-12">
+                                <button type="submit"  data-bs-dismiss="modal" class="btn btn-primary btn-block w-100">Update</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           
+      
+
+          </div>
+      </div>
     </div>
   </div>  
 </div>
@@ -301,4 +406,82 @@
     
         </div>
       </div>
+  </div>
+
+
+  <div class="modal fade" id="add_post">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+  
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add Post</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+        
+              <!-- Modal body -->
+              <div class="modal-body">
+                <form [formGroup]="postForm" (ngSubmit)="sharePost()">
+
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <ngx-dropzone (change)="onSelectPostImage($event)">
+                            <ngx-dropzone-label>Drop Post Image</ngx-dropzone-label>
+                            <ngx-dropzone-preview *ngFor="let f of postFiles" [removable]="true" (removed)="onRemovePostImage(f)">
+                              <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                            </ngx-dropzone-preview>
+                          </ngx-dropzone>
+                        </div>
+                      </div>
+                  
+                      <div class="col-12">
+                        <div class="row">
+                          <div class="col-12">
+                            <label for="postType">Post Type</label>
+                            <select class="form-control" formControlName="postType" id="postType">
+                              <option value="post">Post</option>
+                              <option value="Status">Status</option>
+                            </select>
+                          </div>
+                  
+
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="form-group">
+                                <input type="text" class="form-control w-100 p-3 input-post" placeholder="Add a comment..." formControlName="caption">
+                              </div>
+                            </div>
+                            <!-- <div class="col-2">
+                              <div class="input-group">
+                                <div class="input-group-append">
+                                  <button data-toggle="collapse" class="btn" data-bs-toggle="collapse" data-bs-target="#emoji" aria-expanded="false" type="button">😀</button>
+                                </div>
+                                <div id="emoji" class="collapse">
+                                  <div class="form-group">
+                                    <emoji-mart
+                                      class="emoji-mart w-100"
+                                      (emojiSelect)="addEmoji($event)"
+                                      title="Choose your emoji"
+                                    ></emoji-mart>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> -->
+                          </div>
+                          
+                  
+                          <div class="col-12">
+                            <button type="submit"  data-bs-dismiss="modal" class="btn btn-primary btn-block w-100">Share</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                  </form>
+                  
+              </div>
+  
+      </div>
+    </div>
   </div>

@@ -8,7 +8,9 @@ import { Observable, Subject, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { PostService } from '../services/post.service';
 import { Comment } from '../interfaces/comment';
-
+import { PostDetails } from '../interfaces/post';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { CloudinaryuploadService } from '../services/cloudinaryupload.service';
 
 @Component({
   selector: 'app-post',
@@ -24,6 +26,11 @@ export class PostComponent {
   loggedInuser = ""
   user_id = ""
   editingCommentIndex!: number 
+  files: any[] = [];
+  postFiles: any[] = [];
+postForm!: FormGroup;
+  editPostForm !: FormGroup;
+  editpostFiles: any[] =[];
 
   postComment(post: Post) {
     if (post.comment) {
@@ -99,12 +106,26 @@ export class PostComponent {
           const dateB = new Date(b.created_at);
           return dateB.getTime() - dateA.getTime();
         });
+  
+        // Check if each post is liked by the user
+        this.posts.forEach(post => {
+          post.liked = post.likes.some((like: any) => like.reaction_user_id === this.user_id);
+          
+          // Calculate how many days ago the post was created
+          const createdDate = new Date(post.created_at);
+          const currentDate = new Date();
+          const timeDiff = Math.abs(currentDate.getTime() - createdDate.getTime());
+          const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+          post.daysAgo = daysDiff;
+        });
       },
       (error) => {
         console.error("Error fetching posts:", error);
       }
     );
   }
+  
+  
   
   replyToUsername: string = '';
   replyToCommentId:string = ''
@@ -114,7 +135,7 @@ export class PostComponent {
       this.replyToCommentId = entry.comment_id
     }
     else{
-      this.replyToUsername = `@${entry.comment_creator_username} ${entry.comment}`;
+      this.replyToUsername = `${entry.comment}`;
 
     }
   }
@@ -124,7 +145,7 @@ export class PostComponent {
       (response) => {
         console.log(response);
         this.replyToUsername = ""
-        // this.getAllPosts()
+        this.getAllPosts()
         this.toastr.success('Comment added', 'Success');
 
       },
@@ -229,7 +250,20 @@ export class PostComponent {
   }
   
 
-  constructor(private router: Router,private toastr: ToastrService,private postService:PostService) {
+  constructor(private upload:CloudinaryuploadService,private formBuilder: FormBuilder,private router: Router,private toastr: ToastrService,private postService:PostService) {
+    
+    this.postForm = this.formBuilder.group({
+      postImage: [],
+      postType: 'Post', // Set default value
+      caption: '',
+    });
+
+    this.editPostForm = this.formBuilder.group({
+      postImage: [],
+      postType: 'Post', // Set default value
+      caption: '',
+    });
+    
     this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -271,5 +305,187 @@ export class PostComponent {
     // For simplicity, let's assume that the URL ending with ".mp4" is a video
     return url.toLowerCase().endsWith('.mp4');
   }
+
+  
+
+
+  sharePost() {
+    // Your logic to share the post
+    console.log(this.postForm.value);
+  
+    if (this.postForm.valid) {
+      const imageUrls: string[] = [];
+    if(this.postFiles.length > 0 ){
+   // Upload all images
+   for (let index = 0; index < this.postFiles.length; index++) {
+    const data = new FormData();
+    const file_data = this.postFiles[index];
+    data.append('file', file_data);
+    data.append('upload_preset', 'f3gqwyzn');
+    data.append('cloud_name', 'dqquyjsap');
+
+    this.upload.uploadImage(data).subscribe((res) => {
+      console.log(res.secure_url);
+      imageUrls.push(res.secure_url);
+
+      // If all images are uploaded, proceed to createPost
+      if (imageUrls.length === this.postFiles.length) {
+        // Set the array of image URLs in the form
+        this.postForm.value.postImage = imageUrls ;
+
+        // Create the post
+        let details: PostDetails = this.postForm.value;
+        details.created_by_user_id = this.user_id;
+
+        this.postService.createPost(details).subscribe(
+          (response) => {
+            console.log(response.post);
+            this.toastr.success('Post added successfully!', 'Success');
+         
+            // Clear the form or take other actions as needed
+            this.postForm.reset();
+            this.postFiles = []; // Clear the array of uploaded files
+            this.getAllPosts()
+          },
+          (error) => {
+            // Handle error
+            this.toastr.error(`${error}`, 'Error');
+            console.error('Error submitting form:', error);
+          }
+        );
+      }
+    });
+  }
+    }
+    else{
+
+              let details: PostDetails = this.postForm.value;
+              details.created_by_user_id = this.user_id;
+       this.postForm.value.postImage = [] ;
+              this.postService.createPost(details).subscribe(
+                (response) => {
+                  console.log(response);
+                  this.toastr.success('Form submitted successfully!', 'Success');
+      
+                  // Clear the form or take other actions as needed
+                  this.postForm.reset();
+                  this.postFiles = []; // Clear the array of uploaded files
+                  this.getAllPosts()
+                },
+                (error) => {
+                  // Handle error
+                  this.toastr.error(`${error}`, 'Error');
+                  console.error('Error submitting form:', error);
+                }
+              );
+    }
+   
+    }
+    
+
+    else {
+      // Your form is invalid, display error messages or take appropriate action
+      this.toastr.error('Form is invalid. Please check the fields.', 'Error');
+      console.log('Form is invalid. Please check the fields.');
+    }
+
+    
+
+  }
+  
+  editPost(post_id:string) {
+    // Your logic to share the post
+    console.log(this.editPostForm.value);
+  
+    if (this.editPostForm.valid) {
+      const imageUrls: string[] = [];
+    if(this.editpostFiles.length > 0 ){
+   // Upload all images
+   for (let index = 0; index < this.editpostFiles.length; index++) {
+    const data = new FormData();
+    const file_data = this.postFiles[index];
+    data.append('file', file_data);
+    data.append('upload_preset', 'f3gqwyzn');
+    data.append('cloud_name', 'dqquyjsap');
+
+    this.upload.uploadImage(data).subscribe((res) => {
+      console.log(res.secure_url);
+      imageUrls.push(res.secure_url);
+
+      // If all images are uploaded, proceed to createPost
+      if (imageUrls.length === this.postFiles.length) {
+        // Set the array of image URLs in the form
+        this.postForm.value.postImage = imageUrls ;
+
+        // Create the post
+        let details: PostDetails = this.postForm.value;
+        details.created_by_user_id = this.user_id;
+
+        this.postService.editPost(details).subscribe(
+          (response) => {
+            console.log(response.post);
+            this.toastr.success('Post updated successfully!', 'Success');
+         
+            // Clear the form or take other actions as needed
+            this.postForm.reset();
+            this.postFiles = []; // Clear the array of uploaded files
+            this.getAllPosts()
+          },
+          (error) => {
+            // Handle error
+            this.toastr.error(`${error}`, 'Error');
+            console.error('Error submitting form:', error);
+          }
+        );
+      }
+    });
+  }
+    }
+    else{
+
+              let details: PostDetails = this.postForm.value;
+              details.created_by_user_id = this.user_id;
+       this.postForm.value.postImage = [] ;
+              this.postService.createPost(details).subscribe(
+                (response) => {
+                  console.log(response);
+                  this.toastr.success('Form submitted successfully!', 'Success');
+      
+                  // Clear the form or take other actions as needed
+                  this.postForm.reset();
+                  this.postFiles = []; // Clear the array of uploaded files
+                  this.getAllPosts()
+                },
+                (error) => {
+                  // Handle error
+                  this.toastr.error(`${error}`, 'Error');
+                  console.error('Error submitting form:', error);
+                }
+              );
+    }
+   
+    }
+    
+
+    else {
+      // Your form is invalid, display error messages or take appropriate action
+      this.toastr.error('Form is invalid. Please check the fields.', 'Error');
+      console.log('Form is invalid. Please check the fields.');
+    }
+
+    
+
+  }
+
+  onSelectPostImage(event: any) {
+    console.log(event);
+    this.postFiles.push(...event.addedFiles);
+  }
+
+  onRemovePostImage(event: any) {
+    console.log(event);
+    this.postFiles.splice(this.postFiles.indexOf(event), 1);
+  }
+
   
 }

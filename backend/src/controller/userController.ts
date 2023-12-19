@@ -316,7 +316,7 @@ export const toggleFollowUser =  async(req:Request, res: Response) =>{
         let follower_id = v4()
 
         let {following_user_id, followed_user_id  } = req.body
-        let created_at  = new Date().toISOString();
+        
  const relationsexists = (await dbHelper.query(`SELECT * FROM follower WHERE following_user_id = '${following_user_id}' AND followed_user_id= '${followed_user_id}'`)).recordset
 
      if(!isEmpty(relationsexists)){
@@ -338,7 +338,7 @@ export const toggleFollowUser =  async(req:Request, res: Response) =>{
     else{
 
         let result = await dbHelper.execute('followUser', {
-            follower_id,following_user_id, followed_user_id,created_at
+            follower_id,following_user_id, followed_user_id
         })
         
         if(result.rowsAffected[0] === 0){
