@@ -63,4 +63,19 @@ describe('Login Test Suite', () => {
         cy.contains('Incorrect password')
     
       });
+
+      it('Check deactivated account', () => {
+      
+    
+        cy.get('[data-cy="email"]').type('caleb');
+        cy.get('[data-cy="password"]').type('12345678');  
+        
+        cy.get('[data-cy="login-btn"]').click();
+        cy.wait(2000);
+  
+        
+        cy.contains('Account deactivated, please contact admin')
+     
+    
+      });
   });

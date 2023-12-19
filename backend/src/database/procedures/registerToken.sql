@@ -2,7 +2,6 @@ CREATE OR ALTER PROCEDURE registerToken(
     @user_id VARCHAR(500),
     @token_id VARCHAR(500),
     @token VARCHAR(500),
-    @created_at VARCHAR(20)
 )
 AS
 BEGIN
@@ -16,7 +15,7 @@ BEGIN
     IF @existing_token_count = 0
     BEGIN
         -- If no token exists, insert a new record
-        INSERT INTO token (token_id, user_id, token, created_at)
-        VALUES (@token_id, @user_id, @token, @created_at);
+        INSERT INTO token (token_id, user_id, token)
+        VALUES (@token_id, @user_id, @token);
     END
 END;

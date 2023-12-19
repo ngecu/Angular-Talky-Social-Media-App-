@@ -21,12 +21,12 @@ app.use('/user', user_router)
 app.use('/post', post_router)
 
 
-const io = new Server(server, {
-  cors: {
-    origin: 'http://localhost:4200',
-    methods: ['GET', 'POST'],
-  },
-});
+// const io = new Server(server, {
+//   cors: {
+//     origin: 'http://localhost:4200',
+//     methods: ['GET', 'POST'],
+//   },
+// });
 
 app.use((error: Error, req:Request, res:Response, next:NextFunction)=>{
   res.json({
@@ -39,39 +39,39 @@ app.listen(4400, ()=>{
 })
 
 
-io.on('connection', (socket) => {
+// io.on('connection', (socket) => {
 
-  socket.on('join', (data) => {
-      socket.join(data.room);
-      socket.broadcast.to(data.room).emit('user joined');
-  });
+//   socket.on('join', (data) => {
+//       socket.join(data.room);
+//       socket.broadcast.to(data.room).emit('user joined');
+//   });
 
-  socket.on('message', async(data,req:Request,res:Response) => {
-    console.log(data);
-    let created_at  = new Date().toISOString();
-    let message_id = v4()
-    let from_user_id = data.user.user_id;
-    let to_user_id = data.room
-    let message_text = data.message
+//   socket.on('message', async(data,req:Request,res:Response) => {
+//     console.log(data);
+//     let created_at  = new Date().toISOString();
+//     let message_id = v4()
+//     let from_user_id = data.user.user_id;
+//     let to_user_id = data.room
+//     let message_text = data.message
 
-            let result = await dbHelper.execute('sendMessage', {
-              message_id,from_user_id, to_user_id,message_text,created_at
-        })
+//             let result = await dbHelper.execute('sendMessage', {
+//               message_id,from_user_id, to_user_id,message_text,created_at
+//         })
 
-        console.log(result);
+//         console.log(result);
         
         
-        if(result.rowsAffected[0] === 0){
-            return res.status(404).json({
-                message: "Something went wrong, user not registered"
-            })
-        }else{
-          io.in(data.room).emit('new message', {user: data.user.fullName, message: data.message});
+//         if(result.rowsAffected[0] === 0){
+//             return res.status(404).json({
+//                 message: "Something went wrong, user not registered"
+//             })
+//         }else{
+//           io.in(data.room).emit('new message', {user: data.user.fullName, message: data.message});
 
-        }
+//         }
 
-  });
-});
+//   });
+// });
 
 
 

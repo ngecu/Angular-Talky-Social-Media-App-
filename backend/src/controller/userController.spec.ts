@@ -110,15 +110,15 @@ describe("User Login",()=>{
       it("Returns an error if email or password is empty", async () => {
         const req = {
           body: {
-            Email: "",
-            Password: "",
+            email: "",
+            password: "",
           },
         };
 
         await loginUser(req as Request, res);
 
         expect(res.json).toHaveBeenCalledWith({
-          error: '"Email" is not allowed to be empty',
+          error: '"email" is not allowed to be empty',
         });
       });
 it('Returns an error if email or password is missing' ,async()=>{
@@ -130,15 +130,15 @@ it('Returns an error if email or password is missing' ,async()=>{
 
     await loginUser(req as Request, res)
 
-    expect(res.json).toHaveBeenCalledWith({"error": "\"Email\" is required"})
+    expect(res.json).toHaveBeenCalledWith({"error": "\"email\" is required"})
 
 })
 
 it("Returns an error if email is not in database", async()=>{
     const req = {
         body:{
-            Email: "incorrect@email.com",
-            Password: "12345678"
+            email: "incorrect@email.com",
+            password: "12345678"
         } 
     }
 
@@ -156,8 +156,8 @@ it("Returns an error if email is not in database", async()=>{
 it("Handles incorrect password scenario", async()=>{
     const req = {
         body:{
-            Email: "caleb@gmail.com",
-            Password: "wrongPassword"
+            email: "caleb@gmail.com",
+            password: "wrongpassword"
         }
     }
 
@@ -166,8 +166,8 @@ it("Handles incorrect password scenario", async()=>{
         input: jest.fn().mockReturnThis(),
         execute: jest.fn().mockResolvedValueOnce({
             recordset: [{
-                Email: 'caleb',
-                Password: 'hashedPwd'
+                email: 'caleb@gmail.com',
+                password: 'hashedPwd'
             }]
         })
     } as never)
@@ -177,6 +177,32 @@ it("Handles incorrect password scenario", async()=>{
     await loginUser(req as Request, res)
 
     expect(res.json).toHaveBeenCalledWith({error: "Incorrect password"})
+})
+
+it("Handles A deactivated account", async()=>{
+  const req = {
+      body:{
+          email: "caleb@gmail.com",
+          password: "12345678"
+      }
+  }
+
+  jest.spyOn(mssql, 'connect').mockResolvedValueOnce({
+      request: jest.fn().mockReturnThis(),
+      input: jest.fn().mockReturnThis(),
+      execute: jest.fn().mockResolvedValueOnce({
+          recordset: [{
+              email: 'caleb@gmail.com',
+              password: '12345678'
+          }]
+      })
+  } as never)
+
+  jest.spyOn(bcrypt, 'compare').mockResolvedValueOnce(false as never)
+
+  await loginUser(req as Request, res)
+
+  expect(res.json).toHaveBeenCalledWith({error: "Account deactivated, please contact admin"})
 })
 
 it("successfully logs in a user and returns a token", async()=>{
@@ -192,8 +218,8 @@ it("successfully logs in a user and returns a token", async()=>{
 
     const req = {
         body:{
-            Email: expectedUser.email,
-          Password: "12345678"
+            email: expectedUser.email,
+          password: "12345678"
         }
     }
 

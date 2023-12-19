@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User, UserDetails, toggleFollowUserInterface } from '../interfaces/user';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -96,5 +97,34 @@ export class UserService {
     );
   }
 
+  updateProfile(profileData: any): Observable<any> {
+    const token = localStorage.getItem('token') as string;
+    const storedUser: string | null = localStorage.getItem('user_details');
+    let user_id = ""
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      token: token,
+    });
 
+    if(storedUser){
+      user_id = JSON.parse(storedUser).user_id;
+   
+   
+    }
+
+    return this.http.put<{ message: string }>(`http://localhost:4400/user/${user_id}/profile`, profileData, { headers }).pipe(
+      map(response => response.message)
+    );
+  }
+
+  sendResetToken(emailData: any): Observable<any> {
+  
+
+    return this.http.post<{ message: string }>(`http://localhost:4400/user/reset-password`, emailData).pipe(
+      map(response => response.message)
+    );
+  }
 }
+
+
+

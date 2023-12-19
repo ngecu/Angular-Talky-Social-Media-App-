@@ -31,6 +31,7 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { HttpClientModule } from '@angular/common/http';
 import { MobileNavsComponent } from './mobile-navs/mobile-navs.component';
 import { PostpageComponent } from './postpage/postpage.component';
+import { NewpasswordComponent } from './newpassword/newpassword.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { PostpageComponent } from './postpage/postpage.component';
     SignuppageComponent,
     ForgetpwdComponent,
     MobileNavsComponent,
-    PostpageComponent
+    PostpageComponent,
+    NewpasswordComponent
   ],
   imports: [
     BrowserModule,

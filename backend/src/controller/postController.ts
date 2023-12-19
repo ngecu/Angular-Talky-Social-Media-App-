@@ -20,14 +20,13 @@ export const createPost = async (req: Request, res: Response) => {
     }
 
     let post_id = v4();
-    let created_at = new Date().toISOString()
 
     let result = await dbHelper.execute('createPost', {
       post_id,
       created_by_user_id,
       caption,
       postType,
-      created_at,
+      
     });
 
     if (result.rowsAffected[0] === 0) {
@@ -42,9 +41,8 @@ export const createPost = async (req: Request, res: Response) => {
       let result = await dbHelper.execute('createPostMedia', {
         post_media_id,
         post_id,
-        media_file,
-        created_at,
-      });
+        media_file
+      })
 
       if (result.rowsAffected[0] === 0) {
         throw new Error("Something went wrong, Post Media not created");
@@ -72,8 +70,7 @@ export const createPost = async (req: Request, res: Response) => {
           let result = await dbHelper.execute('addToPostTaggedTable', {
             post_user_tag_id,
             post_id,
-            user_id,
-            created_at,
+            user_id
           });
 
           if (result.rowsAffected[0] === 0) {
@@ -212,7 +209,7 @@ export const getAllPosts = async (req: Request, res: Response) => {
         .execute('fetchCommentsByPostId');
       const comments = commentsResult.recordset;
       const commentsWithSubcomments = groupCommentsByParentId(comments);
-      console.log("comments are ",comments);
+      // console.log("comments are ",comments);
       
 
       // Fetch media files
@@ -309,24 +306,34 @@ export const getSinglePost = async (req: Request, res: Response) => {
 
 
 const groupCommentsByParentId = (comments:any[]) => {
+
+  
   const commentMap = new Map();
   const topLevelComments:any[] = [];
 
   comments.forEach((comment) => {
     const parentId = comment.comment_replied_to_id;
     if (parentId) {
+      console.log("parent id exists ",parentId);
+      
       const parentComment = commentMap.get(parentId);
       if (parentComment) {
+      console.log("parent comment exists ",parentComment);
+
         if (!parentComment.subcomments) {
           parentComment.subcomments = [];
         }
         parentComment.subcomments.push(comment);
+          console.log("new comments ",parentComment.subcomments);
       }
     } else {
       topLevelComments.push(comment);
     }
     commentMap.set(comment.comment_id, comment);
   });
+
+  // console.log(topLevelComments);
+
 
   return topLevelComments;
 };
@@ -462,7 +469,7 @@ export const createComment = async (req: Request, res: Response) => {
       let { created_by_user_id, post_id, comment, comment_replied_to_id } = req.body;
   
       let comment_id = v4();
-      let created_at = new Date().toISOString()
+      
 
       if (comment.includes('@')) {
         const username_tagged = comment.split('@')[1].split(' ')[0]; 
@@ -479,8 +486,8 @@ export const createComment = async (req: Request, res: Response) => {
           let result = await dbHelper.execute('addToPostTaggedTable', {
             post_user_tag_id,
             post_id,
-            user_id,
-            created_at,
+            user_id
+           
           });
 
           if (result.rowsAffected[0] === 0) {
@@ -507,7 +514,6 @@ export const createComment = async (req: Request, res: Response) => {
             post_id,
             comment,
             comment_replied_to_id,
-            created_at,
           });
 
           if (result.rowsAffected[0] === 0) {
@@ -529,8 +535,8 @@ export const createComment = async (req: Request, res: Response) => {
         created_by_user_id,
         post_id,
         comment,
-        comment_replied_to_id,
-        created_at,
+        comment_replied_to_id
+     
       });
   
       if (result.rowsAffected[0] === 0) {

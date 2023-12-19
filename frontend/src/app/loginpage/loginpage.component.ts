@@ -21,8 +21,8 @@ export class LoginpageComponent {
   constructor(private router:Router,private fb:FormBuilder,private route:Router,private toastr: ToastrService,private authService:AuthService){
       //form group for validation
   this.loginForm=this.fb.group({
-    Email:['',[Validators.required]],
-    Password:['',[Validators.required]],
+    email:['',[Validators.required]],
+    password:['',[Validators.required]],
   })
   }
 

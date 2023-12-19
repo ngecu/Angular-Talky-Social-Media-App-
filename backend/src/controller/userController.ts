@@ -51,7 +51,9 @@ export const registerUser = async(req:Request, res: Response) =>{
         let user_id = v4()
 
         const hashedPwd = await bcrypt.hash(password, 5)
-         
+         if(isEmpty(profileImage)){
+          profileImage = ""
+         }
         let result = await dbHelper.execute('registerUser', {
             user_id,profileImage, fullName, email,password:hashedPwd,username, phone_no
         })
@@ -80,10 +82,10 @@ export const registerUser = async(req:Request, res: Response) =>{
 }
 
 export const loginUser = async(req:Request, res: Response) =>{
-    console.log(req.body);
+    
     
     try {  
-        const {Email, Password} = req.body
+        const {email, password} = req.body
 
         const {error} = loginUserSchema.validate(req.body)
 
@@ -93,19 +95,23 @@ export const loginUser = async(req:Request, res: Response) =>{
 
         const pool = await mssql.connect(sqlConfig)
 
-        let user = await (await pool.request().input("email", Email).input("password", Password).execute('loginUser')).recordset
-
-        console.log(user);
+        let user = await (await pool.request().input("email", email).input("password", password).execute('loginUser')).recordset
         
 
-        if(user[0]?.email  == Email || user[0]?.fullName  == Email || user[0]?.username  == Email || user[0]?.phone_no  == Email ){
-            const CorrectPwd = await bcrypt.compare(Password, user[0]?.password)
+        if(user[0]?.email  == email || user[0]?.fullName  == email || user[0]?.username  == email || user[0]?.phone_no  == email ){
+            const CorrectPwd = await bcrypt.compare(password, user[0]?.password)
 
             if(!CorrectPwd){   
               console.log("Incorrect Password");
                 return res.status(401).json({
                     error: "Incorrect password"
                 })
+            }
+
+             if (user[0]?.active === 0) {
+                return res.status(401).json({
+                    error: "Account deactivated, please contact admin"
+                });
             }
 
             const LoginCredentials = user.map(records =>{
@@ -191,12 +197,12 @@ export const updateProfile = async (req: Request, res: Response) => {
     try {
       console.log(req.body);
       const {user_id} = req.params
-      let {error} = updateProfileSchema.validate(req.body)
-      if(error){
-        console.log(error);
+    //   let {error} = updateProfileSchema.validate(req.body)
+    //   if(error){
+    //     console.log(error);
         
-        return res.status(404).json({error: error.details})
-    }
+    //     return res.status(404).json({error: error.details})
+    // }
       let {
         
         profileImage,
@@ -403,10 +409,11 @@ export const getFollowings = async(req:Request, res:Response)=>{
 
 
 export const sendRestPassword = async (req:Request, res:Response) => {
-    const { Email } = req.body
+    const { email } = req.body
+  console.log(req.body);
   
 
-    const user = (await dbHelper.query(`SELECT * FROM users WHERE email='${Email}' OR username ='${Email}' OR phone_no = '${Email}'`)).recordset
+    const user = (await dbHelper.query(`SELECT * FROM users WHERE fullName='${email}' OR email='${email}' OR username ='${email}' OR phone_no = '${email}'`)).recordset
 
     console.log("user is ",user);  
     if (isEmpty(user)) return res.status(400).send({ message: "No such user details" });
@@ -421,10 +428,10 @@ export const sendRestPassword = async (req:Request, res:Response) => {
             const token = crypto.randomBytes(32).toString('hex');
              let token_id = v4()
              let user_id =user[0].user_id;
-             let created_at  = new Date().toISOString();
+           
 
             let result = await dbHelper.execute('registerToken', {
-                token_id,user_id,token,created_at
+                token_id,user_id,token
             })
 
             if(result.rowsAffected[0] === 0){

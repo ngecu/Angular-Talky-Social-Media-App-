@@ -6,14 +6,16 @@ import { sendMail } from '../helpers/emailHelpers'
 dotenv.config()
 
 export const welcomeUser = async() =>{
-    console.log("sdsdsd");
+    
     
     const pool = await mssql.connect(sqlConfig)
+    console.log("pool is ",pool.connected);
+    
 
     const users = await (await pool.request().query('SELECT * FROM users WHERE welcomed = 0')).recordset
 
     console.log(users);
-    
+    console.log("sdsdsd");
 
     for (let user of users){
         ejs.renderFile('templates/welcomeUser.ejs', {Name: user.fullName}, async(error, data)=>{
@@ -25,6 +27,8 @@ export const welcomeUser = async() =>{
             }
 
             try {
+                // console.log("sending ",mailOptions);
+                
                 await sendMail(mailOptions)
 
                 await pool.request().query('UPDATE Users SET welcomed = 1 WHERE welcomed = 0')

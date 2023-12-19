@@ -23,11 +23,10 @@
   </li>
 
 <!-- Messages -->
-<li class="nav-item">
+<!-- <li class="nav-item">
     <a routerLink="/direct/inbox" routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" [ngClass]="{'font-weight-bold': isActive('/direct/inbox')}">
         <div style="position: relative;">
             <i class="fa-regular fa-message"></i>
-            <!-- Add a red background with a number counter -->
             <span class="badge badge-danger" style="position: absolute; top: 0px; right: -10px; font-size: 0.9rem; padding: 4px 6px; border-radius: 50%;">
                1
             </span>
@@ -37,13 +36,13 @@
 </li>
 
 
-<!-- Notifications -->
+
 <li class="nav-item">
     <a routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" [ngClass]="{'font-weight-bold': isActive('/notifications')}">
         <i class="fa-solid fa-bell"></i>
         <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Notifications</span>
     </a>
-</li>
+</li> -->
 
 
 <li class="nav-item">
@@ -68,8 +67,7 @@
       
         <li class="nav-item">
            
-            <a routerLink="/profile/devngecu" routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" >
-                <i class="fa-solid fa-address-card"></i>
+            <a [routerLink]="['/profile', username]" routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" data-cy="update-router-link">                <i class="fa-solid fa-address-card"></i>
 
                 <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Profile</span>
             </a>
@@ -82,6 +80,12 @@
         <li class="nav-item">
             <a (click)="Logout()"   routerLinkActive="active" class="nav-link d-flex align-items-center text-danger">
                 <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Logout</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a (click)="Deactivate()"   routerLinkActive="active" class="nav-link d-flex align-items-center text-danger">
+                <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Deactivate</span>
             </a>
         </li>
 

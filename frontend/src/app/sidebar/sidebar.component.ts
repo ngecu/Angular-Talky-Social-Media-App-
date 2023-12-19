@@ -5,6 +5,7 @@ import { Observable, Subject, of } from 'rxjs';
 import { User } from '../interfaces/user';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,6 +15,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class SidebarComponent {
   registrationForm!: FormGroup;
   files: any[] = [];
+  username : string = ""
 
   public isLightTheme = true;
 
@@ -25,8 +27,17 @@ export class SidebarComponent {
       this.isLightTheme ? 'light' : 'dark'
     );
   }
-  
-  constructor(private router: Router,private toastr: ToastrService,private formBuilder: FormBuilder,) {
+  storedUser: string | null = localStorage.getItem('user_details');
+
+  constructor(private authService:AuthService,private router: Router,private toastr: ToastrService,private formBuilder: FormBuilder,) {
+
+    if (this.storedUser) {
+      const user = JSON.parse(this.storedUser);
+      this.username = user.username
+    } else {
+      console.error('User details not found in local storage');
+    }
+
     this.registrationForm = this.formBuilder.group({
       mobile: ['', Validators.required],
     });
@@ -67,6 +78,24 @@ export class SidebarComponent {
     this.router.navigate(['login']);
     localStorage.clear();
     this.toastr.success('Form submitted successfully! Redirecting to login', 'Success');
+
+  }
+
+  Deactivate(){
+    
+    if(confirm("Are you sure you want to deactivate this account")){
+      this.authService.deactivateAccount().subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.success('Successfully Deactivated Account', 'Success');
+
+          this.router.navigate(['login']);
+          localStorage.clear();
+        }
+      )
+      
+
+    }
 
   }
 

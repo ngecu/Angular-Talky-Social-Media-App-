@@ -1,63 +1,10 @@
-<!-- <app-navbar></app-navbar> -->
-<nav class="navbar navbar-expand-lg" id="top-mobile-nav">
-  <div class="container">
-    <a class="navbar-brand" routerLink="/">TALKY</a>
-<div class="d-flex">
-  <div class="mx-2">
-    <a routerLinkActive="active" class="nav-link d-flex align-items-center text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
-      <div style="position: relative;">
-      <i class="fa-regular fa-heart"></i>
-      </div>
-  </a>
-  </div>
-  <div class="mx-2">
-    <a routerLink="/direct/inbox" routerLinkActive="active" class="nav-link d-flex align-items-center text-dark">
-      <div style="position: relative;">
-          <i class="fa-regular fa-message"></i>
-          <!-- Add a red background with a number counter -->
-          <span class="badge badge-danger" style="position: absolute; top: 0px; right: -10px; font-size: 0.9rem; padding: 4px 6px; border-radius: 50%;">
-             1
-          </span>
-      </div>
-  </a> 
-  </div>
- 
-
+<div class="my-2 container">
+  <app-mobile-navs></app-mobile-navs>
+  <div class="container-fluid">
   
-</div>
- 
-  </div>
-  
-</nav>
-
-<div class="container">
-  <nav class="navbar navbar-expand-lg fixed-bottom" id="bottom-mobile-nav" style="background-color: white;">
-
-    <div class="d-flex w-100">
-      <a class="navbar-brand flex-fill d-flex align-items-center justify-content-center" routerLink="/profile/devngecu"> <i class="fa-solid fa-house"></i></a>
-
-      <a class="navbar-brand flex-fill d-flex align-items-center justify-content-center" routerLinkActive="active" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </a>
-
-      <a class="navbar-brand flex-fill d-flex align-items-center justify-content-center" data-toggle="collapse" data-bs-toggle="collapse" data-bs-target="#demo" aria-expanded="false">
-        <i class="fa-solid fa-plus"></i>
-      </a>
-
-      <a class="navbar-brand flex-fill d-flex align-items-center justify-content-center" routerLink="/profile/devngecu" routerLinkActive="active">
-        <i class="fa-solid fa-address-card"></i>
-      </a>
-    </div>
-
-  </nav>
-</div>
-
-
-<div class="container-fluid">
-   <div class="row">
-
- <!-- <div class="container d-flex justify-content-center"> -->
-  <app-sidebar  class="col-2 d-md-block sidebar" style="border-right: solid 1px #DBDBDB;"></app-sidebar>
+    
+      <div class="row">
+    <app-sidebar  class="col-2 d-md-block sidebar" style="border-right: solid 1px #DBDBDB;"></app-sidebar>
 
   <div *ngIf="showSpinners" class="full-height-container">
     <div class="container d-flex justify-content-center align-items-center">
@@ -71,13 +18,17 @@
      
       <div class="left_row">
         <div class="left_row_profile">
-          <img id="portada" src="../../assets/images/portada.jpg" />
+          <img id="portada" src="https://png.pngtree.com/background/20230616/original/pngtree-modern-profile-web-banner-background-in-3d-render-picture-image_3652219.jpg" />
           <div class="left_row_profile">
         <img id="profile_pic" src="{{profileImage}}" />
-            <span
-              >{{fullName}}<br />
-              <p>150k followers / 50 follow</p></span
-            >
+        <div class="d-flex">
+          <span
+          >{{fullName}}<br />
+          <p>150k followers / 50 follow</p> </span>
+        <span> <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_profile" data-cy="edit-profile-btn">Edit Profile</a></span>
+
+        </div>
+           
           </div>
         </div>
         </div>
@@ -87,92 +38,70 @@
  </div>
 </div>
 </div>
+</div>
 
 
 
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightr" aria-labelledby="offcanvasRightLabel">
-  <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Edit Profile</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    <form [formGroup]="updateProfileForm" (ngSubmit)="onSubmit()">
 
+<div class="modal fade" id="edit_profile">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
-      <div class="row">
-       
-        <div class="col-12">
-          <div class="form-group">
-            <ngx-dropzone (change)="onSelect($event)">
-              <ngx-dropzone-label>Drop Profile Image</ngx-dropzone-label>
-              <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-                  <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-              </ngx-dropzone-preview>
-          </ngx-dropzone>   
-          <div class="row">
-            <img *ngFor="let file of files" [src]="file.url" />
-          </div>
-                             </div>
-        </div>
-      </div>
-  
-  
-      <div class="row">
-
-        <div class="col-md-12">
-          <div class="form-group">
-            <label for="FullName">Mobile Number</label>
-            <input type="text" class="form-control" id="yourName" placeholder="Mobile"  formControlName="mobile" />
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="form-group">
-            <label for="FullName">Full Name</label>
-
-            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Full Name"  formControlName="fullName" />
-          </div>
-        </div>
+          <!-- Modal Header -->
+          <div class="modal-header">
+              <h4 class="modal-title">Edit Profile</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
       
-        <div class="col-md-12">
-          <div class="form-group">
-                        <label for="FullName">Username</label>
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="left_row">
+                <div class="left_row_profile">
+                  <img id="portada" src="https://png.pngtree.com/background/20230616/original/pngtree-modern-profile-web-banner-background-in-3d-render-picture-image_3652219.jpg" />
+                  <div class="left_row_profile">
+                <img id="profile_pic" src="{{profileImage}}" />
+                <div class="d-flex">
+                  <span
+                  >{{fullName}}<br />
+                  <p>150k followers / 50 follow</p> </span>
+                
+        
+                </div>
+                   
+                  </div>
+                </div>
+                </div>
 
-            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Username" value="@" formControlName="username" />
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="form-group">
-                                    <label for="FullName">Username</label>
+                <form (ngSubmit)="updateUser()" #userForm="ngForm">
+                  <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" data-cy="fullName" id="fullName" name="fullName" class="form-control" [(ngModel)]="userDetails.fullName">
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" [(ngModel)]="userDetails.email" disabled>
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" data-cy="username" name="username" class="form-control" [(ngModel)]="userDetails.username" >
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="phone_no">Phone Number</label>
+                    <input type="text" id="phone_no" name="phone_no" class="form-control" [(ngModel)]="userDetails.phone_no" disabled>
+                  </div>
+                
+                  <button class="btn btn-primary text-white" type="submit" data-cy="update-btn">Update User</button>
+                </form>
+                
 
-            <label for="FullName">Email Address</label>
+                
+            </div>
 
-            <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email address" formControlName="email"  />
-          </div>
-        </div>
-      
-        <div class="col-md-12">
-          <div class="form-group">
-            <label for="FullName">Password</label>
-
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" formControlName="password" />
-          </div>
-        </div>
-      
-        <div class="col-md-12">
-          <div class="form-group">
-            <label for="FullName">Confirm Password</label>
-
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" formControlName="confirmPassword" />
-          </div>
-        </div>
-      
-      </div>
-      
-
-      
-    <button type="submit" class="btn btn-primary btn-block w-100">Register</button>
-</form>     
+    </div>
   </div>
 </div>
 

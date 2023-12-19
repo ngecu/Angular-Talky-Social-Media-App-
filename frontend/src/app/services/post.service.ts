@@ -2,7 +2,8 @@ import { Post, PostDetails } from '../interfaces/post';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Comment } from '../interfaces/comment';
-import { Observable } from 'rxjs';
+import { Observable,throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 interface PostResponse {
   posts: Post[];
@@ -105,4 +106,27 @@ export class PostService {
     return this.http.post<Post>(`http://localhost:4400/post/comment`, commentData, { headers });
   }
 
+
+  userPosts(): Observable<any>{
+    const storedUser: string | null = localStorage.getItem('user_details');
+    let user_id = ""
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': `${localStorage.getItem('token')}`, // Add the token from localStorage
+    });
+
+    if(storedUser){
+      user_id = JSON.parse(storedUser).user_id;
+   
+   
+    }
+   
+    return this.http.get<any>(`http://localhost:4400/post/user/${user_id}`,{headers}).pipe(
+     catchError(error => {
+       console.error('Error checking details:', error);
+       return throwError(error); 
+     })
+   );
+  }
 }

@@ -26,7 +26,7 @@ export class SignuppageComponent {
   constructor(private router:Router,private formBuilder: FormBuilder,private toastr: ToastrService,private authService:AuthService,private upload:CloudinaryuploadService) {
     this.registrationForm = this.formBuilder.group({
       profileImage: [null], // You might want to add custom validation for the profile image
-      phone_no: ['', Validators.required],
+      phone_no: ['', Validators.required,Validators.minLength(10)],
       fullName: ['', Validators.required],
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -47,54 +47,61 @@ export class SignuppageComponent {
         this.toastr.error('Password Missmatch', 'Error');
 
       }
-      if (this.registrationForm.value.phone_no.length != 10) {
-        this.toastr.error('Phone Number should be 10 digits', 'Error');
-
-      }
-      if(!this.files[0]){
-        this.toastr.error('Profile Picture IsEmpty', 'Error');
-
-      }
-      else{
-
+     
+      if (this.files.length > 0) {
         for (let index = 0; index < this.files.length; index++) {
-          const data = new FormData()
-          const file_data = this.files[index]
-          data.append('file',file_data)
-          data.append("upload_preset",'f3gqwyzn')
-          data.append('cloud_name','dqquyjsap')
-          this.upload.uploadImage(data).subscribe((res)=>{
+          const data = new FormData();
+          const file_data = this.files[index];
+          data.append('file', file_data);
+          data.append('upload_preset', 'f3gqwyzn');
+          data.append('cloud_name', 'dqquyjsap');
+          
+          this.upload.uploadImage(data).subscribe((res) => {
             console.log(res.secure_url);
-            this.registrationForm.value.profileImage = res.secure_url
-            let details: UserDetails = this.registrationForm.value
-
-             this.authService.createUser(details).subscribe(
+            this.registrationForm.value.profileImage = res.secure_url;
+            let details: UserDetails = this.registrationForm.value;
+      
+            this.authService.createUser(details).subscribe(
+              (response) => {
+                console.log(response);
+                this.toastr.success('Form submitted successfully! Redirecting to login', 'Success');
+                console.log('Form submitted successfully, redirect to login!', details);
+      
+                setTimeout(async () => {
+                  this.router.navigate(['/login']);
+                }, 2000);
+              },
+              (error) => {
+                // Handle error
+                this.toastr.error(`${error}`, 'Error');
+                console.error('Error submitting form:', error);
+              }
+            );
+          });
+        }
+      } else {
+        // No files to upload, proceed with user creation without a profile image
+        this.registrationForm.value.profileImage = ""
+        let details: UserDetails = this.registrationForm.value;
+      
+        this.authService.createUser(details).subscribe(
           (response) => {
             console.log(response);
-            
-            this.toastr.success('Form submitted successfully! Redirecting to login', 'Success');
+            this.toastr.success(response.message, 'Success');
             console.log('Form submitted successfully, redirect to login!', details);
-    
-            setTimeout( async() => {             
-            this.router.navigate(['/login'])
-          }, 2000);
-  
+      
+            setTimeout(async () => {
+              this.router.navigate(['/login']);
+            }, 2000);
           },
           (error) => {
             // Handle error
             this.toastr.error(`${error}`, 'Error');
-
             console.error('Error submitting form:', error);
           }
         );
-            
-          })
-        }
-
-        
-
-       
       }
+      
 
     } else {
       // Your form is invalid, display error messages or take appropriate action

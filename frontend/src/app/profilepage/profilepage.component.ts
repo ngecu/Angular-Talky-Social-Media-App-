@@ -4,12 +4,28 @@ import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { PostService } from '../services/post.service';
+import { UserService } from '../services/user.service';
+
+   interface UserDetails {
+    user_id?: string;
+    profileImage?: string;
+    fullName?: string;
+    email?: string;
+    username?: string;
+    phone_no?: string;
+    active?: number;
+    created_at?: string;
+  }
+
 
 @Component({
   selector: 'app-profilepage',
   templateUrl: './profilepage.component.html',
   styleUrls: ['./profilepage.component.scss']
 })
+
+
 export class ProfilepageComponent {
   updateProfileForm!: FormGroup;
   user_id : string = ""
@@ -20,14 +36,59 @@ export class ProfilepageComponent {
   username : string = ""
   fullName : string = ""
   profileImage:string = ""
+  posts:any[] = []
 
+  userDetails:UserDetails = {}
+
+  
   ngOnInit() {
     // Set a timeout to hide the spinners after 5 seconds
     setTimeout(() => {
       this.showSpinners = false;
     }, 3000);
+
+    const storedUserDetails = localStorage.getItem('user_details');
+    if (storedUserDetails) {
+      // Parse the JSON string and assign it to the userDetails property
+      this.userDetails = JSON.parse(storedUserDetails);
+    }
+    
+     // Check if the user is logged in
+     const isLoggedIn = localStorage.getItem('isLoggined') === 'true';
+
+     // If not logged in, redirect to the login page
+     if (!isLoggedIn) {
+       this.router.navigate(['/login']);
+     }
   }
 
+  
+  updateUser(): void {
+    // Make API call to update user details on the server
+    // ...
+  
+    // Optionally, update local storage if needed
+    localStorage.setItem('user_details', JSON.stringify(this.userDetails));
+    this.userService.updateProfile(this.userDetails).subscribe(
+      (response) => {
+        // Handle success
+        console.log('Profile updated successfully:', response);
+        this.toastr.success(response.message, 'Success');
+
+        // You can optionally show a success message or perform other actions
+      },
+      (error) => {
+        // Handle error
+        console.error('Error updating profile:', error);
+    
+        this.toastr.error(error, 'Error');
+
+    
+        // You can show an error message or perform other error-related actions
+      }
+    );
+    
+  }
 
 
   prepopulatedData = {
@@ -40,7 +101,7 @@ export class ProfilepageComponent {
     confirmPassword: 'password123'
   };
 
-  constructor(private router:Router,private formBuilder: FormBuilder,private toastr: ToastrService,private route: ActivatedRoute) {
+  constructor(private router:Router,private formBuilder: FormBuilder,private toastr: ToastrService,private route: ActivatedRoute,private postService:PostService,private userService:UserService) {
     if (this.storedUser) {
       const user = JSON.parse(this.storedUser);
       this.username = user.username
@@ -60,17 +121,20 @@ export class ProfilepageComponent {
       confirmPassword: [this.prepopulatedData.confirmPassword, Validators.required]
     });
 
-    this.route.params.subscribe(params => {
-      this.user_id=  params['username'] as string
-
-     
-  })
+   this.fetchUserPosts()
 }
 
 
 
 
-
+fetchUserPosts(){
+  this.postService.userPosts().subscribe(
+    (response)=>{
+      console.log(response);
+      
+    }
+  )
+}
 
 
 

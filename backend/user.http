@@ -19,8 +19,8 @@ POST http://localhost:4400/user/login
 Content-Type: application/json
 
 {
-    "Email":  "caleb@gmail.com",
-    "Password": "12345678"
+    "email":  "wanjirubecky.rw@gmail.com",
+    "password": "3W!W.:srzc4r^!P"
 }
 
 ###
@@ -30,10 +30,9 @@ token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6ImRmZTI4ZDA3LTJh
 
 
 ### TOGGLE SOFT DELETE USER
-PUT http://localhost:4400/user/toggleSoftDeleteUser/cf8ff26a-fbad-40a8-9bc9-0bb19c1b262f
+PUT http://localhost:4400/user/toggleSoftDeleteUser/0c7212ca-b57d-4913-b021-de4dc7f467a8
 Content-Type: application/json
-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNWM3NGZkYzYtZDU4Zi00ZTQ3LTgxMzItOGVmMWIyMGU5ZWRiIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlNhbmRyYSBNd2loYWtpIiwiZW1haWwiOiI5c3VwZXJiaWtlc0BnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlNhbmRyYSIsInBob25lX25vIjoiMDc5MTg4NTUyNyIsImFjdGl2ZSI6MSwiY3JlYXRlZF9hdCI6IjIwMjMtMTItMTVUMDY6MzE6MjUuIiwiaWF0IjoxNzAyNjIxOTA5LCJleHAiOjE3MDI3MDgzMDl9.Z2SzMlK5EQctiz5VoiGyuwVT5rKXoST0-kfW-qTFgK4
-
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMGM3MjEyY2EtYjU3ZC00OTEzLWIwMjEtZGU0ZGM3ZjQ2N2E4IiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IkNhbGViICIsImVtYWlsIjoiY2FsZWJAZ21haWwuY29tIiwidXNlcm5hbWUiOiJjYWxlYiIsInBob25lX25vIjoiMDc5MTg4NTUyNyIsImFjdGl2ZSI6MSwiY3JlYXRlZF9hdCI6IjIwMjMtMTItMTdUMTc6MDQ6MjIuMjU3WiIsImlhdCI6MTcwMjg5MTc0NSwiZXhwIjoxNzAyOTc4MTQ1fQ.jHZIfj_3LsLJ7j2igRT7k6oo0NOMJobyQ9xSa81Lwk0
 ### UPDATE USER PROFILE
 PUT http://localhost:4400/user/5c74fdc6-d58f-4e47-8132-8ef1b20e9edb/profile
 Content-Type: application/json
@@ -86,10 +85,9 @@ token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00O
 ### SEND RESET PASSWORD TOKEN LINK
 POST http://localhost:4400/user/reset-password
 Content-Type: application/json
-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiMTRkYWEtYWQ3Ni00OWQ4LWE1YmQtYWUyOThlMTVkZGUzIiwicHJvZmlsZUltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHFxdXlqc2FwL2ltYWdlL3VwbG9hZC92MTcwMjQwMTEzNC94N3V5YmM0Ym15c3ZlZHl6Z2J2cy5qcGciLCJmdWxsTmFtZSI6IlJvYmluIiwiZW1haWwiOiJkZXZuZ2VjdUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImRldm5nZWN1IiwicGhvbmVfbm8iOiIwNzA3NTgzMDkyIiwiYWN0aXZlIjoxLCJjcmVhdGVkX2F0IjoiMjAyMy0xMi0xMlQxNzoxMjoxOC4iLCJpYXQiOjE3MDI1NjMzMjUsImV4cCI6MTcwMjY0OTcyNX0.J2o6hYFQD0raldxMj6LzFJ8lJHAQ92WR3tZ2-c0eS-E
 
 {
-   "Email":"9superbikes@gmail.com"
+   "Email":"Robinson Ngecu"
 }
 
 
