@@ -53,39 +53,7 @@ postForm!: FormGroup;
     }
   }
 
-  // postComment(post: Post,comment_id:string) {
-  //   if (this.editingCommentIndex !== null) {
-  //     // You are in edit mode, handle update logic here
-  //     const editedPost = { ...post }; // Create a copy to avoid modifying the original post
-  //     editedPost.comment = post.comment; // Assuming commentText is the property where the edited comment is stored
-  //     this.postService.updateComment(editedPost,comment_id).subscribe(
-  //       (response) => {
-  //         // Assuming the server returns the updated post
-  //         if (this.editingCommentIndex) {
-  //           this.posts[this.editingCommentIndex] = response;
-  
-  //         }
-  //       },
-  //       (error) => {
-  //         console.error('Error updating comment:', error);
-  //         // Handle error as needed
-  //       }
-  //     );
-  //   } else {
-  //     // You are in normal comment mode, handle post logic here
-  //     this.postService.createComment(post,this.user_id).subscribe(
-  //       (response) => {
-  //         // Assuming the server returns the newly created post
-  //         this.posts.push(response);
-  //       },
-  //       (error) => {
-  //         console.error('Error posting comment:', error);
-  //         // Handle error as needed
-  //       }
-  //     );
-  //   }
-  // }
-
+ 
 
   isLoggedInUser(username:string){
     if(username == this.loggedInuser) console.log("khkj");
@@ -147,7 +115,7 @@ postForm!: FormGroup;
         this.replyToUsername = ""
         this.getAllPosts()
         this.toastr.success('Comment added', 'Success');
-
+        window.location.reload()
       },
       (error) => {
         console.error('Error posting comment:', error);
@@ -263,7 +231,7 @@ postForm!: FormGroup;
       postType: 'Post', // Set default value
       caption: '',
     });
-    
+
     this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -345,7 +313,9 @@ postForm!: FormGroup;
             // Clear the form or take other actions as needed
             this.postForm.reset();
             this.postFiles = []; // Clear the array of uploaded files
-            this.getAllPosts()
+
+              this.getAllPosts()
+
           },
           (error) => {
             // Handle error
@@ -397,81 +367,81 @@ postForm!: FormGroup;
     // Your logic to share the post
     console.log(this.editPostForm.value);
   
-    if (this.editPostForm.valid) {
-      const imageUrls: string[] = [];
-    if(this.editpostFiles.length > 0 ){
-   // Upload all images
-   for (let index = 0; index < this.editpostFiles.length; index++) {
-    const data = new FormData();
-    const file_data = this.postFiles[index];
-    data.append('file', file_data);
-    data.append('upload_preset', 'f3gqwyzn');
-    data.append('cloud_name', 'dqquyjsap');
+  //   if (this.editPostForm.valid) {
+  //     const imageUrls: string[] = [];
+  //   if(this.editpostFiles.length > 0 ){
+  //  // Upload all images
+  //  for (let index = 0; index < this.editpostFiles.length; index++) {
+  //   const data = new FormData();
+  //   const file_data = this.postFiles[index];
+  //   data.append('file', file_data);
+  //   data.append('upload_preset', 'f3gqwyzn');
+  //   data.append('cloud_name', 'dqquyjsap');
 
-    this.upload.uploadImage(data).subscribe((res) => {
-      console.log(res.secure_url);
-      imageUrls.push(res.secure_url);
+  //   this.upload.uploadImage(data).subscribe((res) => {
+  //     console.log(res.secure_url);
+  //     imageUrls.push(res.secure_url);
 
-      // If all images are uploaded, proceed to createPost
-      if (imageUrls.length === this.postFiles.length) {
-        // Set the array of image URLs in the form
-        this.postForm.value.postImage = imageUrls ;
+  //     // If all images are uploaded, proceed to createPost
+  //     if (imageUrls.length === this.postFiles.length) {
+  //       // Set the array of image URLs in the form
+  //       this.postForm.value.postImage = imageUrls ;
 
-        // Create the post
-        let details: PostDetails = this.postForm.value;
-        details.created_by_user_id = this.user_id;
+  //       // Create the post
+  //       let details: PostDetails = this.postForm.value;
+  //       details.created_by_user_id = this.user_id;
 
-        this.postService.editPost(details).subscribe(
-          (response) => {
-            console.log(response.post);
-            this.toastr.success('Post updated successfully!', 'Success');
+  //       this.postService.editPost(details).subscribe(
+  //         (response) => {
+  //           console.log(response.post);
+  //           this.toastr.success('Post updated successfully!', 'Success');
          
-            // Clear the form or take other actions as needed
-            this.postForm.reset();
-            this.postFiles = []; // Clear the array of uploaded files
-            this.getAllPosts()
-          },
-          (error) => {
-            // Handle error
-            this.toastr.error(`${error}`, 'Error');
-            console.error('Error submitting form:', error);
-          }
-        );
-      }
-    });
-  }
-    }
-    else{
+  //           // Clear the form or take other actions as needed
+  //           this.postForm.reset();
+  //           this.postFiles = []; // Clear the array of uploaded files
+  //           this.getAllPosts()
+  //         },
+  //         (error) => {
+  //           // Handle error
+  //           this.toastr.error(`${error}`, 'Error');
+  //           console.error('Error submitting form:', error);
+  //         }
+  //       );
+  //     }
+  //   });
+  // }
+  //   }
+  //   else{
 
-              let details: PostDetails = this.postForm.value;
-              details.created_by_user_id = this.user_id;
-       this.postForm.value.postImage = [] ;
-              this.postService.createPost(details).subscribe(
-                (response) => {
-                  console.log(response);
-                  this.toastr.success('Form submitted successfully!', 'Success');
+  //             let details: PostDetails = this.postForm.value;
+  //             details.created_by_user_id = this.user_id;
+  //      this.postForm.value.postImage = [] ;
+  //             this.postService.createPost(details).subscribe(
+  //               (response) => {
+  //                 console.log(response);
+  //                 this.toastr.success('Form submitted successfully!', 'Success');
       
-                  // Clear the form or take other actions as needed
-                  this.postForm.reset();
-                  this.postFiles = []; // Clear the array of uploaded files
-                  this.getAllPosts()
-                },
-                (error) => {
-                  // Handle error
-                  this.toastr.error(`${error}`, 'Error');
-                  console.error('Error submitting form:', error);
-                }
-              );
-    }
+  //                 // Clear the form or take other actions as needed
+  //                 this.postForm.reset();
+  //                 this.postFiles = []; // Clear the array of uploaded files
+  //                 this.getAllPosts()
+  //               },
+  //               (error) => {
+  //                 // Handle error
+  //                 this.toastr.error(`${error}`, 'Error');
+  //                 console.error('Error submitting form:', error);
+  //               }
+  //             );
+  //   }
    
-    }
+  //   }
     
 
-    else {
-      // Your form is invalid, display error messages or take appropriate action
-      this.toastr.error('Form is invalid. Please check the fields.', 'Error');
-      console.log('Form is invalid. Please check the fields.');
-    }
+  //   else {
+  //     // Your form is invalid, display error messages or take appropriate action
+  //     this.toastr.error('Form is invalid. Please check the fields.', 'Error');
+  //     console.log('Form is invalid. Please check the fields.');
+  //   }
 
     
 
@@ -485,6 +455,16 @@ postForm!: FormGroup;
   onRemovePostImage(event: any) {
     console.log(event);
     this.postFiles.splice(this.postFiles.indexOf(event), 1);
+  }
+
+  onSelectEditPostImage(event: any) {
+    console.log(event);
+    this.editpostFiles.push(...event.addedFiles);
+  }
+
+  onRemoveEditPostImage(event: any) {
+    console.log(event);
+    this.editpostFiles.splice(this.editpostFiles.indexOf(event), 1);
   }
 
   

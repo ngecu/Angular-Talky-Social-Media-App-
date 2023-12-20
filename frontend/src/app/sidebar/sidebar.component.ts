@@ -17,16 +17,6 @@ export class SidebarComponent {
   files: any[] = [];
   username : string = ""
 
-  public isLightTheme = true;
-
-  onThemeSwitchChange() {
-    this.isLightTheme = !this.isLightTheme;
-
-    document.body.setAttribute(
-      'data-theme',
-      this.isLightTheme ? 'light' : 'dark'
-    );
-  }
   storedUser: string | null = localStorage.getItem('user_details');
 
   constructor(private authService:AuthService,private router: Router,private toastr: ToastrService,private formBuilder: FormBuilder,) {
@@ -58,8 +48,8 @@ export class SidebarComponent {
 
 
   searchQuery: string = '';
-  searchResults: User[] = [];
-  users: User[] = [
+  searchResults: any[] = [];
+  users: any[] = [
     { username: 'instagram', isFollowing: false, profileImage: 'assets/images/profiles/profile-3.jpg' },
     { username: 'dccomics', isFollowing: false, profileImage: 'assets/images/profiles/profile-4.png' },
     { username: 'thecw', isFollowing: false, profileImage: 'assets/images/profiles/profile-5.jpg' }
@@ -70,9 +60,12 @@ export class SidebarComponent {
 
 
   searchUsers(): void {
+    console.log("i am typing");
     this.searchResults = this.users.filter(user =>
       user.username.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
+    
+    
   }
   Logout(){
     this.router.navigate(['login']);

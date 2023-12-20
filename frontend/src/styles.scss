@@ -1,5 +1,11 @@
 @import "themes";
-
+a{
+  color: black;
+  text-decoration: none;
+  :hover{
+    color: black;
+  }
+}
 html,
 body {
   height: 100%;

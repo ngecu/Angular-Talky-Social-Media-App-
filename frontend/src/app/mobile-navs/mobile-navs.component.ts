@@ -8,6 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CloudinaryuploadService } from '../services/cloudinaryupload.service';
 import { PostDetails } from '../interfaces/post';
 import { PostService } from '../services/post.service';
+import { UserService } from '../services/user.service';
+
 @Component({
   selector: 'app-mobile-navs',
   templateUrl: './mobile-navs.component.html',
@@ -20,7 +22,7 @@ export class MobileNavsComponent {
   postFiles: any[] = [];
 postForm!: FormGroup;
 html: string = `<h1>Heading h1</h1><h2>Heading h2</h2><h3>Heading h3</h3><h4>Heading h4</h4><h5>Heading h5</h5><h6>Heading h6</h6>`;
-
+  users:any[] = []
 storedUser: string | null = localStorage.getItem('user_details');
 user_id:string = ""
 
@@ -41,9 +43,9 @@ user_id:string = ""
     );
   }
   
-  constructor(private router: Router,private toastr: ToastrService,private formBuilder: FormBuilder,private upload:CloudinaryuploadService,private postService:PostService) {
+  constructor(private userService:UserService,private router: Router,private toastr: ToastrService,private formBuilder: FormBuilder,private upload:CloudinaryuploadService,private postService:PostService) {
   
-
+    
 
     this.searchSubject.pipe(
       debounceTime(300),
@@ -59,6 +61,7 @@ user_id:string = ""
       console.error('User details not found in local storage');
     }
 
+
     
   }
 
@@ -68,22 +71,44 @@ user_id:string = ""
 
 
 
-  searchQuery: string = '';
-  searchResults: User[] = [];
-  users: User[] = [
-    { username: 'instagram', isFollowing: false, profileImage: 'assets/images/profiles/profile-3.jpg' },
-    { username: 'dccomics', isFollowing: false, profileImage: 'assets/images/profiles/profile-4.png' },
-    { username: 'thecw', isFollowing: false, profileImage: 'assets/images/profiles/profile-5.jpg' }
-  ];
+  fetchAllUsers() {
+    this.userService.getAllUsers().subscribe(
+      (response) => {
+        console.log("response is ", response);
+        this.users = response
+        this.searchResults = [...this.users];
+  
+      },
+      (error) => {
+        console.error("Error fetching posts:", error);
+      }
+    );
+  }
 
   private searchSubject = new Subject<string>();
-
-
+  searchQuery: string = '';
+  searchResults: User[] = [];
+  // users: User[] = [
+  //   { username: 'instagram', isFollowing: false, profileImage: 'assets/images/profiles/profile-3.jpg' },
+  //   { username: 'dccomics', isFollowing: false, profileImage: 'assets/images/profiles/profile-4.png' },
+  //   { username: 'thecw', isFollowing: false, profileImage: 'assets/images/profiles/profile-5.jpg' }
+  // ];
 
   searchUsers(): void {
-    this.searchResults = this.users.filter(user =>
-      user.username.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
+    this.searchResults = this.users.filter(user => {
+    console.log("search results is ", user);
+      
+      user.username.toLowerCase().includes(this.searchQuery.toLowerCase())});
+  }
+  
+  filterProducts() {
+    this.searchResults = this.users.filter((user) =>
+    user.username.toLowerCase().includes(this.searchQuery.toLowerCase()));
+  }
+  
+  ngOnInit(){
+    this.searchUsers()
+    this.fetchAllUsers()
   }
   Logout(){
     this.router.navigate(['login']);

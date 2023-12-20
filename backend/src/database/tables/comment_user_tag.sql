@@ -6,7 +6,7 @@ CREATE TABLE comment_user_tag (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
  FOREIGN KEY (comment_id) REFERENCES comment(comment_id),
- FOREIGN KEY (user_id) REFERENCES user(user_id),
+ FOREIGN KEY (user_id) REFERENCES users(user_id),
 
 
 );

@@ -25,11 +25,11 @@ export class UserService {
     );
   }
 
-  getFollowers(followed_user_id: string) {
+  getFollowers(followed_user_id: string ) {
     let token = localStorage.getItem('token') as string;
-    return this.http.post<{ followers: UserDetails[] }>(
-      'http://localhost:4400/user/getFollowers',
-      { followed_user_id }, 
+    return this.http.get<{ followers: UserDetails[] }>(
+      `http://localhost:4400/user/getFollowers/${followed_user_id}`,
+    
       {
         headers: new HttpHeaders({
           'Content-type': 'application/json',

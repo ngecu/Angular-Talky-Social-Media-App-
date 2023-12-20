@@ -13,6 +13,17 @@
                 </button>
               </li>
               
+              <li class="list-inline-item" *ngFor="let user of stories" style="cursor: pointer;">
+                <button class="btn p-0 m-0" data-bs-toggle="modal" [attr.data-bs-target]="'#user_' + user.post_id">
+                  <div class="d-flex flex-column align-items-center">
+                    <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger story-profile-photo">
+                      <img [src]="user.profileImage" alt="Profile" style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                    <small>{{ user.username }}</small>
+                  </div>
+                </button>
+              </li>
+            
 
         </ul>
         </div>

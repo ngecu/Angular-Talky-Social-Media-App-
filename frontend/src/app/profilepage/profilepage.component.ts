@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PostService } from '../services/post.service';
 import { UserService } from '../services/user.service';
+import { Post } from '../interfaces/post';
 
    interface UserDetails {
     user_id?: string;
@@ -39,6 +40,8 @@ export class ProfilepageComponent {
   posts:any[] = []
 
   userDetails:UserDetails = {}
+  followers:any[] = []
+  followings:any[] = []
 
   
   ngOnInit() {
@@ -51,6 +54,18 @@ export class ProfilepageComponent {
     if (storedUserDetails) {
       // Parse the JSON string and assign it to the userDetails property
       this.userDetails = JSON.parse(storedUserDetails);
+
+      this.userService.getFollowers(JSON.parse(storedUserDetails).user_id).subscribe(
+        (response) => {
+          console.log('Followers:', response);
+          this.followers = response
+          // Handle the response as needed
+        },
+        (error) => {
+          console.error('Error fetching followers:', error);
+          // Handle errors
+        }
+      );
     }
     
      // Check if the user is logged in
@@ -60,7 +75,9 @@ export class ProfilepageComponent {
      if (!isLoggedIn) {
        this.router.navigate(['/login']);
      }
-  }
+
+  
+    }
 
   
   updateUser(): void {
@@ -74,6 +91,7 @@ export class ProfilepageComponent {
         // Handle success
         console.log('Profile updated successfully:', response);
         this.toastr.success(response.message, 'Success');
+        window.location.reload()
 
         // You can optionally show a success message or perform other actions
       },
@@ -89,7 +107,6 @@ export class ProfilepageComponent {
     );
     
   }
-
 
   prepopulatedData = {
     profileImage: 'path/to/image.jpg',
@@ -130,6 +147,8 @@ export class ProfilepageComponent {
 fetchUserPosts(){
   this.postService.userPosts().subscribe(
     (response)=>{
+      this.posts = response.posts
+
       console.log(response);
       
     }
@@ -177,6 +196,90 @@ fetchUserPosts(){
     this.files.splice(this.files.indexOf(event), 1);
   }
   
+  toggleLike(post: Post): void {
+    // post.isLiked = !post.isLiked;
+    // post.likes += post.isLiked ? 1 : -1;
+
+    
+
+    this.postService.toggleLikePost(post.post_id,this.user_id).subscribe(
+      (response) => {
+        console.log(response);
+        post.comment = '';
+       
+        this.toastr.success(`${response}`, 'Success');
+
+      },
+      (error) => {
+        console.error('Error posting comment:', error);
+        // Handle error as needed
+      }
+    );
+
+
+  }
   
+  deletePost(post: Post): void {
+    // post.isBookmarked = !post.isBookmarked;
+    if (confirm('Are you sure you want to delete this post?')) {
+      // User clicked OK, proceed with deletion
+      this.postService.deletePost(post.post_id).subscribe(
+        (response) => {
+          console.log(response);
+          post.comment = '';
+          
+          this.toastr.success(`${response}`, 'Success');
+        },
+        (error) => {
+          console.error('Error deleting post:', error);
+          // Handle error as needed
+        }
+      );
+    }
+
+
+  }
+
+
+
+  deleteEntry(comment_id: string, index: number) {
+    // Implement your delete logic here
+    console.log("delete");
+    this.postService.deleteComment(comment_id).subscribe(
+      (response) => {
+        console.log(response);
+  
+        // Remove the deleted comment from the array
+        this.posts[index].comments.splice(index, 1);
+        this.toastr.success('Comment deleted', 'Success');
+
+      },
+      (error) => {
+        console.error(error, error);
+        // Handle error as needed
+      }
+    );
+  }
+
+  postComment(post: Post) {
+    if (post.comment) {
+      console.log(post);
+      
+      // Assuming you have a service to handle posting comments
+      this.postService.createComment(post,this.user_id).subscribe(
+        (response) => {
+          console.log(response);
+          post.comment = '';
+      
+          this.toastr.success('Comment added', 'Success');
+
+        },
+        (error) => {
+          console.error('Error posting comment:', error);
+          // Handle error as needed
+        }
+      );
+    }
+  }
 
 }

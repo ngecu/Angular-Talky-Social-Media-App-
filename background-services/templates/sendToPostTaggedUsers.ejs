@@ -3,125 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post tagged</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <title>Welcome to Talky</title>
     <style>
-body{
-    margin-top:20px;
-    background:#ddd;
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
 
-.widget .panel, .widget.panel {
-    border-bottom-width: 1px;
-    border-bottom-color: #cfd9db;
-    overflow: hidden;
-}
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+        }
 
-.widget {
-    margin-bottom: 20px;
-}
+        th {
+            background-color: #1DA1F2;
+            color: #ffffff;
+            font-size: 24px;
+            text-align: center;
+            padding: 20px;
+        }
 
-.panel {
-    position: relative;
-    border-width: 1px;
-    border-color: #cfd9db;
-    border-radius: 3px;
-    -webkit-box-shadow: 0 .0625rem .0625rem rgba(0,0,0,.05);
-    box-shadow: 0 .0625rem .0625rem rgba(0,0,0,.05);
-}
+        td {
+            padding: 20px;
+            text-align: center;
+        }
 
-.panel-body {
-    position: relative;
-}
+        p {
+            font-size: 16px;
+            color: #333333;
+            line-height: 1.5;
+        }
 
-.mb0 {
-    margin-bottom: 0!important;
-}
+        img {
+            max-width: 100%;
+            height: auto;
+        }
 
-.text-info {
-    color: #22A7F0!important;
-}
-
-.list-table {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.list-table>li:first-child {
-    padding-left: 0;
-}
-
-.list-table>li {
-    display: table-cell;
-    table-layout: fixed;
-    vertical-align: middle;
-    width: auto;
-    padding: 0 5px;
-}
-
-.img-bordered-primary {
-    -webkit-box-shadow: 0 0 0 2px #fff,0 0 0 4px #446CB3;
-    box-shadow: 0 0 0 2px #fff,0 0 0 4px #446CB3;
-}
-
-.img-circle {
-    border-radius: 50%!important;
-}
-
-.ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.semibold {
-    font-weight: 600;
-}
-.nm {
-    margin: 0!important;
-}
-</style>
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1DA1F2;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-Hello,You have been mentioned in the followowing post
-    <div class="container">
-        <div class="row">
-        <div class="col-xs-12 col-md-4 col-lg-4 bootstrap snippets bootdeys">
-            <div class="widget panel">
-              <div class="panel-body">
-                <h4 class="mb0">Latest Post
-                  <i class="fa fa-twitter text-info pull-right"></i>
-                </h4>
-                <hr>
-                <ul class="list-table">
-                  <li style="width:70px;">
-                    <img class="img-circle img-bordered-primary" src="<%=profileImage%>" alt="" width="65px" height="65px">
-                  </li>
-                  <li class="text-left">
-                    <h5 class="semibold ellipsis nm"><%=Name%></h5>
-                    <p class="text-muted nm">5k followers</p>
-                  </li>
-                  <li class="text-right">
-                    <button type="button" class="btn btn-sm btn-success">Follow</button>
-                  </li>
-                </ul>
-              </div>
-        
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <p class="nm"><%=postContent%> </p>
-                  <small class="text-muted">Now</small>
-                </li>
-                
-              </ul>
-            </div>
-        </div>
-        </div>
-        </div>
-
-        
-  
-  </body>
+    <table>
+        <tr>
+            <th>Someone tagged you <%=Name%>!</th>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    Hi <%=Name%>, You have been tagged in one of the posts🎉.Kindly logg in to check
+                </p>
+            
+                <p>
+                </p>
+              
+               
+            </td>
+        </tr>
+    </table>
+</body>
 </html>

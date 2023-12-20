@@ -14,7 +14,6 @@ import { LoginpageComponent } from './loginpage/loginpage.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExplorepageComponent } from './explorepage/explorepage.component';
-import { MessagespageComponent } from './messagespage/messagespage.component';
 import {WebcamModule} from 'ngx-webcam';
 import { LivepageComponent } from './livepage/livepage.component';
 import { ProfilepageComponent } from './profilepage/profilepage.component';
@@ -45,7 +44,6 @@ import { NewpasswordComponent } from './newpassword/newpassword.component';
     SidebarComponent,
     LoginpageComponent,
     ExplorepageComponent,
-    MessagespageComponent,
     LivepageComponent,
     ProfilepageComponent,
     SignuppageComponent,

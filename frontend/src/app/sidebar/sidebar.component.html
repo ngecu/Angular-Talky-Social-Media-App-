@@ -48,7 +48,7 @@
 <li class="nav-item">
     <a  class="nav-link d-flex align-items-center text-dark" data-bs-toggle="modal" data-bs-target="#add_post">
         <i class="fa-solid fa-plus"></i>
-        <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Add</span>
+        <span class="ml-2" style="font-size: 1.2rem; margin-left: 8px; padding: 4px 0;">Add Post</span>
     </a>
     <div id="demo" class="collapse">
         <ul class="list-group">
@@ -280,33 +280,5 @@
     </div>
   </div>
 
-
-<!-- off-canvas-menu.component.html -->
-<div class="offcanvas offcanvas-start offcanvas-full" id="offcanvasLeft" tabindex="-1" aria-labelledby="offcanvasLeftLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasLeftLabel">Search Users</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <input type="text" class="form-control mb-3" [(ngModel)]="searchQuery" placeholder="Search users..." (input)="searchUsers()">      <!-- Display search results here -->
-        <div *ngIf="searchResults.length > 0" class="list-group mt-3">
-            <!-- Display search results -->
-            <div *ngFor="let user of searchResults" class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
-              <a routerLink="/profile/{{user.username}}" class="d-flex flex-row align-items-center">
-                <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
-                  <img src="{{ user.profileImage }}" alt="..." style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
-                </div>
-                <strong class="ml-3 sugest-username">{{ user.username }}</strong>
-            </a>
-            </div>
-          </div>
-          
-          <!-- Show a message when there are no search results -->
-          <div *ngIf="searchResults.length === 0" class="mt-3">
-            <p>No results found.</p>
-          </div>
-          
-    </div>
-</div>
 
   

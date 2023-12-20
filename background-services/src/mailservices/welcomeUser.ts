@@ -74,18 +74,20 @@ export const sendToPostTaggedUsers = async () => {
         const pool = await mssql.connect(sqlConfig);
 
         // Fetch entries from post_user_tag where sent is 0
-        const taggedUsers = await (await pool.request().query('SELECT * FROM comment_user_tag WHERE sent = 0')).recordset;
+        const taggedUsers = await (await pool.request().query('SELECT * FROM post_user_tag WHERE sent = 0')).recordset;
 
         for (const taggedUser of taggedUsers) {
             // Fetch user information
+            
             const user = await (await pool.request().query(`SELECT * FROM Users WHERE user_id = '${taggedUser.user_id}'`)).recordset[0];
+            console.log(user);
 
             if (user) {
                 // Fetch post information
-                const post = await (await pool.request().query(`SELECT * FROM comment WHERE comment_id = '${taggedUser.post_id}'`)).recordset[0];
+                const post = await (await pool.request().query(`SELECT * FROM post WHERE post_id = '${taggedUser.post_id}'`)).recordset[0];
 
                 if (post) {
-                    ejs.renderFile('templates/sendToCommentTaggedUsers.ejs', { Name: user.fullName, post_id: taggedUser.post_id, postContent: post.content,profileImage:user.profileImage }, async (error, data) => {
+                    ejs.renderFile('templates/sendToPostTaggedUsers.ejs', { Name: user.fullName, post_id: taggedUser.post_id, postContent: post.content,profileImage:user.profileImage }, async (error, data) => {
                         let mailOptions = {
                             from: process.env.EMAIL as string,
                             to: user.email,
@@ -97,7 +99,7 @@ export const sendToPostTaggedUsers = async () => {
                             await sendMail(mailOptions);
 
                             // Update sent status in post_user_tag
-                            await pool.request().query(`UPDATE comment_user_tag SET sent = 1 WHERE comment_user_tag_id = '${taggedUser.post_user_tag_id}'`);
+                            await pool.request().query(`UPDATE post_user_tag SET sent = 1 WHERE post_user_tag_id = '${taggedUser.post_user_tag_id}'`);
 
                             console.log(`Email sent to tagged user with ID ${user.user_id}`);
                         } catch (error) {

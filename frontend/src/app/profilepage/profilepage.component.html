@@ -24,14 +24,40 @@
         <div class="d-flex">
           <span
           >{{fullName}}<br />
-          <p>150k followers / 50 follow</p> </span>
-        <span> <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_profile" data-cy="edit-profile-btn">Edit Profile</a></span>
+          <p>0 followers / 3 followings</p> </span>
+        <span> <a class="btn btn-primary text-light" data-bs-toggle="modal" data-bs-target="#edit_profile" data-cy="edit-profile-btn">Edit Profile</a></span>
 
         </div>
            
           </div>
         </div>
         </div>
+
+    
+          <div *ngFor="let post of posts ;let i = index" class="d-flex flex-column mt-4 mb-4">
+    
+            <div class="card">
+              <a routerLink="/post/{{post.post_id}}">
+                <div class="card-header p-3">
+                    <div class="d-flex flex-row align-items-center">
+                        <div
+                            class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
+                            <img src="{{profileImage}}" alt="..."
+                                style="transform: scale(1.5); width: 100%; position: absolute; left: 0">
+                        </div>
+                        <span class="font-weight-bold px-2">{{fullName}} <span style="color: Dodgerblue;"> <i class="fa-solid fa-circle-check"></i> </span></span>
+    <span class="text-muted"> &middot; </span>
+                    </div>
+                </div>
+              </a>
+              <div class="card-body p-0">
+                {{post.caption}}
+              </div>
+               
+            </div>
+          
+        </div>
+     
 
 
    </main>
@@ -64,7 +90,7 @@
                 <div class="d-flex">
                   <span
                   >{{fullName}}<br />
-                  <p>150k followers / 50 follow</p> </span>
+                  <p>0 followers / 3  follow</p> </span>
                 
         
                 </div>

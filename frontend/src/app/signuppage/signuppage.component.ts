@@ -41,7 +41,6 @@ export class SignuppageComponent {
     
 
 
-    if (this.registrationForm.valid) {
 
       if (this.registrationForm.value.password != this.registrationForm.value.confirmPassword  ) {
         this.toastr.error('Password Missmatch', 'Error');
@@ -103,15 +102,10 @@ export class SignuppageComponent {
       }
       
 
-    } else {
-      // Your form is invalid, display error messages or take appropriate action
-      this.toastr.error('Form is invalid. Please check the fields.', 'Error');
-      console.log('Form is invalid. Please check the fields.',this.registrationForm.value);
-    }
-
+    } 
     
 
-  }
+  
 
 
  
