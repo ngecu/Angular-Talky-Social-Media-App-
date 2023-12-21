@@ -19,8 +19,8 @@ POST http://localhost:4400/user/login
 Content-Type: application/json
 
 {
-    "email":  "wanjirubecky.rw@gmail.com",
-    "password": "3W!W.:srzc4r^!P"
+    "email":  "caleb@gmail.com",
+    "password": "12345678"
 }
 
 ###

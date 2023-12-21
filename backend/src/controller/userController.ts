@@ -151,8 +151,6 @@ export const toggleSoftDeleteUser = async (req: Request, res: Response) => {
       
       console.log(req.params);
       
-  
-
       if (!user_id) {
         return res.status(400).json({
           message: 'User ID is required for toggling soft delete',

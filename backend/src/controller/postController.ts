@@ -85,9 +85,7 @@ export const createPost = async (req: Request, res: Response) => {
 
     // Send the response after all media is created and tagged users are processed
     return res.status(200).json({
-      message: 'Post created successfully',
-      post_id,
-      postMediaIds,
+      message: 'Post created successfully'
     });
   } catch (error) {
     console.log(error);
@@ -183,8 +181,7 @@ export const editPost = async (req: Request, res: Response) => {
     // Send the response after all media is updated and tagged users are processed
     return res.status(200).json({
       message: 'Post updated successfully',
-      post_id,
-      postMediaIds,
+    
     });
   } catch (error) {
     console.log(error);
