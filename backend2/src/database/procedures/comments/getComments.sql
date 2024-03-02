@@ -1,7 +1,0 @@
-CREATE OR ALTER PROCEDURE getComments
-	AS
-SET NOCOUNT ON;
-BEGIN
-	SELECT * FROM Comments 
-    WHERE isDeleted = 0
-END
